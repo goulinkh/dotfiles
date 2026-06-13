@@ -36,7 +36,7 @@ fi
 if [ "${SKIP_PACKAGES:-0}" != "1" ]; then
   case "$(uname -s)" in
     Darwin) pkg=macos ;;
-    Linux)  pkg=linux ;;
+    Linux)  pkg=ubuntu ;;
     *)      pkg="" ; echo "==> Unknown OS $(uname -s) — skipping packages" >&2 ;;
   esac
   if [ -n "$pkg" ]; then

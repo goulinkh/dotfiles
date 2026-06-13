@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Linux tools via apt (+ mise installer). Idempotent.
+# Ubuntu/Debian tools via apt (+ mise installer). Idempotent.
 set -euo pipefail
 
 if command -v apt-get >/dev/null 2>&1; then
