@@ -21,5 +21,30 @@ mise use -g ubi:lsd-rs/lsd@latest
 mise exec node@26 -- npm install -g pnpm
 mise reshim
 
-echo "==> juju via go install"
-mise exec go@latest -- go install github.com/juju/juju/cmd/juju@latest
+JUJU_VERSION="3.6.8"
+JUJU_SERIES="${JUJU_VERSION%.*}"
+if [ "$(juju version 2>/dev/null | cut -d- -f1)" = "$JUJU_VERSION" ]; then
+  echo "==> juju $JUJU_VERSION already installed"
+else
+  echo "==> juju $JUJU_VERSION via Launchpad"
+  case "$(uname -s)" in
+    Darwin) JUJU_OS="darwin" ;;
+    Linux)  JUJU_OS="linux" ;;
+    *) echo "==> unsupported OS for juju" >&2; JUJU_OS="" ;;
+  esac
+  case "$(uname -m)" in
+    arm64|aarch64) JUJU_ARCH="arm64" ;;
+    x86_64|amd64)  JUJU_ARCH="amd64" ;;
+    *) echo "==> unsupported arch for juju" >&2; JUJU_ARCH="" ;;
+  esac
+  if [ -n "$JUJU_OS" ] && [ -n "$JUJU_ARCH" ]; then
+    JUJU_TARBALL="juju-${JUJU_VERSION}-${JUJU_OS}-${JUJU_ARCH}.tar.xz"
+    JUJU_URL="https://launchpad.net/juju/${JUJU_SERIES}/${JUJU_VERSION}/+download/${JUJU_TARBALL}"
+    JUJU_TMP="$(mktemp -d)"
+    curl -fsSL "$JUJU_URL" -o "$JUJU_TMP/$JUJU_TARBALL"
+    tar -xJf "$JUJU_TMP/$JUJU_TARBALL" -C "$JUJU_TMP"
+    mkdir -p "$HOME/.local/bin"
+    install -m 0755 "$JUJU_TMP/juju" "$HOME/.local/bin/juju"
+    rm -rf "$JUJU_TMP"
+  fi
+fi
