@@ -33,7 +33,7 @@ if command -v nvim &>/dev/null; then
 fi
 command -v code   &>/dev/null && alias c="code"
 command -v zoxide &>/dev/null && alias zz="zi"
-command -v colorls &>/dev/null && alias ls="colorls"
+command -v lsd &>/dev/null && alias ls="lsd --group-dirs first --color always --human-readable --hyperlink auto"
 # bat ships as `batcat` on Debian/Ubuntu.
 if command -v bat &>/dev/null; then
   alias bat="bat --paging never"

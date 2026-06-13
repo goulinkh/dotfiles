@@ -30,6 +30,7 @@ z4h load ohmyzsh/ohmyzsh/plugins/aws
 path=(
   ~/.local/bin
   ~/.npm-global/bin
+  ~/go/bin
   "$HOME/.bun/bin"
   "${KREW_ROOT:-$HOME/.krew}/bin"
   "/Users/goulin/Library/pnpm"
