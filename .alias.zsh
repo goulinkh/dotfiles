@@ -26,28 +26,41 @@ function git-refresh-pushed() {
   git branch -d "$stash_branch"
 }
 
-# --- editors / tools ---
-alias vi=nvim
-alias vim=nvim
-alias c="code"
-alias bat="bat --paging never"
-alias zz="zi"
-alias ls="colorls"
+# --- editors / tools (alias only when the tool exists) ---
+if command -v nvim &>/dev/null; then
+  alias vi=nvim
+  alias vim=nvim
+fi
+command -v code   &>/dev/null && alias c="code"
+command -v zoxide &>/dev/null && alias zz="zi"
+command -v colorls &>/dev/null && alias ls="colorls"
+# bat ships as `batcat` on Debian/Ubuntu.
+if command -v bat &>/dev/null; then
+  alias bat="bat --paging never"
+elif command -v batcat &>/dev/null; then
+  alias bat="batcat --paging never"
+fi
 
 # --- package managers ---
-alias x=pnpx
-alias npx=pnpx
-alias pn="pnpm"
-alias start="pnpm start"
-alias dev="pnpm dev"
-alias sb="bun run storybook"
-alias art="php artisan"
+if command -v pnpx &>/dev/null; then
+  alias x=pnpx
+  alias npx=pnpx
+fi
+if command -v pnpm &>/dev/null; then
+  alias pn="pnpm"
+  alias start="pnpm start"
+  alias dev="pnpm dev"
+fi
+command -v bun &>/dev/null && alias sb="bun run storybook"
+command -v php &>/dev/null && alias art="php artisan"
 
 # --- k8s / juju ---
-alias k="kubectl"
-alias jsft="juju status"
-alias js="juju status"
-alias jsw="juju status --watch 1s"
+command -v kubectl &>/dev/null && alias k="kubectl"
+if command -v juju &>/dev/null; then
+  alias jsft="juju status"
+  alias js="juju status"
+  alias jsw="juju status --watch 1s"
+fi
 
 # --- ssh ---
 alias ubuntu="ssh ubuntu@${ORBSTACK_MAIN_VM_HOST}"

@@ -2,7 +2,8 @@
 # Bootstrap this machine:
 #   1. symlink dotfiles into $HOME (backing up real files to *.bak)
 #   2. seed ~/.zsh.local from the example
-#   3. install zsh4humans + oh-my-zsh plugins on first interactive zsh
+#   3. install per-OS CLI tools (packages.sh)
+#   4. install zsh4humans + oh-my-zsh plugins on first interactive zsh
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -29,6 +30,12 @@ if [ ! -e "$HOME/.zsh.local" ]; then
   echo "   created ~/.zsh.local — fill in secrets: \$EDITOR ~/.zsh.local"
 else
   echo "   ~/.zsh.local exists, leaving it"
+fi
+
+# Install per-OS CLI tools. Set SKIP_PACKAGES=1 to skip.
+if [ "${SKIP_PACKAGES:-0}" != "1" ]; then
+  echo "==> Installing packages"
+  bash "$DIR/packages.sh" || echo "   package install failed — re-run: ./packages.sh" >&2
 fi
 
 # Make zsh the login shell if it isn't.
