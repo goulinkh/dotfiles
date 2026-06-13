@@ -32,10 +32,17 @@ else
   echo "   ~/.zsh.local exists, leaving it"
 fi
 
-# Install per-OS CLI tools. Set SKIP_PACKAGES=1 to skip.
+# Install per-OS CLI tools (packages/<os>.sh). Set SKIP_PACKAGES=1 to skip.
 if [ "${SKIP_PACKAGES:-0}" != "1" ]; then
-  echo "==> Installing packages"
-  bash "$DIR/packages.sh" || echo "   package install failed — re-run: ./packages.sh" >&2
+  case "$(uname -s)" in
+    Darwin) pkg=macos ;;
+    Linux)  pkg=linux ;;
+    *)      pkg="" ; echo "==> Unknown OS $(uname -s) — skipping packages" >&2 ;;
+  esac
+  if [ -n "$pkg" ]; then
+    echo "==> Installing packages ($pkg)"
+    bash "$DIR/packages/$pkg.sh" || echo "   package install failed — re-run: ./packages/$pkg.sh" >&2
+  fi
 fi
 
 # Make zsh the login shell if it isn't.
