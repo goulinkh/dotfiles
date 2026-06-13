@@ -62,6 +62,16 @@ if command -v juju &>/dev/null; then
   alias jsw="juju status --watch 1s"
 fi
 
+# --- dotfiles ---
+alias dotsync="$HOME/dotfiles/sync.sh"
+function dotpkg() {
+  case "$(uname -s)" in
+    Darwin) "$HOME/dotfiles/packages/macos.sh" ;;
+    Linux)  "$HOME/dotfiles/packages/ubuntu.sh" ;;
+    *)      echo "unknown OS: $(uname -s)" >&2 ; return 1 ;;
+  esac
+}
+
 # --- ssh ---
 alias ubuntu="ssh ubuntu@${ORBSTACK_MAIN_VM_HOST}"
 alias ps6="ssh $LAUNCHPAD_USERNAME@webdesign-bastion-ps6.internal"

@@ -16,9 +16,8 @@ mise use -g pnpm@latest
 mise use -g python@3.14
 mise use -g go@latest
 mise use -g kubectl@latest
-# lsd via ubi (GitHub release binaries) — aqua backend lacks linux/arm64.
-mise use -g ubi:lsd-rs/lsd@latest   # `ls` replacement (colorls-like icons)
+mise use -g ubi:ajeetdsouza/zoxide@latest
+mise use -g ubi:lsd-rs/lsd@latest
 
-# juju built from source via Go (not a mise plugin). Lands in ~/go/bin.
 echo "==> juju via go install"
 mise exec go@latest -- go install github.com/juju/juju/cmd/juju@latest

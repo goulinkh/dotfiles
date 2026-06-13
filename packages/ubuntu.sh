@@ -10,8 +10,9 @@ if command -v apt-get >/dev/null 2>&1; then
   sudo apt-get update -qq
   # bat installs as `batcat` on Ubuntu; .alias.zsh handles that.
   # build-* + lib*-dev: needed for mise to compile Python from source.
+  # zoxide comes from mise (common.sh) — not in older Ubuntu apt repos.
   sudo apt-get install -y \
-    fzf zoxide bat neovim jq curl git \
+    fzf bat neovim jq curl git \
     build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
     libsqlite3-dev libffi-dev liblzma-dev tk-dev
 else

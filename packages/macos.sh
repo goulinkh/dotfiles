@@ -10,7 +10,7 @@ if ! command -v brew >/dev/null 2>&1; then
 fi
 
 echo "==> brew install"
-brew install fzf zoxide bat neovim jq mise
+brew install fzf bat neovim jq mise
 
 # Shared global runtimes/CLIs via mise.
 bash "$DIR/common.sh"
