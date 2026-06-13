@@ -67,7 +67,12 @@ if [[ $OSTYPE == darwin* ]]; then
 fi
 
 # --- tool init (load only if installed) ---
-command -v fzf    &>/dev/null && source <(fzf --zsh)
+# z4h already wires fzf; `fzf --zsh` is a bonus for fzf >= 0.48 (older fzf
+# lacks the flag and errors with "unknown option: --zsh").
+if command -v fzf &>/dev/null; then
+  _fzf_init="$(fzf --zsh 2>/dev/null)" && eval "$_fzf_init"
+  unset _fzf_init
+fi
 command -v mise   &>/dev/null && eval "$(mise activate zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
