@@ -1,0 +1,3 @@
+.DS_Store
+*.bak
+# Keep .zsh.local a template only — never put real secrets in the repo copy.

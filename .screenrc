@@ -1,0 +1,15 @@
+termcapinfo xterm* ti@:te@
+defscrollback 10000
+defutf8 on
+nonblock on
+autodetach on
+altscreen on
+startup_message off
+vbell off
+hardstatus alwayslastline
+hardstatus string '%{= Kd} %-Lw%{= kG} %n %t %{= Gd}%{= Kd}%+Lw%{= dd}%=%{= bd}%{= Wb} host %H %{= yb}%{= ky} load %l '
+
+defutf8 on
+defencoding utf8
+term screen-256color
+sorendition "= Kd"
