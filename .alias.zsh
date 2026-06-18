@@ -41,6 +41,21 @@ elif command -v batcat &>/dev/null; then
   alias bat="batcat --paging never"
 fi
 
+if [[ $(uname -s) == Linux ]]; then
+  function pbcopy() {
+    if command -v wl-copy &>/dev/null; then
+      wl-copy "$@"
+    elif command -v xclip &>/dev/null; then
+      xclip -selection clipboard "$@"
+    elif command -v xsel &>/dev/null; then
+      xsel --clipboard --input "$@"
+    else
+      echo "pbcopy: install wl-clipboard, xclip, or xsel" >&2
+      return 1
+    fi
+  }
+fi
+
 # --- package managers ---
 if command -v pnpx &>/dev/null; then
   alias x=pnpx

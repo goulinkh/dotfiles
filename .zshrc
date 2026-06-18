@@ -67,10 +67,18 @@ if [[ $OSTYPE == darwin* ]]; then
     export DOCKER_HOST="unix://$HOME/.orbstack/run/docker.sock"
 fi
 
+# --- completion ---
+# Configure Oh My Zsh-style horizontal (rows-first) tab completion.
+zmodload -i zsh/complist
+setopt LIST_ROWS_FIRST
+setopt LIST_PACKED
+zstyle ':completion:*' menu select
+bindkey '^I' expand-or-complete
+
 # --- tool init (load only if installed) ---
-# z4h already wires fzf; `fzf --zsh` is a bonus for fzf >= 0.48 (older fzf
-# lacks the flag and errors with "unknown option: --zsh").
+# Use upstream fzf completion so TAB stays native unless the trigger is present.
 if command -v fzf &>/dev/null; then
+  export FZF_COMPLETION_TRIGGER='**'
   _fzf_init="$(fzf --zsh 2>/dev/null)" && eval "$_fzf_init"
   unset _fzf_init
 fi
