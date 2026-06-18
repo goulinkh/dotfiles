@@ -4,6 +4,7 @@ FILES=(
   .zshenv
   .zshrc
   .alias.zsh
+  .claupilot.zsh
   .mp.zsh
   .gitconfig
   .screenrc

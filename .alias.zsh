@@ -97,6 +97,11 @@ alias klaude='ANTHROPIC_BASE_URL=https://api.kimi.com/coding ANTHROPIC_AUTH_TOKE
 alias clodex="ANTHROPIC_BASE_URL=http://localhost:8080 ANTHROPIC_API_KEY=pwd ANTHROPIC_DEFAULT_OPUS_MODEL=gpt-5.5 ANTHROPIC_DEFAULT_SONNET_MODEL=gpt-5.5-codex ANTHROPIC_DEFAULT_HAIKU_MODEL=gpt-5.5-mini ANTHROPIC_MODEL='gpt-5.5' claude"
 alias orc='ANTHROPIC_BASE_URL=$CLAUDE_OR_BASE_URL ANTHROPIC_AUTH_TOKEN=$OPENROUTER_API_KEY ANTHROPIC_MODEL=$CLAUDE_OR_MODEL_MAIN ANTHROPIC_DEFAULT_OPUS_MODEL=$CLAUDE_OR_MODEL_MAIN ANTHROPIC_DEFAULT_SONNET_MODEL=$CLAUDE_OR_MODEL_FAST ANTHROPIC_DEFAULT_HAIKU_MODEL=$CLAUDE_OR_MODEL_LIGHT CLAUDE_CODE_SUBAGENT_MODEL=$CLAUDE_OR_MODEL_FAST ENABLE_TOOL_SEARCH=false claude'
 
+# --- load claupilot logic from its dedicated file ---
+if [ -f ~/.claupilot.zsh ]; then
+  source ~/.claupilot.zsh
+fi
+
 # --- python venv helpers ---
 # usage: venv [--clean] [path]  (default path: .venv)
 function venv() {

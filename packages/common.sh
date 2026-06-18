@@ -15,6 +15,8 @@ mise use -g node@26
 mise use -g python@3.14
 mise use -g go@latest
 mise use -g kubectl@latest
+mise use -g terraform@latest
+mise use -g vault@latest
 mise use -g ubi:ajeetdsouza/zoxide@latest
 mise use -g ubi:lsd-rs/lsd@latest
 
