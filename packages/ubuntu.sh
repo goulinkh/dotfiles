@@ -12,7 +12,7 @@ if command -v apt-get >/dev/null 2>&1; then
   # build-* + lib*-dev: needed for mise to compile Python from source.
   # zoxide comes from mise (common.sh) — not in older Ubuntu apt repos.
   sudo apt-get install -y \
-    fzf bat neovim jq curl git xclip wl-clipboard \
+    fzf bat neovim jq curl git xclip wl-clipboard unzip \
     build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
     libsqlite3-dev libffi-dev liblzma-dev tk-dev
 else

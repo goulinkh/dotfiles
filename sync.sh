@@ -41,6 +41,7 @@ for f in "${FILES[@]}"; do
     mv "$dst" "$dst.bak"
     echo "   backup: $dst -> $dst.bak"
   fi
+  mkdir -p "$(dirname "$dst")"
   ln -sfn "$src" "$dst"
 done
 echo "   done"

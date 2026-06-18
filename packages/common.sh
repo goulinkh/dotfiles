@@ -19,6 +19,22 @@ mise use -g ubi:ajeetdsouza/zoxide@latest
 mise use -g ubi:lsd-rs/lsd@latest
 
 mise exec node@26 -- npm install -g pnpm
+# Install Bun (required by omp) and oh-my-pi (omp) CLI
+if ! command -v bun >/dev/null 2>&1; then
+  echo "==> installing bun"
+  curl -fsSL https://bun.sh/install | bash
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+else
+  echo "==> bun already installed"
+fi
+
+if ! command -v omp >/dev/null 2>&1; then
+  echo "==> installing oh-my-pi (omp)"
+  curl -fsSL https://omp.sh/install | sh
+else
+  echo "==> oh-my-pi (omp) already installed"
+fi
 mise reshim
 
 JUJU_VERSION="3.6.8"

@@ -1,0 +1,8 @@
+setupVersion: 1
+modelRoles:
+  default: openrouter/google/gemini-3.5-flash
+  kimi: openrouter/moonshotai/kimi-k2.7-code:medium
+cycleOrder:
+  - default
+  - kimi
+hideThinkingBlock: true

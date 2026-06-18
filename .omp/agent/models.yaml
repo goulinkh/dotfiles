@@ -1,0 +1,14 @@
+providers:
+  openrouter:
+    google/gemini-3.5-flash:
+      compat:
+        openRouterRouting:
+          only: [google-ai-studio]
+    z-ai/glm-5.2:
+      compat:
+        openRouterRouting:
+          only: [io-net/fp8]
+    moonshotai/kimi-k2.7-code:
+      compat:
+        openRouterRouting:
+          only: [moonshotai/highspeed]
