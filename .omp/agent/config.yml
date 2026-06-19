@@ -1,6 +1,6 @@
 setupVersion: 1
 modelRoles: 
-  default: openrouter/google/gemini-3.5-flash:medium
+  default: github-copilot/claude-opus-4.8:medium
   kimi: openrouter/moonshotai/kimi-k2.7-code:medium
 cycleOrder: 
   - default
