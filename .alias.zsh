@@ -1,7 +1,7 @@
 # Aliases & functions. Sourced from .zshrc.
 
 alias copilot-usage="gh api /copilot_internal/user --jq '.quota_snapshots.premium_interactions'"
-
+alias commit="omp -p 'Commit following conventional commits'" 
 # Launchpad username (override in ~/.zsh.local).
 : ${LAUNCHPAD_USERNAME:=goulinkh}
 
