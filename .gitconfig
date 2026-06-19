@@ -1,6 +1,19 @@
 [user]
 	name = Goulin Khoge
 	email = contact+git@goulin.fr
+	signingkey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.gitallowedsigners
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
 
 [init]
 	defaultBranch = main

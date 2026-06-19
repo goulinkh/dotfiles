@@ -57,6 +57,9 @@ if [ -e "$HOME/.zsh.local" ]; then
   fi
 fi
 
+# Register the local SSH signing key with GitHub when gh is authenticated.
+bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
+
 echo "==> Updating zsh4humans + plugins"
 if command -v zsh >/dev/null 2>&1; then
   zsh -ic 'z4h update' || echo "   z4h update needs an interactive shell; run 'z4h update' manually"

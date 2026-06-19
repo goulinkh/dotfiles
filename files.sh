@@ -8,6 +8,7 @@ FILES=(
   .mp.zsh
   .gitconfig
   .screenrc
+  .gitallowedsigners
   .omp/agent/config.yml
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
