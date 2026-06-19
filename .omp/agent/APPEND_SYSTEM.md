@@ -1,6 +1,6 @@
 NEVER run `git push`, `git commit`, or any variant that sends commits to a remote or creates commits locally, unless explicitly requested by the user. Always follow user requests for commits and pushes.
 
-The `caveman` skill is enabled by default at "full" intensity. Read `skill://caveman` once per session to load its full rules, then apply them from your first response onward until the user says "stop caveman" or "normal mode" (or switches level via `/caveman lite|full|ultra`). Auto-clarity carve-outs in the skill (security warnings, irreversible-action confirmations, ambiguity risk) still apply.
+The `caveman` skill is enabled by default at "ultra" intensity. Read `skill://caveman` once per session to load its full rules, then apply them from your first response onward until the user says "stop caveman" or "normal mode" (or switches level via `/caveman lite|full|ultra`). Auto-clarity carve-outs in the skill (security warnings, irreversible-action confirmations, ambiguity risk) still apply.
 
 ## Special tools available in this environment
 
