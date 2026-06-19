@@ -1,7 +1,6 @@
 [user]
 	name = Goulin Khoge
 	email = contact+git@goulin.fr
-	signingkey = ~/.ssh/id_ed25519.pub
 
 [gpg]
 	format = ssh
@@ -9,11 +8,10 @@
 [gpg "ssh"]
 	allowedSignersFile = ~/.gitallowedsigners
 
-[commit]
-	gpgsign = true
-
-[tag]
-	gpgsign = true
+# Signing key + commit/tag gpgsign live here, written by setup-git-signing.sh
+# only when the SSH signing key exists. No key => commits succeed unsigned.
+[include]
+	path = ~/.config/git/signing.local
 
 [init]
 	defaultBranch = main
