@@ -16,7 +16,21 @@ if command -v apt-get >/dev/null 2>&1; then
     build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
     libsqlite3-dev libffi-dev liblzma-dev tk-dev
 else
-  echo "==> Non-apt Linux — install manually: fzf zoxide bat neovim jq" >&2
+  echo "==> Non-apt Linux — install manually: fzf zoxide bat neovim jq gh" >&2
+fi
+
+# GitHub CLI (gh): not in default Ubuntu repos — add GitHub's official apt repo.
+# Used by setup-git-signing.sh to verify the SSH signing key on GitHub.
+if command -v apt-get >/dev/null 2>&1 && ! command -v gh >/dev/null 2>&1; then
+  echo "==> installing GitHub CLI (gh)"
+  sudo mkdir -p -m 755 /etc/apt/keyrings
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
+  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+    | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+  sudo apt-get update -qq
+  sudo apt-get install -y gh
 fi
 
 # mise has no apt package; use the official installer.
