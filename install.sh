@@ -52,8 +52,16 @@ bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run
 # Make zsh the login shell if it isn't.
 ZSH_BIN="$(command -v zsh || true)"
 if [ -n "$ZSH_BIN" ] && [ "${SHELL:-}" != "$ZSH_BIN" ]; then
-  echo "==> Default shell is $SHELL, not $ZSH_BIN"
-  echo "   run: chsh -s $ZSH_BIN"
+  echo "==> Switching default shell to $ZSH_BIN"
+  # zsh must be listed in /etc/shells before chsh accepts it.
+  if [ -w /etc/shells ] || sudo -n true 2>/dev/null; then
+    grep -qxF "$ZSH_BIN" /etc/shells 2>/dev/null || echo "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null
+  fi
+  if chsh -s "$ZSH_BIN"; then
+    echo "   default shell now $ZSH_BIN — log out/in to take effect"
+  else
+    echo "   chsh failed — run manually: chsh -s $ZSH_BIN" >&2
+  fi
 fi
 
 # Trigger z4h bootstrap + oh-my-zsh plugin install.
