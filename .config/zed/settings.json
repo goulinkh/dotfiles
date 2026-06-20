@@ -45,6 +45,9 @@
   },
   "agent": {
     "dock": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+    "enable_feedback": true,
   },
   "telemetry": {
     "diagnostics": false,
