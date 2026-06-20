@@ -15,5 +15,6 @@ FILES=(
   .omp/agent/APPEND_SYSTEM.md
   .config/zed/settings.json
   .config/zed/keymap.json
+  .config/htop/htoprc
   .copilot/settings.json
 )
