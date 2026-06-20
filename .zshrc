@@ -4,6 +4,9 @@
 zstyle ':z4h:'                auto-update      'no'
 zstyle ':z4h:'                auto-update-days '28'
 
+# Don't prompt to change login shell — install.sh runs chsh.
+zstyle ':z4h:'                chsh             'no'
+
 # Keyboard type: 'mac' or 'pc'.
 zstyle ':z4h:bindkey'         keyboard         'mac'
 

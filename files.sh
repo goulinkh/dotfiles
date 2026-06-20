@@ -3,6 +3,7 @@
 FILES=(
   .zshenv
   .zshrc
+  .p10k.zsh
   .alias.zsh
   .claupilot.zsh
   .mp.zsh
