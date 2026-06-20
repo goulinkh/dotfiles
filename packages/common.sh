@@ -21,6 +21,14 @@ mise use -g ubi:ajeetdsouza/zoxide@latest
 mise use -g ubi:lsd-rs/lsd@latest
 
 mise exec node@26 -- npm install -g pnpm
+
+# GitHub Copilot CLI (npm global; binary downloaded on postinstall).
+if ! command -v copilot >/dev/null 2>&1; then
+  echo "==> installing GitHub Copilot CLI (@github/copilot)"
+  mise exec node@26 -- npm install -g @github/copilot
+else
+  echo "==> GitHub Copilot CLI already installed"
+fi
 # Install Bun (required by omp) and oh-my-pi (omp) CLI
 if ! command -v bun >/dev/null 2>&1; then
   echo "==> installing bun"
@@ -65,4 +73,15 @@ else
     install -m 0755 "$JUJU_TMP/juju" "$HOME/.local/bin/juju"
     rm -rf "$JUJU_TMP"
   fi
+fi
+
+# Copilot CLI skills (vercel-labs/skills installer). Installs into ~/.agents/skills,
+# which Copilot CLI auto-discovers. Idempotent: skip when already present.
+if [ -f "$HOME/.agents/skills/caveman/SKILL.md" ]; then
+  echo "==> caveman skill already installed"
+else
+  echo "==> installing caveman skill (JuliusBrussee/skills) for Copilot CLI"
+  mise exec node@26 -- npx -y skills@latest add JuliusBrussee/skills \
+    -s caveman -a github-copilot -g -y --copy \
+    || echo "   caveman skill install failed — re-run: npx -y skills@latest add JuliusBrussee/skills -s caveman -a github-copilot -g -y --copy" >&2
 fi
