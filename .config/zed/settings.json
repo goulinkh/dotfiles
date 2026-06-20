@@ -1,0 +1,70 @@
+// Zed settings — https://zed.dev/docs/configuring-zed
+// Only non-default values are kept here; run `zed: open default settings`
+// from the command palette to see everything else.
+{
+  "agent_servers": {
+    "omp": {
+      "default_config_options": {
+        "mode": "default",
+        "model": "github-copilot/claude-opus-4.8",
+      },
+      "type": "custom",
+      "command": "omp",
+      "args": ["acp"],
+    },
+    "github-copilot-cli": {
+      "default_config_options": {
+        "mode": "https://agentclientprotocol.com/protocol/session-modes#autopilot",
+        "model": "claude-opus-4.8",
+      },
+      "type": "registry",
+    },
+  },
+  "edit_predictions": {
+    "open_ai_compatible_api": {
+      "max_output_tokens": 150,
+      "prompt_format": "glm",
+      "model": "z-ai/glm-5.2",
+      "api_url": "https://openrouter.ai/api/v1",
+    },
+    "provider": "open_ai_compatible_api",
+    "allow_data_collection": "no",
+  },
+  "cli_default_open_behavior": "new_window",
+  "project_panel": {
+    "dock": "left",
+  },
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "dock": "left",
+  },
+  "agent": {
+    "dock": "right",
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "terminal": {
+    "font_family": "JetBrainsMono Nerd Font",
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_family": "MonoLisa",
+  "soft_wrap": "editor_width",
+  "ui_font_size": 14,
+  "ui_font_family": "MonoLisa",
+  "buffer_font_size": 13.5,
+  "theme": {
+    "mode": "system",
+    "light": "Gruvbox Light",
+    "dark": "Gruvbox Dark",
+  },
+}

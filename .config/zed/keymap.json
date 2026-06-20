@@ -1,0 +1,72 @@
+// Zed keymap — https://zed.dev/docs/key-bindings
+[
+  {
+    "bindings": {
+      "ctrl-shift-b": "agent::Toggle",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-shift-b": "outline_panel::ToggleFocus",
+    },
+  },
+  {
+    "unbind": {
+      "ctrl-q": "zed::Quit",
+    },
+  },
+  {
+    "context": "SkillCreator > Editor",
+    "unbind": {
+      "ctrl-w": "workspace::CloseWindow",
+    },
+  },
+  {
+    "context": "SkillCreator",
+    "unbind": {
+      "ctrl-w": "workspace::CloseWindow",
+    },
+  },
+  {
+    "unbind": {
+      "ctrl-shift-w": "workspace::CloseWindow",
+    },
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "ctrl-.": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "AcpThread",
+    "bindings": {
+      "ctrl-.": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-.": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-\\": "terminal_panel::Toggle",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-`": "terminal_panel::Toggle",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-\\": "pane::SplitRight",
+    },
+  },
+]
