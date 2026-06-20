@@ -2,14 +2,11 @@
 	name = Goulin Khoge
 	email = contact+git@goulin.fr
 
-[gpg]
-	format = ssh
-
-[gpg "ssh"]
-	allowedSignersFile = ~/.gitallowedsigners
-
-# Signing key + commit/tag gpgsign live here, written by setup-git-signing.sh
-# only when the SSH signing key exists. No key => commits succeed unsigned.
+# SSH signing config (gpg.format=ssh, allowedSignersFile, signing key, and
+# commit/tag gpgsign) lives in the machine-local include below, written by
+# setup-git-signing.sh only when the SSH key exists AND git is new enough
+# (>= 2.34). Keeping gpg.format=ssh out of this base file means old git
+# versions (which reject it as fatal) still work. No key => commits unsigned.
 [include]
 	path = ~/.config/git/signing.local
 
