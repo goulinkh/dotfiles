@@ -57,7 +57,7 @@
     "trust_all_worktrees": true,
   },
   "terminal": {
-    "font_family": "JetBrainsMono Nerd Font",
+    "font_family": "MonoLisa Nerd Font Mono",
   },
   "base_keymap": "VSCode",
   "buffer_font_family": "MonoLisa",

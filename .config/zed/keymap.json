@@ -1,72 +1,74 @@
 // Zed keymap — https://zed.dev/docs/key-bindings
+// `secondary-` resolves to `cmd` on macOS and `ctrl` on Linux/Windows,
+// keeping these bindings consistent across platforms.
 [
   {
     "bindings": {
-      "ctrl-shift-b": "agent::Toggle",
+      "secondary-shift-b": "agent::Toggle",
     },
   },
   {
     "context": "Workspace",
     "unbind": {
-      "ctrl-shift-b": "outline_panel::ToggleFocus",
+      "secondary-shift-b": "outline_panel::ToggleFocus",
     },
   },
   {
     "unbind": {
-      "ctrl-q": "zed::Quit",
+      "secondary-q": "zed::Quit",
     },
   },
   {
     "context": "SkillCreator > Editor",
     "unbind": {
-      "ctrl-w": "workspace::CloseWindow",
+      "secondary-w": "workspace::CloseWindow",
     },
   },
   {
     "context": "SkillCreator",
     "unbind": {
-      "ctrl-w": "workspace::CloseWindow",
+      "secondary-w": "workspace::CloseWindow",
     },
   },
   {
     "unbind": {
-      "ctrl-shift-w": "workspace::CloseWindow",
+      "secondary-shift-w": "workspace::CloseWindow",
     },
   },
   {
     "context": "Editor && mode == full",
     "bindings": {
-      "ctrl-.": "agent::AddSelectionToThread",
+      "secondary-.": "agent::AddSelectionToThread",
     },
   },
   {
     "context": "AcpThread",
     "bindings": {
-      "ctrl-.": "agent::AddSelectionToThread",
+      "secondary-.": "agent::AddSelectionToThread",
     },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-.": "agent::AddSelectionToThread",
+      "secondary-.": "agent::AddSelectionToThread",
     },
   },
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-\\": "terminal_panel::Toggle",
+      "secondary-\\": "terminal_panel::Toggle",
     },
   },
   {
     "context": "Workspace",
     "unbind": {
-      "ctrl-`": "terminal_panel::Toggle",
+      "secondary-`": "terminal_panel::Toggle",
     },
   },
   {
     "context": "Editor",
     "unbind": {
-      "ctrl-\\": "pane::SplitRight",
+      "secondary-\\": "pane::SplitRight",
     },
   },
 ]
