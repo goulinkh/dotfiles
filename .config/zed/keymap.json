@@ -71,4 +71,35 @@
       "secondary-\\": "pane::SplitRight",
     },
   },
+  {
+    "context": "Editor && !showing_completions",
+    "bindings": {
+      "alt-space": "editor::ShowCompletions",
+    },
+  },
+  {
+    "bindings": {
+      "secondary-|": "workspace::NewTerminal",
+      "secondary-shift-x": "zed::Extensions",
+      "secondary-shift-g": "git_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "secondary->": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "AcpThread",
+    "unbind": {
+      "secondary->": "agent::AddSelectionToThread",
+    },
+  },
+  {
+    "context": "Terminal",
+    "unbind": {
+      "secondary->": "agent::AddSelectionToThread",
+    },
+  },
 ]
