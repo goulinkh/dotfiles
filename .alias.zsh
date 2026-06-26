@@ -56,6 +56,14 @@ if [[ $(uname -s) == Linux ]]; then
       return 1
     fi
   }
+
+  # Re-add DOCKER-USER accept rules so LXD/workshop bridges reach the network.
+  function fix-lxd-netwrk() {
+    sudo nft insert rule ip filter DOCKER-USER iifname lxdbr0 accept &&
+      sudo nft insert rule ip filter DOCKER-USER oifname lxdbr0 ct state related,established accept &&
+      sudo nft insert rule ip filter DOCKER-USER iifname workshopbr0 accept &&
+      sudo nft insert rule ip filter DOCKER-USER oifname workshopbr0 ct state related,established accept
+  }
 fi
 
 # --- package managers ---
