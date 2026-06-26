@@ -3,24 +3,19 @@
 // from the command palette to see everything else.
 {
   // === appearance ===
-  "debugger": {
-    "button": false,
-  },
-  "search": {
-    "button": false,
-  },
-  "toolbar": {
-    "code_actions": false,
-    "agent_review": true,
-    "selections_menu": true,
-    "quick_actions": false,
-    "breadcrumbs": true,
-  },
-  "status_bar": {
-    "show_active_file": false,
-    "cursor_position_button": true,
-    "active_language_button": true,
-  },
+  "ssh_connections": [
+    {
+      "host": "thinkpad",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/goulin.khoge@canonical.com/Lab/canonical/sd-tools/./",
+          ],
+        },
+      ],
+    },
+  ],
   "theme": {
     "mode": "dark",
     "light": "One Light",
@@ -77,7 +72,7 @@
   "close_on_file_delete": true,
   "use_smartcase_search": true,
   "inlay_hints": {
-    "enabled": true,
+    "enabled": false,
   },
   "git": {
     "inline_blame": {
@@ -135,7 +130,7 @@
     "button": false,
     "default_width": 300,
     "auto_fold_dirs": false,
-    "auto_reveal_entries": false,
+    "auto_reveal_entries": true,
     "entry_spacing": "standard",
     "diagnostic_badges": true,
     "git_status_indicator": true,
@@ -226,9 +221,9 @@
   "soft_wrap": "editor_width",
   // === Terminal ===
   "terminal": {
-    "button": false,
+    "button": true,
     "scrollbar": {
-      "show": "never",
+      "show": "auto",
     },
     "max_scroll_history_lines": 5000000,
     "font_family": "Maple Mono NF",
@@ -248,7 +243,7 @@
       "GIT_EDITOR": "zed --wait",
       "EDITOR": "zed",
     },
-    "minimum_contrast": 0,
+    "minimum_contrast": 60,
     "keep_selection_on_copy": false,
   },
   "load_direnv": "shell_hook",
