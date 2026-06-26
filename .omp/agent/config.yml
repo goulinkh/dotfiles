@@ -5,4 +5,4 @@ modelRoles:
 cycleOrder: 
   - default
   - kimi
-hideThinkingBlock: true
+hideThinkingBlock: false
