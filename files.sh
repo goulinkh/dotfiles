@@ -20,4 +20,7 @@ FILES=(
   .copilot/settings.json
   .claude/settings.json
   .claude/CLAUDE.md
+  .claude/hooks
+  .claude/skills/caveman
+  .claude/skills/caveman-compress
 )
