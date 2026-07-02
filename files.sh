@@ -18,4 +18,6 @@ FILES=(
   .config/zed/AGENTS.md
   .config/htop/htoprc
   .copilot/settings.json
+  .claude/settings.json
+  .claude/CLAUDE.md
 )
