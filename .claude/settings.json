@@ -9,14 +9,14 @@
       "Grep"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/goulin/.claude/hooks/caveman-activate.js\"",
+            "command": "node \"$HOME/.claude/hooks/caveman-activate.js\"",
             "timeout": 5,
             "statusMessage": "Loading caveman mode..."
           }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/goulin/.claude/hooks/caveman-mode-tracker.js\"",
+            "command": "node \"$HOME/.claude/hooks/caveman-mode-tracker.js\"",
             "timeout": 5,
             "statusMessage": "Tracking caveman mode..."
           }
@@ -38,7 +38,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash \"/Users/goulin/.claude/hooks/caveman-statusline.sh\""
+    "command": "bash \"$HOME/.claude/hooks/caveman-statusline.sh\""
   },
   "extraKnownMarketplaces": {
     "caveman": {
