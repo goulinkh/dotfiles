@@ -9,6 +9,6 @@ export ORBSTACK_MAIN_VM_HOST="launchpad-container"
 
 # --- OpenRouter ---
 export CLAUDE_OR_BASE_URL="https://openrouter.ai/api"
-export CLAUDE_OR_MODEL_MAIN="moonshotai/kimi-k2.7-code" # opus/main
+export CLAUDE_OR_MODEL_MAIN="z-ai/glm-5.2" # opus/main
 export CLAUDE_OR_MODEL_FAST="z-ai/glm-4.7:nitro"        # sonnet slot + subagents
 export CLAUDE_OR_MODEL_LIGHT="z-ai/glm-4.7:nitro"       # haiku slot
