@@ -75,13 +75,3 @@ else
   fi
 fi
 
-# Copilot CLI skills (vercel-labs/skills installer). Installs into ~/.agents/skills,
-# which Copilot CLI auto-discovers. Idempotent: skip when already present.
-if [ -f "$HOME/.agents/skills/caveman/SKILL.md" ]; then
-  echo "==> caveman skill already installed"
-else
-  echo "==> installing caveman skill (JuliusBrussee/skills) for Copilot CLI"
-  mise exec node@26 -- npx -y skills@latest add JuliusBrussee/skills \
-    -s caveman -a github-copilot -g -y --copy \
-    || echo "   caveman skill install failed — re-run: npx -y skills@latest add JuliusBrussee/skills -s caveman -a github-copilot -g -y --copy" >&2
-fi

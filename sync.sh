@@ -60,8 +60,6 @@ fi
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
 
-echo "==> Installing caveman mode"
-bash "$DIR/install-caveman.sh" || echo "   caveman install failed — re-run: ./install-caveman.sh" >&2
 
 echo "==> Updating zsh4humans + plugins"
 if command -v zsh >/dev/null 2>&1; then
