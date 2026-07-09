@@ -46,9 +46,10 @@ if [ "${SKIP_PACKAGES:-0}" != "1" ]; then
   fi
 fi
 
+bash "$DIR/remove-caveman.sh" || echo "   caveman cleanup failed — re-run: ./remove-caveman.sh" >&2
+
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
-
 
 # Make zsh the login shell if it isn't.
 ZSH_BIN="$(command -v zsh || true)"

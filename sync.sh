@@ -46,6 +46,8 @@ for f in "${FILES[@]}"; do
 done
 echo "   done"
 
+bash "$DIR/remove-caveman.sh" || echo "   caveman cleanup failed — re-run: ./remove-caveman.sh" >&2
+
 # Surface new secret keys added to the example since last sync.
 if [ -e "$HOME/.zsh.local" ]; then
   missing="$(grep -oE '^export [A-Z_]+' "$DIR/.zsh.local" 2>/dev/null \
