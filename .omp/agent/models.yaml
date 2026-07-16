@@ -1,14 +1,24 @@
 providers:
+  # Local codex proxy (see `clodex` alias in .alias.zsh: localhost:8080).
+  # OpenAI-compatible; models discovered from /v1/models. Bearer key is the
+  # literal "pwd" (via `!printf pwd` to dodge env-var-name resolution).
+  clodex:
+    baseUrl: http://localhost:8080/v1
+    api: openai-completions
+    apiKey: "!printf pwd"
+    discovery:
+      type: openai-models-list
   openrouter:
-    google/gemini-3.5-flash:
-      compat:
-        openRouterRouting:
-          only: [google-ai-studio]
-    z-ai/glm-5.2:
-      compat:
-        openRouterRouting:
-          only: [io-net/fp8]
-    moonshotai/kimi-k2.7-code:
-      compat:
-        openRouterRouting:
-          only: [moonshotai/highspeed]
+    modelOverrides:
+      google/gemini-3.5-flash:
+        compat:
+          openRouterRouting:
+            only: [google-ai-studio]
+      z-ai/glm-5.2:
+        compat:
+          openRouterRouting:
+            only: [novita/fp8]
+      moonshotai/kimi-k2.7-code:
+        compat:
+          openRouterRouting:
+            only: [together]

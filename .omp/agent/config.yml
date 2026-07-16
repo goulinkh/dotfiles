@@ -1,8 +1,15 @@
 setupVersion: 1
-modelRoles: 
+modelRoles:
+  # Primary driver (boot model). Ctrl+P / /model cycles default <-> sol.
   default: github-copilot/claude-opus-4.8:medium
-  kimi: openrouter/moonshotai/kimi-k2.7-code:medium
-cycleOrder: 
+  # Lightweight explorer: scout subagents + background tasks.
+  # Anthropic Sonnet via OpenRouter. To use Copilot's Sonnet instead,
+  # swap the line for: github-copilot/claude-sonnet-5:medium
+  smol: openrouter/anthropic/claude-sonnet-5
+  # Local codex proxy (clodex alias). Alternate main driver to opus.
+  sol: clodex/gpt-5.6-sol:medium
+cycleOrder:
   - default
-  - kimi
+  - sol
 hideThinkingBlock: false
+textVerbosity: low
