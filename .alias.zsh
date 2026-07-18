@@ -98,9 +98,11 @@ function dotpkg() {
 }
 
 # --- omp swarm (multi-agent orchestration) ---
-# Standalone runner for the vendored swarm extension. No timeout; runs the
-# pipeline to completion. With no argument it runs the default fable-5
-# pipeline. Usage: omp-swarm [path/to/swarm.yaml]
+# Launches a classic omp TUI session and runs the swarm pipeline inside it via
+# the `/swarm run` command, so the normal shell stays up with a live progress
+# widget. With no argument it runs the default fable-5 pipeline.
+# Usage: omp-swarm [path/to/swarm.yaml]
+# For a headless/background run (no TUI), use: omp-swarm --headless [yaml]
 if command -v bun &>/dev/null; then
   function omp-swarm() {
     local ext="$HOME/.omp/swarm-extension"
@@ -109,10 +111,17 @@ if command -v bun &>/dev/null; then
       return 1
     fi
     local default_yaml="$HOME/.omp/swarm/fable-5.yaml"
-    if [[ $# -eq 0 ]]; then
-      set -- "$default_yaml"
+    local headless=0
+    if [[ "$1" == "--headless" || "$1" == "-H" ]]; then
+      headless=1
+      shift
     fi
-    bun "$ext/src/cli.ts" "$@"
+    local yaml="${1:-$default_yaml}"
+    if [[ $headless -eq 1 ]]; then
+      bun "$ext/src/cli.ts" "$yaml"
+    else
+      omp "/swarm run $yaml"
+    fi
   }
 fi
 
