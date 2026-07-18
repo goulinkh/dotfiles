@@ -99,13 +99,18 @@ function dotpkg() {
 
 # --- omp swarm (multi-agent orchestration) ---
 # Standalone runner for the vendored swarm extension. No timeout; runs the
-# pipeline to completion. Usage: omp-swarm ~/.omp/swarm/fable-5.yaml
+# pipeline to completion. With no argument it runs the default fable-5
+# pipeline. Usage: omp-swarm [path/to/swarm.yaml]
 if command -v bun &>/dev/null; then
   function omp-swarm() {
     local ext="$HOME/.omp/swarm-extension"
     if [[ ! -e "$ext/node_modules/@oh-my-pi/pi-coding-agent" ]]; then
       echo "omp-swarm: extension not wired — run ~/dotfiles/setup-swarm.sh" >&2
       return 1
+    fi
+    local default_yaml="$HOME/.omp/swarm/fable-5.yaml"
+    if [[ $# -eq 0 ]]; then
+      set -- "$default_yaml"
     fi
     bun "$ext/src/cli.ts" "$@"
   }

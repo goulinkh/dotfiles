@@ -11,14 +11,13 @@ swarm:
     planner:
       role: fable-orchestrator-planner
 
-      # ACTIVE: GitHub Copilot (verified working in this environment).
-      # claude-fable-5 is not offered by this Copilot account, so Opus 4.8
-      # (strongest available) drives the planner.
-      model: github-copilot/claude-opus-4.8
+      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
+      model: anthropic/claude-fable-5
 
-      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
-      # stored token is currently expired). Comment the line above, then:
-      # model: anthropic/claude-fable-5
+      # ALTERNATIVE — GitHub Copilot. claude-fable-5 is not offered by this
+      # Copilot account, so Opus 4.8 (strongest available) stands in. Comment
+      # the line above, then uncomment this line:
+      # model: github-copilot/claude-opus-4.8
 
       extra_context: |
         You are the Fable orchestrator.
@@ -128,12 +127,11 @@ swarm:
     opus_worker:
       role: opus-judgment-worker
 
-      # ACTIVE: GitHub Copilot (verified working in this environment).
-      model: github-copilot/claude-opus-4.8
+      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
+      model: anthropic/claude-opus-4.8
 
-      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
-      # stored token is currently expired). Comment the line above, then:
-      # model: anthropic/claude-opus-4.8
+      # ALTERNATIVE — GitHub Copilot. Comment the line above, then:
+      # model: github-copilot/claude-opus-4.8
 
       extra_context: |
         You perform only reasoning-heavy judgment work.
@@ -214,12 +212,11 @@ swarm:
     execution_worker:
       role: scoped-execution-worker
 
-      # ACTIVE: GitHub Copilot (verified working in this environment).
-      model: github-copilot/claude-sonnet-4.6
+      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
+      model: anthropic/claude-sonnet-5
 
-      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
-      # stored token is currently expired). Comment the line above, then:
-      # model: anthropic/claude-sonnet-4.6
+      # ALTERNATIVE — GitHub Copilot. Comment the line above, then:
+      # model: github-copilot/claude-sonnet-5
 
       extra_context: |
         You perform fully scoped, inexpensive execution work.
@@ -405,14 +402,13 @@ swarm:
     validator:
       role: fable-result-measurer
 
-      # ACTIVE: GitHub Copilot (verified working in this environment).
-      # claude-fable-5 is not offered by this Copilot account, so Opus 4.8
-      # (strongest available) performs validation.
-      model: github-copilot/claude-opus-4.8
+      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
+      model: anthropic/claude-fable-5
 
-      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
-      # stored token is currently expired). Comment the line above, then:
-      # model: anthropic/claude-fable-5
+      # ALTERNATIVE — GitHub Copilot. claude-fable-5 is not offered by this
+      # Copilot account, so Opus 4.8 (strongest available) performs validation.
+      # Comment the line above, then uncomment this line:
+      # model: github-copilot/claude-opus-4.8
 
       extra_context: |
         You are the Fable measurement stage.
