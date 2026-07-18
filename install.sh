@@ -51,6 +51,9 @@ bash "$DIR/remove-caveman.sh" || echo "   caveman cleanup failed — re-run: ./r
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
 
+# Wire the vendored omp swarm extension to the installed omp runtime.
+bash "$DIR/setup-swarm.sh" || echo "   swarm wiring failed — re-run: ./setup-swarm.sh" >&2
+
 # Make zsh the login shell if it isn't.
 ZSH_BIN="$(command -v zsh || true)"
 if [ -n "$ZSH_BIN" ] && [ "${SHELL:-}" != "$ZSH_BIN" ]; then

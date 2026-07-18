@@ -97,6 +97,20 @@ function dotpkg() {
   esac
 }
 
+# --- omp swarm (multi-agent orchestration) ---
+# Standalone runner for the vendored swarm extension. No timeout; runs the
+# pipeline to completion. Usage: omp-swarm ~/.omp/swarm/fable-5.yaml
+if command -v bun &>/dev/null; then
+  function omp-swarm() {
+    local ext="$HOME/.omp/swarm-extension"
+    if [[ ! -e "$ext/node_modules/@oh-my-pi/pi-coding-agent" ]]; then
+      echo "omp-swarm: extension not wired — run ~/dotfiles/setup-swarm.sh" >&2
+      return 1
+    fi
+    bun "$ext/src/cli.ts" "$@"
+  }
+fi
+
 # --- ssh ---
 alias ubuntu='orb -m ubuntu-arm lxc exec ${ORBSTACK_MAIN_VM_HOST} -- su - ubuntu'
 alias ps6="ssh $LAUNCHPAD_USERNAME@webdesign-bastion-ps6.internal"

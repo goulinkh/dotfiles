@@ -62,6 +62,9 @@ fi
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
 
+# Re-wire the vendored omp swarm extension (deps symlinks, smoke check).
+bash "$DIR/setup-swarm.sh" || echo "   swarm wiring failed — re-run: ./setup-swarm.sh" >&2
+
 
 echo "==> Updating zsh4humans + plugins"
 if command -v zsh >/dev/null 2>&1; then

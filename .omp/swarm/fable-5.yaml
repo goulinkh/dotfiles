@@ -1,0 +1,541 @@
+swarm:
+  name: fable-5
+  workspace: .
+  mode: parallel
+  target_count: 1
+
+  agents:
+    # =========================================================================
+    # WAVE 1 — FABLE PLANNER
+    # =========================================================================
+    planner:
+      role: fable-orchestrator-planner
+
+      # ACTIVE: GitHub Copilot (verified working in this environment).
+      # claude-fable-5 is not offered by this Copilot account, so Opus 4.8
+      # (strongest available) drives the planner.
+      model: github-copilot/claude-opus-4.8
+
+      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
+      # stored token is currently expired). Comment the line above, then:
+      # model: anthropic/claude-fable-5
+
+      extra_context: |
+        You are the Fable orchestrator.
+
+        You only plan, route, assign, and define measurable acceptance
+        criteria. You do not implement goals or modify application code.
+
+        Route goals according to these rules:
+
+        - opus:
+          Rare reasoning-heavy decisions, architecture choices, ambiguity
+          resolution, risk analysis, and selection between competing approaches.
+
+        - execution:
+          Fully scoped, low-cost work that does not require modifying application
+          source code. Examples include research, documentation analysis,
+          inventory generation, and applying an already approved non-code action.
+
+        - coding:
+          Anything that reads, diagnoses, modifies, tests, builds, or validates
+          the codebase.
+
+        All orchestration communication must use files under .fable/.
+      task: |
+        Read the user's complete request from:
+
+          .fable/request.md
+
+        Inspect the repository only as much as required to create an accurate
+        plan. Do not modify application source code.
+
+        Create these directories if they do not exist:
+
+          .fable/goals/
+          .fable/results/
+          .fable/verdicts/
+
+        Break the request into small, independently measurable goals.
+
+        Write the complete plan to:
+
+          .fable/plan.json
+
+        The plan must have this shape:
+
+          {
+            "request_summary": "...",
+            "assumptions": ["..."],
+            "goals": [
+              {
+                "id": "goal-001",
+                "title": "...",
+                "objective": "...",
+                "tier": "opus | execution | coding",
+                "instructions": ["..."],
+                "allowed_paths": ["..."],
+                "forbidden_paths": ["..."],
+                "dependencies": [],
+                "expected_artifacts": ["..."],
+                "acceptance_checks": [
+                  {
+                    "type": "file | command | inspection",
+                    "description": "...",
+                    "value": "..."
+                  }
+                ]
+              }
+            ]
+          }
+
+        Also write each goal separately to:
+
+          .fable/goals/<goal-id>.json
+
+        Planning rules:
+
+        1. Give every goal exactly one tier.
+        2. Give every goal a unique stable ID.
+        3. Fully scope every goal before assigning it.
+        4. Define objective and independently verifiable acceptance checks.
+        5. Route all source-code work to the coding tier.
+        6. Use the opus tier only when genuine judgment is required.
+        7. Use the execution tier for inexpensive, fully specified non-code work.
+        8. State dependencies explicitly.
+        9. Avoid assigning overlapping writable paths to independent goals.
+        10. Do not claim that any goal is complete.
+        11. Do not modify files outside .fable/.
+
+        When planning is complete, write:
+
+          .fable/planner.done
+
+        Its contents must include:
+
+          status=completed
+          goals=<number of goals>
+          plan=.fable/plan.json
+
+      reports_to:
+        - opus_worker
+        - execution_worker
+        - coding_worker
+
+    # =========================================================================
+    # WAVE 2A — EXPENSIVE JUDGMENT WORKER
+    # =========================================================================
+    opus_worker:
+      role: opus-judgment-worker
+
+      # ACTIVE: GitHub Copilot (verified working in this environment).
+      model: github-copilot/claude-opus-4.8
+
+      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
+      # stored token is currently expired). Comment the line above, then:
+      # model: anthropic/claude-opus-4.8
+
+      extra_context: |
+        You perform only reasoning-heavy judgment work.
+
+        You may inspect the repository and supporting evidence, but you must not
+        implement code or modify application source files. Your output consists
+        of decisions, rationale, evidence, risks, and implementation guidance.
+
+        Do not process execution-tier or coding-tier goals.
+      task: |
+        Read:
+
+          .fable/planner.done
+          .fable/plan.json
+          .fable/goals/*.json
+
+        Process only goals whose "tier" is "opus".
+
+        For each assigned goal:
+
+        1. Read the complete goal and its dependencies.
+        2. Inspect relevant repository files and available evidence.
+        3. Evaluate the alternatives requested by the goal.
+        4. Make a clear decision or recommendation.
+        5. Explain the trade-offs, risks, and rejected alternatives.
+        6. Do not implement the selected approach.
+        7. Write the result to:
+
+             .fable/results/<goal-id>.json
+
+        Use this result shape:
+
+          {
+            "goal_id": "goal-001",
+            "tier": "opus",
+            "status": "completed | blocked | failed",
+            "summary": "...",
+            "decision": "...",
+            "rationale": ["..."],
+            "evidence": ["path:line or other concrete evidence"],
+            "rejected_alternatives": [
+              {
+                "alternative": "...",
+                "reason": "..."
+              }
+            ],
+            "risks": ["..."],
+            "implementation_guidance": ["..."],
+            "artifacts": [".fable/results/goal-001.json"],
+            "checks_performed": ["..."],
+            "unresolved_questions": ["..."]
+          }
+
+        Never write a result for a goal assigned to another tier.
+        Do not modify files outside .fable/.
+
+        When all assigned goals are processed, write:
+
+          .fable/opus-worker.done
+
+        Use:
+
+          status=completed
+          tier=opus
+          processed=<number>
+          no_work=true|false
+
+        If no opus goals exist, write a successful no-work marker.
+
+      waits_for:
+        - planner
+      reports_to:
+        - validator
+
+    # =========================================================================
+    # WAVE 2B — LOW-COST, FULLY SCOPED EXECUTION
+    # =========================================================================
+    execution_worker:
+      role: scoped-execution-worker
+
+      # ACTIVE: GitHub Copilot (verified working in this environment).
+      model: github-copilot/claude-sonnet-4.6
+
+      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
+      # stored token is currently expired). Comment the line above, then:
+      # model: anthropic/claude-sonnet-4.6
+
+      extra_context: |
+        You perform fully scoped, inexpensive execution work.
+
+        Do not make new architecture decisions. Do not modify application source
+        code. If a goal requires source-code changes, mark it blocked because it
+        was routed to the wrong tier.
+
+        Do not process opus-tier or coding-tier goals.
+      task: |
+        Read:
+
+          .fable/planner.done
+          .fable/plan.json
+          .fable/goals/*.json
+
+        Process only goals whose "tier" is "execution".
+
+        For each assigned goal:
+
+        1. Read the goal and its dependencies.
+        2. Follow the supplied instructions exactly.
+        3. Stay within allowed_paths.
+        4. Never access or modify forbidden_paths.
+        5. Produce every expected artifact.
+        6. Run the specified safe, non-destructive checks.
+        7. Record concrete evidence.
+        8. Write the result to:
+
+             .fable/results/<goal-id>.json
+
+        Use this result shape:
+
+          {
+            "goal_id": "goal-001",
+            "tier": "execution",
+            "status": "completed | blocked | failed",
+            "summary": "...",
+            "evidence": ["..."],
+            "artifacts": ["..."],
+            "checks_performed": [
+              {
+                "check": "...",
+                "outcome": "passed | failed",
+                "evidence": "..."
+              }
+            ],
+            "files_changed": ["..."],
+            "unresolved_questions": ["..."]
+          }
+
+        If an assigned goal requires application source changes, use:
+
+          {
+            "status": "blocked",
+            "summary": "Goal requires source-code work and must be routed to coding."
+          }
+
+        Never process goals assigned to another tier.
+        Do not modify application source code.
+        Do not modify files outside .fable/ unless the goal explicitly names a
+        non-code output path in allowed_paths.
+
+        When all assigned goals are processed, write:
+
+          .fable/execution-worker.done
+
+        Use:
+
+          status=completed
+          tier=execution
+          processed=<number>
+          no_work=true|false
+
+        If no execution goals exist, write a successful no-work marker.
+
+      waits_for:
+        - planner
+      reports_to:
+        - validator
+
+    # =========================================================================
+    # WAVE 2C — DEDICATED CODING AGENT
+    # =========================================================================
+    coding_worker:
+      role: dedicated-coding-agent
+
+      # ACTIVE: ChatGPT Plus/Pro Codex subscription (verified working here).
+      model: openai-codex/gpt-5.6-sol
+
+      # ALTERNATIVE — GitHub Copilot (also verified working). Comment the
+      # Codex line above, then uncomment this line:
+      # model: github-copilot/gpt-5.6-sol
+
+      extra_context: |
+        You are the dedicated coding worker.
+
+        You handle all goals that inspect, diagnose, modify, test, build, or
+        otherwise operate on the codebase.
+
+        Make the smallest coherent change that satisfies each assigned goal.
+        Follow repository conventions, path restrictions, and acceptance checks.
+
+        Do not process opus-tier or execution-tier goals.
+      task: |
+        Read:
+
+          .fable/planner.done
+          .fable/plan.json
+          .fable/goals/*.json
+          .fable/results/*.json
+
+        Process only goals whose "tier" is "coding".
+
+        Respect goal dependencies. If a coding goal depends on an opus decision,
+        read the corresponding file under .fable/results/ before implementing it.
+
+        For each assigned goal:
+
+        1. Read the complete goal and dependency results.
+        2. Inspect the current repository and git state before editing.
+        3. Understand the relevant implementation and tests.
+        4. Stay within allowed_paths.
+        5. Never modify forbidden_paths.
+        6. Make the smallest coherent implementation satisfying the objective.
+        7. Follow the repository's established architecture and style.
+        8. Use precise anchored edits.
+        9. Add or update tests when required.
+        10. Run every specified acceptance command.
+        11. Run applicable type checks, tests, and linters.
+        12. Do not hide, ignore, or misrepresent failures.
+        13. Write the result to:
+
+              .fable/results/<goal-id>.json
+
+        Use this result shape:
+
+          {
+            "goal_id": "goal-001",
+            "tier": "coding",
+            "status": "completed | blocked | failed",
+            "summary": "...",
+            "files_changed": ["..."],
+            "evidence": ["path:line or command output summary"],
+            "artifacts": ["..."],
+            "checks_performed": [
+              {
+                "command": "...",
+                "exit_code": 0,
+                "outcome": "passed | failed",
+                "summary": "..."
+              }
+            ],
+            "unresolved_questions": ["..."]
+          }
+
+        Never process goals assigned to another tier.
+
+        Do not commit, push, create branches, or open pull requests unless a goal
+        explicitly requires it.
+
+        When all assigned goals are processed, write:
+
+          .fable/coding-worker.done
+
+        Use:
+
+          status=completed
+          tier=coding
+          processed=<number>
+          no_work=true|false
+
+        If no coding goals exist, write a successful no-work marker.
+
+      waits_for:
+        - planner
+      reports_to:
+        - validator
+
+    # =========================================================================
+    # WAVE 3 — FABLE MEASUREMENT / VALIDATION
+    # =========================================================================
+    validator:
+      role: fable-result-measurer
+
+      # ACTIVE: GitHub Copilot (verified working in this environment).
+      # claude-fable-5 is not offered by this Copilot account, so Opus 4.8
+      # (strongest available) performs validation.
+      model: github-copilot/claude-opus-4.8
+
+      # ALTERNATIVE — Anthropic Claude Pro/Max (run `/login anthropic`; the
+      # stored token is currently expired). Comment the line above, then:
+      # model: anthropic/claude-fable-5
+
+      extra_context: |
+        You are the Fable measurement stage.
+
+        A worker claiming that a goal is complete does not prove completion.
+        Independently inspect its output and execute its acceptance checks before
+        counting it as done.
+
+        You only measure and report. You do not repair failed work and do not
+        modify application source code.
+      task: |
+        Read:
+
+          .fable/planner.done
+          .fable/opus-worker.done
+          .fable/execution-worker.done
+          .fable/coding-worker.done
+          .fable/plan.json
+          .fable/goals/*.json
+          .fable/results/*.json
+
+        Independently validate every goal against:
+
+        - its objective;
+        - assigned tier;
+        - allowed and forbidden paths;
+        - expected artifacts;
+        - dependencies;
+        - acceptance checks;
+        - actual repository state.
+
+        For each goal:
+
+        1. Confirm that its worker result exists.
+        2. Confirm that the correct tier processed it.
+        3. Confirm that dependency results exist.
+        4. Inspect every expected artifact.
+        5. Verify that changed files stay within allowed_paths.
+        6. Verify that forbidden_paths were not modified.
+        7. Run safe command-based acceptance checks where specified.
+        8. Compare the actual outcome with the goal rather than trusting the
+           worker's summary.
+        9. Assign exactly one verdict:
+
+           HIT:
+           Every required acceptance check passes and sufficient evidence exists.
+
+           MISS:
+           Any required check fails, an artifact is missing, the wrong tier
+           processed the goal, or evidence is insufficient.
+
+        10. For every MISS, write fully scoped rerun instructions for the same
+            tier.
+
+        Write each verdict to:
+
+          .fable/verdicts/<goal-id>.json
+
+        Use this shape:
+
+          {
+            "goal_id": "goal-001",
+            "assigned_tier": "coding",
+            "worker_status": "completed | blocked | failed | missing",
+            "verdict": "HIT | MISS",
+            "summary": "...",
+            "checks": [
+              {
+                "description": "...",
+                "outcome": "passed | failed",
+                "evidence": "..."
+              }
+            ],
+            "failed_checks": ["..."],
+            "rerun": {
+              "required": true,
+              "tier": "coding",
+              "instructions": ["..."]
+            }
+          }
+
+        For a HIT, set:
+
+          "rerun": {
+            "required": false,
+            "tier": "<assigned tier>",
+            "instructions": []
+          }
+
+        Write the aggregate report to:
+
+          .fable/final.json
+
+        Use this shape:
+
+          {
+            "status": "HIT | MISS",
+            "total_goals": 0,
+            "hits": 0,
+            "misses": 0,
+            "hit_goal_ids": [],
+            "miss_goal_ids": [],
+            "summary": "...",
+            "next_action": "ship | rerun misses"
+          }
+
+        Aggregate status is HIT only when every goal receives a HIT.
+
+        Finally, write:
+
+          .fable/validator.done
+
+        containing:
+
+          status=completed
+          aggregate=HIT|MISS
+          report=.fable/final.json
+
+        Do not repair misses.
+        Do not modify application source code.
+        Do not count incomplete or unverified work as done.
+
+      waits_for:
+        - opus_worker
+        - execution_worker
+        - coding_worker

@@ -13,3 +13,8 @@ cycleOrder:
   - sol
 hideThinkingBlock: false
 textVerbosity: low
+# Swarm orchestration extension (vendored under ~/.omp/swarm-extension).
+# Enables the TUI `/swarm` command; the `omp-swarm` standalone runner is a
+# shell function in .alias.zsh. See .omp/swarm/fable-5.yaml for the pipeline.
+extensions:
+  - ~/.omp/swarm-extension/src/extension.ts
