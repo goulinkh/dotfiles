@@ -21,6 +21,10 @@ bun install
 # Foreground — runs until complete, no timeout:
 omp-swarm path/to/swarm.yaml
 
+# Supply the request inline or from stdin for a pipeline with request_file:
+omp-swarm path/to/swarm.yaml --request "Describe the work to perform"
+cat request.md | omp-swarm path/to/swarm.yaml
+
 # Background — survives terminal close:
 nohup omp-swarm path/to/swarm.yaml \
   > pipeline.log 2>&1 & disown
@@ -52,29 +56,40 @@ A pipeline may set a top-level `request_file` (workspace-relative). When it does
 `/swarm run` opens an editor **inside the session** before the run so you type
 your request there — no need to pre-write a file. The editor is prefilled with
 any existing content, so re-runs let you tweak the previous request. Cancelling
-(Esc) keeps a prior non-empty request, or aborts the run if none exists.
+(Esc) keeps a prior non-empty request, or aborts the run if none exists. A
+successful request is also echoed into the session transcript before agents run.
 
-Headless runs (`omp-swarm --headless`, `bun cli.ts`) cannot prompt: the
-`request_file` must already exist and be non-empty, otherwise the run errors.
+The standalone runner accepts `--request "<text>"` (or `-r`) and
+`--request -`/piped stdin, then writes the normalized text to `request_file`.
+Without explicit input it falls back to a pre-existing non-empty request file.
 
 ### Live progress
 
-While the pipeline runs, a compact line is pinned into the omp footer/status
-bar (via `ctx.ui.setStatus`) beside the built-in segments, e.g.
-`⬡ fable-5 · ✓1/5 ⟳3 · 5m10s` (name · counts done/total, running, failed ·
-elapsed). It clears when the run finishes; full per-agent detail lands in the
-summary below and in `/swarm status`.
+Two surfaces update while the pipeline runs:
+
+- **Status bar** — a compact line pinned into the omp footer/status bar (via
+  `ctx.ui.setStatus`) beside the built-in segments, e.g.
+  `⬡ fable-5 · 1/5 · Σ3m36s · ✓planner · ⠧ opus_worker 2m10s · ○validator`. It
+  leads with name, overall progress (`done/total`), and total elapsed (`Σ`),
+  then a per-agent chip per stage: `✓` done, `⠧ name Xs` running (braille
+  spinner + its own elapsed), `✗` failed, `○` pending, `⋯` waiting. Multi-pass
+  runs add `iter N/M`.
+- **Stream panel** — a below-editor widget (via `ctx.ui.setWidget`) that streams
+  each running agent's output as it is produced: a header per agent (spinner,
+  elapsed, current tool, tokens) followed by the tail of its live output.
+
+Both clear when the run finishes.
 
 ### Results in the session
 
-When a run finishes, a summary lands in the conversation with each agent's
-status, resolved model, token cost, and **final output** (planner plan summary,
-worker reports, validator verdict) — truncated per agent, with a `read`-able
-path to the full artifact.
+Each agent's **final output** is posted to the conversation the moment it
+finishes (planner plan summary, worker reports, validator verdict) — truncated,
+with a `read`-able path to the full artifact. When the whole run ends, a compact
+recap follows with per-agent status, resolved model, and token cost.
 
-`/swarm status <name>` replays the same view from `state/pipeline.json`, so it
-works after the run and even from a **fresh omp session** — outputs are persisted,
-not just held in memory.
+`/swarm status <name>` replays every agent's output from `state/pipeline.json`,
+so it works after the run and even from a **fresh omp session** — outputs are
+persisted, not just held in memory.
 
 ## Monitoring
 
@@ -136,7 +151,7 @@ swarm:
 | `mode`         | no       | `sequential`    | Execution mode (see below)                                                     |
 | `target_count` | no       | `1`             | How many times to repeat the full pipeline. Only meaningful in `pipeline` mode |
 | `model`        | no       | session default | Default model for agents that do not set `agents.<name>.model`                |
-| `request_file` | no       | —               | Workspace-relative file. When set, `/swarm run` prompts for your request in-session and writes it here before the run |
+| `request_file` | no       | —               | Workspace-relative request seeded from the TUI editor, standalone `--request`/stdin, or existing file |
 
 ### Agent Fields
 

@@ -13,14 +13,49 @@ import { Settings } from "@oh-my-pi/pi-coding-agent/config/settings";
 import { buildDependencyGraph, buildExecutionWaves, detectCycles } from "./swarm/dag";
 import { PipelineController } from "./swarm/pipeline";
 import { renderSwarmProgress } from "./swarm/render";
+import {
+	NO_REQUEST_ERROR,
+	readExistingRequest,
+	resolveHeadlessRequest,
+	resolveRequestPath,
+	writeRequest,
+} from "./swarm/request";
 import { parseSwarmYaml, validateSwarmDefinition } from "./swarm/schema";
 import { StateTracker } from "./swarm/state";
 
-const yamlPath = process.argv[2];
-if (!yamlPath) {
-	console.error("Usage: omp-swarm <path-to-yaml>");
-	process.exit(1);
+interface CliArgs {
+	yamlPath: string;
+	request?: string;
 }
+
+function parseCliArgs(args: string[]): CliArgs {
+	let yamlPath: string | undefined;
+	let request: string | undefined;
+	for (let index = 0; index < args.length; index += 1) {
+		const arg = args[index];
+		if (arg === "--request" || arg === "-r") {
+			const value = args[index + 1];
+			if (value === undefined) {
+				console.error(`${arg} requires a value`);
+				process.exit(1);
+			}
+			request = value;
+			index += 1;
+		} else if (yamlPath === undefined) {
+			yamlPath = arg;
+		} else {
+			console.error(`Unexpected argument: ${arg}`);
+			process.exit(1);
+		}
+	}
+	if (yamlPath === undefined) {
+		console.error('Usage: omp-swarm <path-to-yaml> [--request "<text>" | --request -]');
+		process.exit(1);
+	}
+	return { yamlPath, request };
+}
+
+const { yamlPath, request: explicitRequest } = parseCliArgs(process.argv.slice(2));
 
 const resolvedPath = path.resolve(yamlPath);
 console.log(`Reading: ${resolvedPath}`);
@@ -58,15 +93,34 @@ const workspace = path.isAbsolute(def.workspace)
 await fs.mkdir(workspace, { recursive: true });
 console.log(`Workspace: ${workspace}`);
 
-// Headless runs cannot prompt: the request file must already exist and be non-empty.
+// Resolve the headless request from explicit text, stdin, or the existing file.
 if (def.requestFile) {
-	const requestPath = path.isAbsolute(def.requestFile) ? def.requestFile : path.resolve(workspace, def.requestFile);
-	const request = await Bun.file(requestPath).text().catch(() => "");
-	if (request.trim().length === 0) {
-		console.error(`No request found. Write your request to ${requestPath} before running headless.`);
+	const requestPath = resolveRequestPath(def.requestFile, workspace);
+	const existingRequest = await readExistingRequest(requestPath);
+	const useStdin = explicitRequest === "-" || (explicitRequest === undefined && process.stdin.isTTY !== true);
+	const stdinRequest = useStdin ? await Bun.stdin.text() : undefined;
+	const capture = resolveHeadlessRequest({
+		explicitRequest,
+		stdinRequest,
+		useStdin,
+		existingRequest,
+	});
+	if (!capture.ok || capture.request === undefined) {
+		console.error(NO_REQUEST_ERROR(requestPath));
 		process.exit(1);
 	}
+	if (capture.source === "explicit" || capture.source === "stdin") {
+		try {
+			await writeRequest(requestPath, capture.request);
+		} catch (error) {
+			console.error(error instanceof Error ? error.message : String(error));
+			process.exit(1);
+		}
+	}
 	console.log(`Request: ${requestPath}`);
+} else if (explicitRequest !== undefined) {
+	console.error("This pipeline does not define swarm.request_file; --request cannot be used.");
+	process.exit(1);
 }
 
 // Initialize

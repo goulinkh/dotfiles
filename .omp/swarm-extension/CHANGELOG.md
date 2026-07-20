@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- Capture multi-line pipeline requests in the native TUI editor and echo them to
+  the session transcript.
+- Accept standalone requests through `--request`/`-r` or stdin, with the
+  configured request file as a fallback.
+
+### Fixed
+
+- Always clear live swarm status and stream surfaces when pipeline execution
+  throws.
+
 ## [16.3.7] - 2026-07-05
 
 ### Fixed

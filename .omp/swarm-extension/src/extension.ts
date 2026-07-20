@@ -11,11 +11,24 @@
 
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import type { ExtensionAPI, ExtensionCommandContext } from "@oh-my-pi/pi-coding-agent";
+import type { AgentProgress, ExtensionAPI, ExtensionCommandContext } from "@oh-my-pi/pi-coding-agent";
 import { formatDuration } from "@oh-my-pi/pi-utils";
 import { buildDependencyGraph, buildExecutionWaves, detectCycles } from "./swarm/dag";
 import { PipelineController, type PipelineResult } from "./swarm/pipeline";
-import { renderSwarmOutputs, renderSwarmProgress, renderSwarmStatusLine } from "./swarm/render";
+import {
+	renderAgentOutput,
+	renderStreamPanel,
+	renderSwarmOutputs,
+	renderSwarmProgress,
+	renderSwarmStatusLine,
+	type StreamAgentView,
+} from "./swarm/render";
+import {
+	NO_REQUEST_ERROR,
+	readExistingRequest,
+	resolveRequestPath,
+	writeRequest,
+} from "./swarm/request";
 import { parseSwarmYaml, type SwarmDefinition, validateSwarmDefinition } from "./swarm/schema";
 import { StateTracker } from "./swarm/state";
 
@@ -115,7 +128,7 @@ async function handleRun(yamlPath: string, ctx: ExtensionCommandContext, pi: Ext
 
 	// 5b. Capture the operator's request interactively and seed the request file.
 	if (def.requestFile) {
-		const seeded = await seedRequestFile(def.requestFile, workspace, ctx);
+		const seeded = await seedRequestFile(def.requestFile, workspace, ctx, pi, def.name);
 		if (!seeded) return; // cancelled with no usable request
 	}
 
@@ -139,26 +152,70 @@ async function handleRun(yamlPath: string, ctx: ExtensionCommandContext, pi: Ext
 		"info",
 	);
 
-	// 8. Pin a compact progress line into the omp footer/status bar. Full
-	// per-agent detail stays in the end-of-run summary and `/swarm status`.
+	// 8. Live surfaces: a compact progress line pinned in the omp status bar,
+	// plus a below-editor panel that streams each running agent's output as it
+	// is produced. Finalized output is posted to the transcript on completion.
 	const statusKey = `swarm-${def.name}`;
+	const streamKey = `swarm-stream-${def.name}`;
+	const running = new Map<string, StreamAgentView>();
+
 	const updateStatus = () => {
 		ctx.ui.setStatus(statusKey, renderSwarmStatusLine(stateTracker.state));
+	};
+	const updateStream = () => {
+		const panel = renderStreamPanel([...running.values()]);
+		ctx.ui.setWidget(streamKey, panel.length > 0 ? panel : undefined, { placement: "belowEditor" });
 	};
 	updateStatus();
 
 	// 9. Run pipeline
 	const controller = new PipelineController(def, waves, stateTracker);
 
-	const result = await controller.run({
-		workspace,
-		onProgress: () => updateStatus(),
-		modelRegistry: ctx.modelRegistry,
-		settings: pi.pi.settings,
-	});
+	let result: PipelineResult;
+	try {
+		result = await controller.run({
+			workspace,
+			onProgress: () => updateStatus(),
+			onAgentProgress: (name, progress: AgentProgress) => {
+				if (progress.status === "running") {
+					running.set(name, {
+						name,
+						durationMs: progress.durationMs,
+						currentTool: progress.currentTool,
+						recentOutput: progress.recentOutput,
+						tokens: progress.tokens,
+					});
+				} else {
+					running.delete(name);
+				}
+				updateStream();
+				updateStatus();
+			},
+			onAgentComplete: name => {
+				running.delete(name);
+				updateStream();
+				const agent = stateTracker.state.agents[name];
+				const chunk = agent ? renderAgentOutput(agent) : [];
+				if (chunk.length === 0) return;
+				pi.sendMessage(
+					{
+						customType: "swarm-agent-output",
+						content: [{ type: "text", text: [`## ${def.name} · ${name}`, "", ...chunk].join("\n") }],
+						display: true,
+						details: { swarmName: def.name, agent: name, status: agent?.status },
+					},
+					{ triggerTurn: false },
+				);
+			},
+			modelRegistry: ctx.modelRegistry,
+			settings: pi.pi.settings,
+		});
+	} finally {
+		ctx.ui.setStatus(statusKey, undefined);
+		ctx.ui.setWidget(streamKey, undefined);
+	}
 
-	// 10. Clear the pinned status and show the summary.
-	ctx.ui.setStatus(statusKey, undefined);
+	// 10. Show the summary after the live surfaces have been cleared.
 
 	const elapsed = stateTracker.state.completedAt
 		? formatDuration(stateTracker.state.completedAt - stateTracker.state.startedAt)
@@ -240,51 +297,65 @@ async function handleStatus(name: string | undefined, ctx: ExtensionCommandConte
  * Headless (no UI): the file must already exist and be non-empty — there is no
  * surface to prompt on. Returns false with a notification otherwise.
  */
-async function seedRequestFile(
+export async function seedRequestFile(
 	requestFile: string,
 	workspace: string,
 	ctx: ExtensionCommandContext,
+	pi: ExtensionAPI,
+	swarmName: string,
 ): Promise<boolean> {
-	const requestPath = path.isAbsolute(requestFile) ? requestFile : path.resolve(workspace, requestFile);
-
-	let existing = "";
-	try {
-		existing = await Bun.file(requestPath).text();
-	} catch {
-		existing = "";
-	}
+	const requestPath = resolveRequestPath(requestFile, workspace);
+	const existing = await readExistingRequest(requestPath);
+	let request = existing;
 
 	if (!ctx.hasUI) {
 		if (existing.trim().length === 0) {
-			ctx.ui.notify(`No request found. Write your request to ${requestPath} before running headless.`, "error");
+			ctx.ui.notify(NO_REQUEST_ERROR(requestPath), "error");
 			return false;
 		}
-		return true;
+	} else {
+		const edited = await ctx.ui.editor(
+			`Swarm request for '${path.basename(requestFile)}' — describe what you want done`,
+			existing,
+			undefined,
+			{ promptStyle: true },
+		);
+
+		// Cancelled (Esc): keep an existing request, otherwise abort.
+		if (edited === undefined) {
+			if (existing.trim().length === 0) {
+				ctx.ui.notify("Swarm cancelled — no request provided.", "warning");
+				return false;
+			}
+		} else {
+			if (edited.trim().length === 0) {
+				ctx.ui.notify("Swarm cancelled — request was empty.", "warning");
+				return false;
+			}
+			request = edited;
+			try {
+				await writeRequest(requestPath, request);
+			} catch (error) {
+				ctx.ui.notify(error instanceof Error ? error.message : String(error), "error");
+				return false;
+			}
+		}
 	}
 
-	const edited = await ctx.ui.editor(
-		`Swarm request for '${path.basename(requestFile)}' — describe what you want done`,
-		existing,
-		undefined,
-		{ promptStyle: true },
+	pi.sendMessage(
+		{
+			customType: "swarm-request",
+			content: [
+				{
+					type: "text",
+					text: [`## ${swarmName} · request`, "", request.replace(/\s+$/, "")].join("\n"),
+				},
+			],
+			display: true,
+			details: { swarmName, requestFile },
+		},
+		{ triggerTurn: false },
 	);
-
-	// Cancelled (Esc): keep an existing request, otherwise abort.
-	if (edited === undefined) {
-		if (existing.trim().length === 0) {
-			ctx.ui.notify("Swarm cancelled — no request provided.", "warning");
-			return false;
-		}
-		return true;
-	}
-
-	if (edited.trim().length === 0) {
-		ctx.ui.notify("Swarm cancelled — request was empty.", "warning");
-		return false;
-	}
-
-	await fs.mkdir(path.dirname(requestPath), { recursive: true });
-	await Bun.write(requestPath, edited.endsWith("\n") ? edited : `${edited}\n`);
 	return true;
 }
 
@@ -316,12 +387,10 @@ function buildSummaryMessage(
 		lines.push(`- **${name}**: ${agent.status} (${duration})${metaSuffix}${agent.error ? ` — ${agent.error}` : ""}`);
 	}
 
-	// Persisted per-agent output (planner plan summary, worker reports). Same
-	// source as `/swarm status`, so the two views always agree.
-	const outputs = renderSwarmOutputs(stateTracker.state);
-	if (outputs.length > 0) {
-		lines.push("", "### Agent Output", "", ...outputs);
-	}
+	// Per-agent output was streamed into the transcript live as each agent
+	// finished, so it is not repeated here. `/swarm status` replays it from
+	// persisted state on demand.
+	lines.push("", `_Per-agent output streamed above; replay with_ \`/swarm status ${def.name}\`.`);
 
 	if (result.errors.length > 0) {
 		lines.push("");

@@ -6,7 +6,7 @@
  * - Waves execute sequentially (wave N+1 starts after wave N completes)
  * - For pipeline mode, iterations repeat the full DAG execution
  */
-import type { AgentSource, ModelRegistry, Settings, SingleResult } from "@oh-my-pi/pi-coding-agent";
+import type { AgentProgress, AgentSource, ModelRegistry, Settings, SingleResult } from "@oh-my-pi/pi-coding-agent";
 import { executeSwarmAgent } from "./executor";
 import type { SwarmDefinition } from "./schema";
 import type { StateTracker } from "./state";
@@ -19,6 +19,10 @@ export interface PipelineOptions {
 	workspace: string;
 	signal?: AbortSignal;
 	onProgress?: (state: PipelineProgress) => void;
+	/** Fires on every subprocess progress event, carrying the live AgentProgress (recent output, current tool, tokens). */
+	onAgentProgress?: (name: string, progress: AgentProgress) => void;
+	/** Fires once when an agent finishes (success or failure), carrying its final result. */
+	onAgentComplete?: (name: string, result: SingleResult) => void;
 	modelRegistry?: ModelRegistry;
 	settings?: Settings;
 }
@@ -54,7 +58,7 @@ export class PipelineController {
 	}
 
 	async run(options: PipelineOptions): Promise<PipelineResult> {
-		const { workspace, signal, onProgress, modelRegistry, settings } = options;
+		const { workspace, signal, onProgress, onAgentProgress, onAgentComplete, modelRegistry, settings } = options;
 		const allResults = new Map<string, SingleResult[]>();
 		const errors: string[] = [];
 
@@ -92,6 +96,8 @@ export class PipelineController {
 					workspace,
 					signal,
 					emitProgress,
+					onAgentProgress,
+					onAgentComplete,
 					modelRegistry,
 					settings,
 				});
@@ -125,6 +131,8 @@ export class PipelineController {
 			workspace: string;
 			signal?: AbortSignal;
 			emitProgress: (currentWave: number) => void;
+			onAgentProgress?: (name: string, progress: AgentProgress) => void;
+			onAgentComplete?: (name: string, result: SingleResult) => void;
 			modelRegistry?: ModelRegistry;
 			settings?: Settings;
 		},
@@ -163,13 +171,15 @@ export class PipelineController {
 							iteration,
 							modelOverride: agent.model ?? this.#def.model,
 							signal: options.signal,
-							onProgress: (_name, _progress) => {
+							onProgress: (name, progress) => {
+								options.onAgentProgress?.(name, progress);
 								options.emitProgress(waveIdx);
 							},
 							modelRegistry: options.modelRegistry,
 							settings: options.settings,
 							stateTracker: this.#stateTracker,
 						});
+						options.onAgentComplete?.(agentName, result);
 						return { agentName, result };
 					} catch (err) {
 						const error = err instanceof Error ? err.message : String(err);
@@ -188,6 +198,7 @@ export class PipelineController {
 							requests: 0,
 							error,
 						};
+						options.onAgentComplete?.(agentName, failResult);
 						return { agentName, result: failResult };
 					}
 				}),
