@@ -53,6 +53,32 @@ export function renderSwarmProgress(state: SwarmState): string[] {
 	return lines;
 }
 
+/**
+ * One compact line for the omp footer/status bar (`ctx.ui.setStatus`), styled
+ * to sit beside the built-in prompt segments rather than as a multi-line block.
+ * Full per-agent detail lives in the end-of-run summary and `/swarm status`.
+ */
+export function renderSwarmStatusLine(state: SwarmState): string {
+	const agents = Object.values(state.agents);
+	const total = agents.length;
+	const completed = agents.filter(a => a.status === "completed").length;
+	const running = agents.filter(a => a.status === "running").length;
+	const failed = agents.filter(a => a.status === "failed").length;
+
+	const segs = [`⬡ ${state.name}`];
+	if (state.targetCount > 1) segs.push(`iter ${state.iteration + 1}/${state.targetCount}`);
+
+	const counts = [`✓${completed}/${total}`];
+	if (running > 0) counts.push(`⟳${running}`);
+	if (failed > 0) counts.push(`✗${failed}`);
+	segs.push(counts.join(" "));
+
+	if (state.startedAt) {
+		segs.push(formatDuration((state.completedAt ?? Date.now()) - state.startedAt));
+	}
+	return segs.join(" · ");
+}
+
 function formatAgentDuration(agent: { startedAt?: number; completedAt?: number; status: string }): string {
 	if (agent.startedAt && agent.completedAt) {
 		return ` (${formatDuration(agent.completedAt - agent.startedAt)})`;

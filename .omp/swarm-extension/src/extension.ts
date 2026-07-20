@@ -15,7 +15,7 @@ import type { ExtensionAPI, ExtensionCommandContext } from "@oh-my-pi/pi-coding-
 import { formatDuration } from "@oh-my-pi/pi-utils";
 import { buildDependencyGraph, buildExecutionWaves, detectCycles } from "./swarm/dag";
 import { PipelineController, type PipelineResult } from "./swarm/pipeline";
-import { renderSwarmOutputs, renderSwarmProgress } from "./swarm/render";
+import { renderSwarmOutputs, renderSwarmProgress, renderSwarmStatusLine } from "./swarm/render";
 import { parseSwarmYaml, type SwarmDefinition, validateSwarmDefinition } from "./swarm/schema";
 import { StateTracker } from "./swarm/state";
 
@@ -139,26 +139,26 @@ async function handleRun(yamlPath: string, ctx: ExtensionCommandContext, pi: Ext
 		"info",
 	);
 
-	// 8. Set up progress widget
-	const widgetKey = `swarm-${def.name}`;
-	const updateWidget = () => {
-		const lines = renderSwarmProgress(stateTracker.state);
-		ctx.ui.setWidget(widgetKey, lines);
+	// 8. Pin a compact progress line into the omp footer/status bar. Full
+	// per-agent detail stays in the end-of-run summary and `/swarm status`.
+	const statusKey = `swarm-${def.name}`;
+	const updateStatus = () => {
+		ctx.ui.setStatus(statusKey, renderSwarmStatusLine(stateTracker.state));
 	};
-	updateWidget();
+	updateStatus();
 
 	// 9. Run pipeline
 	const controller = new PipelineController(def, waves, stateTracker);
 
 	const result = await controller.run({
 		workspace,
-		onProgress: () => updateWidget(),
+		onProgress: () => updateStatus(),
 		modelRegistry: ctx.modelRegistry,
 		settings: pi.pi.settings,
 	});
 
-	// 10. Clear widget and show summary
-	ctx.ui.setWidget(widgetKey, undefined);
+	// 10. Clear the pinned status and show the summary.
+	ctx.ui.setStatus(statusKey, undefined);
 
 	const elapsed = stateTracker.state.completedAt
 		? formatDuration(stateTracker.state.completedAt - stateTracker.state.startedAt)

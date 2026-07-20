@@ -57,6 +57,14 @@ any existing content, so re-runs let you tweak the previous request. Cancelling
 Headless runs (`omp-swarm --headless`, `bun cli.ts`) cannot prompt: the
 `request_file` must already exist and be non-empty, otherwise the run errors.
 
+### Live progress
+
+While the pipeline runs, a compact line is pinned into the omp footer/status
+bar (via `ctx.ui.setStatus`) beside the built-in segments, e.g.
+`⬡ fable-5 · ✓1/5 ⟳3 · 5m10s` (name · counts done/total, running, failed ·
+elapsed). It clears when the run finishes; full per-agent detail lands in the
+summary below and in `/swarm status`.
+
 ### Results in the session
 
 When a run finishes, a summary lands in the conversation with each agent's
