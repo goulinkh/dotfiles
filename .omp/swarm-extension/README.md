@@ -46,6 +46,17 @@ Then:
 /swarm help
 ```
 
+### Interactive requests (`request_file`)
+
+A pipeline may set a top-level `request_file` (workspace-relative). When it does,
+`/swarm run` opens an editor **inside the session** before the run so you type
+your request there — no need to pre-write a file. The editor is prefilled with
+any existing content, so re-runs let you tweak the previous request. Cancelling
+(Esc) keeps a prior non-empty request, or aborts the run if none exists.
+
+Headless runs (`omp-swarm --headless`, `bun cli.ts`) cannot prompt: the
+`request_file` must already exist and be non-empty, otherwise the run errors.
+
 ## Monitoring
 
 State persists to `<workspace>/.swarm_<name>/` while the pipeline runs:
@@ -81,6 +92,7 @@ swarm:
   mode: pipeline # pipeline | parallel | sequential
   target_count: 10 # Iterations (pipeline mode only, default: 1)
   model: claude-opus-4-6 # Default model for agents without an override (optional)
+  request_file: .fable/request.md # Prompt for a request in-session, seed this file (optional)
 
   agents:
     first_agent:
@@ -105,6 +117,7 @@ swarm:
 | `mode`         | no       | `sequential`    | Execution mode (see below)                                                     |
 | `target_count` | no       | `1`             | How many times to repeat the full pipeline. Only meaningful in `pipeline` mode |
 | `model`        | no       | session default | Default model for agents that do not set `agents.<name>.model`                |
+| `request_file` | no       | —               | Workspace-relative file. When set, `/swarm run` prompts for your request in-session and writes it here before the run |
 
 ### Agent Fields
 

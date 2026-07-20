@@ -113,6 +113,12 @@ async function handleRun(yamlPath: string, ctx: ExtensionCommandContext, pi: Ext
 	// Ensure workspace exists
 	await fs.mkdir(workspace, { recursive: true });
 
+	// 5b. Capture the operator's request interactively and seed the request file.
+	if (def.requestFile) {
+		const seeded = await seedRequestFile(def.requestFile, workspace, ctx);
+		if (!seeded) return; // cancelled with no usable request
+	}
+
 	// 6. Initialize state tracker
 	const stateTracker = new StateTracker(workspace, def.name);
 	await stateTracker.init([...def.agents.keys()], def.targetCount, def.mode);
@@ -218,6 +224,65 @@ async function handleStatus(name: string | undefined, ctx: ExtensionCommandConte
 // ============================================================================
 // Helpers
 // ============================================================================
+
+/**
+ * Capture the operator's request in-session and write it to the pipeline's
+ * request file (resolved relative to the workspace) before the run starts.
+ *
+ * Interactive TUI: opens an editor prefilled with any existing request, so the
+ * operator types/edits their request without leaving the session. Cancelling
+ * keeps a pre-existing non-empty request and aborts only when none exists.
+ *
+ * Headless (no UI): the file must already exist and be non-empty — there is no
+ * surface to prompt on. Returns false with a notification otherwise.
+ */
+async function seedRequestFile(
+	requestFile: string,
+	workspace: string,
+	ctx: ExtensionCommandContext,
+): Promise<boolean> {
+	const requestPath = path.isAbsolute(requestFile) ? requestFile : path.resolve(workspace, requestFile);
+
+	let existing = "";
+	try {
+		existing = await Bun.file(requestPath).text();
+	} catch {
+		existing = "";
+	}
+
+	if (!ctx.hasUI) {
+		if (existing.trim().length === 0) {
+			ctx.ui.notify(`No request found. Write your request to ${requestPath} before running headless.`, "error");
+			return false;
+		}
+		return true;
+	}
+
+	const edited = await ctx.ui.editor(
+		`Swarm request for '${path.basename(requestFile)}' — describe what you want done`,
+		existing,
+		undefined,
+		{ promptStyle: true },
+	);
+
+	// Cancelled (Esc): keep an existing request, otherwise abort.
+	if (edited === undefined) {
+		if (existing.trim().length === 0) {
+			ctx.ui.notify("Swarm cancelled — no request provided.", "warning");
+			return false;
+		}
+		return true;
+	}
+
+	if (edited.trim().length === 0) {
+		ctx.ui.notify("Swarm cancelled — request was empty.", "warning");
+		return false;
+	}
+
+	await fs.mkdir(path.dirname(requestPath), { recursive: true });
+	await Bun.write(requestPath, edited.endsWith("\n") ? edited : `${edited}\n`);
+	return true;
+}
 
 function buildSummaryMessage(
 	def: SwarmDefinition,

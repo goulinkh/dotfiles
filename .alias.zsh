@@ -101,8 +101,12 @@ function dotpkg() {
 # Launches a classic omp TUI session and runs the swarm pipeline inside it via
 # the `/swarm run` command, so the normal shell stays up with a live progress
 # widget. With no argument it runs the default fable-5 pipeline.
+#
+# fable-5 sets `request_file: .fable/request.md`, so on launch an editor opens
+# in-session for your request — type it there, save, and the pipeline starts.
 # Usage: omp-swarm [path/to/swarm.yaml]
-# For a headless/background run (no TUI), use: omp-swarm --headless [yaml]
+# For a headless/background run (no TUI, request file must already exist), use:
+#   omp-swarm --headless [yaml]
 if command -v bun &>/dev/null; then
   function omp-swarm() {
     local ext="$HOME/.omp/swarm-extension"

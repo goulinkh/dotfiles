@@ -17,6 +17,7 @@ interface RawSwarmConfig {
 	mode?: string;
 	target_count?: number;
 	model?: string;
+	request_file?: string;
 	agents: Record<string, RawSwarmAgentConfig>;
 }
 
@@ -42,6 +43,8 @@ export interface SwarmDefinition {
 	mode: SwarmMode;
 	targetCount: number;
 	model?: string;
+	/** Optional workspace-relative file seeded with the operator's request before the run. */
+	requestFile?: string;
 	agents: Map<string, SwarmAgent>;
 	/** Preserves YAML declaration order for implicit pipeline sequencing. */
 	agentOrder: string[];
@@ -108,6 +111,7 @@ export function parseSwarmYaml(content: string): SwarmDefinition {
 		mode: mode as SwarmMode,
 		targetCount: swarm.target_count ?? 1,
 		model: typeof swarm.model === "string" ? swarm.model.trim() : undefined,
+		requestFile: typeof swarm.request_file === "string" ? swarm.request_file.trim() : undefined,
 		agents,
 		agentOrder,
 	};
@@ -123,6 +127,9 @@ export function validateSwarmDefinition(def: SwarmDefinition): string[] {
 
 	if (def.model !== undefined && def.model.length === 0) {
 		errors.push("swarm.model must not be empty when provided");
+	}
+	if (def.requestFile !== undefined && def.requestFile.length === 0) {
+		errors.push("swarm.request_file must not be empty when provided");
 	}
 	for (const [name, agent] of def.agents) {
 		for (const dep of agent.waitsFor) {

@@ -4,6 +4,10 @@ swarm:
   mode: parallel
   target_count: 1
 
+  # Seeded interactively when you run `/swarm run` in a TUI session (an editor
+  # opens for your request). Headless runs require this file to already exist.
+  request_file: .fable/request.md
+
   agents:
     # =========================================================================
     # WAVE 1 — FABLE PLANNER

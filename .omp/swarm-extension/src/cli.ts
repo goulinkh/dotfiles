@@ -58,6 +58,17 @@ const workspace = path.isAbsolute(def.workspace)
 await fs.mkdir(workspace, { recursive: true });
 console.log(`Workspace: ${workspace}`);
 
+// Headless runs cannot prompt: the request file must already exist and be non-empty.
+if (def.requestFile) {
+	const requestPath = path.isAbsolute(def.requestFile) ? def.requestFile : path.resolve(workspace, def.requestFile);
+	const request = await Bun.file(requestPath).text().catch(() => "");
+	if (request.trim().length === 0) {
+		console.error(`No request found. Write your request to ${requestPath} before running headless.`);
+		process.exit(1);
+	}
+	console.log(`Request: ${requestPath}`);
+}
+
 // Initialize
 const stateTracker = new StateTracker(workspace, def.name);
 await stateTracker.init([...def.agents.keys()], def.targetCount, def.mode);
