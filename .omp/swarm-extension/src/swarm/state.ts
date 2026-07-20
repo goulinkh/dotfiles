@@ -14,6 +14,9 @@ import * as path from "node:path";
 export type PipelineStatus = "idle" | "running" | "completed" | "failed" | "aborted";
 export type AgentStatus = "pending" | "waiting" | "running" | "completed" | "failed";
 
+/** Max chars of an agent's output persisted into pipeline.json (keeps state bounded). */
+export const MAX_PERSISTED_OUTPUT_CHARS = 4000;
+
 export interface AgentState {
 	name: string;
 	status: AgentStatus;
@@ -22,6 +25,18 @@ export interface AgentState {
 	startedAt?: number;
 	completedAt?: number;
 	error?: string;
+	/** Agent's final output text (truncated to MAX_PERSISTED_OUTPUT_CHARS). */
+	output?: string;
+	/** True when `output` was truncated for persistence. */
+	outputTruncated?: boolean;
+	/** Filesystem path to the full, untruncated output artifact (read via `read`). */
+	outputPath?: string;
+	/** Resolved model string, e.g. "anthropic/claude-opus-4.8". */
+	resolvedModel?: string;
+	/** Cumulative tokens across the agent's turns. */
+	tokens?: number;
+	/** Assistant request count across the run. */
+	requests?: number;
 }
 
 export interface SwarmState {

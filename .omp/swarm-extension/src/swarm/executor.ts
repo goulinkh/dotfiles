@@ -15,7 +15,7 @@ import type {
 } from "@oh-my-pi/pi-coding-agent";
 import { runSubprocess } from "@oh-my-pi/pi-coding-agent";
 import type { SwarmAgent } from "./schema";
-import type { StateTracker } from "./state";
+import { MAX_PERSISTED_OUTPUT_CHARS, type StateTracker } from "./state";
 
 export interface SwarmExecutorOptions {
 	workspace: string;
@@ -79,10 +79,18 @@ export async function executeSwarmAgent(
 		});
 
 		const status = result.exitCode === 0 ? ("completed" as const) : ("failed" as const);
+		const trimmed = result.output.trim();
+		const outputTruncated = trimmed.length > MAX_PERSISTED_OUTPUT_CHARS;
 		await stateTracker.updateAgent(agent.name, {
 			status,
 			completedAt: Date.now(),
 			error: result.error,
+			output: outputTruncated ? trimmed.slice(0, MAX_PERSISTED_OUTPUT_CHARS) : trimmed,
+			outputTruncated,
+			outputPath: result.outputPath,
+			resolvedModel: result.resolvedModel,
+			tokens: result.tokens,
+			requests: result.requests,
 		});
 		await stateTracker.appendLog(
 			agent.name,

@@ -14,8 +14,8 @@ import * as path from "node:path";
 import type { ExtensionAPI, ExtensionCommandContext } from "@oh-my-pi/pi-coding-agent";
 import { formatDuration } from "@oh-my-pi/pi-utils";
 import { buildDependencyGraph, buildExecutionWaves, detectCycles } from "./swarm/dag";
-import { PipelineController } from "./swarm/pipeline";
-import { renderSwarmProgress } from "./swarm/render";
+import { PipelineController, type PipelineResult } from "./swarm/pipeline";
+import { renderSwarmOutputs, renderSwarmProgress } from "./swarm/render";
 import { parseSwarmYaml, type SwarmDefinition, validateSwarmDefinition } from "./swarm/schema";
 import { StateTracker } from "./swarm/state";
 
@@ -218,6 +218,10 @@ async function handleStatus(name: string | undefined, ctx: ExtensionCommandConte
 	}
 
 	const lines = renderSwarmProgress(state);
+	const outputs = renderSwarmOutputs(state);
+	if (outputs.length > 0) {
+		lines.push("", "### Agent Output", "", ...outputs);
+	}
 	ctx.ui.notify(lines.join("\n"), "info");
 }
 
@@ -286,7 +290,7 @@ async function seedRequestFile(
 
 function buildSummaryMessage(
 	def: SwarmDefinition,
-	result: { status: string; iterations: number; errors: string[] },
+	result: PipelineResult,
 	stateTracker: StateTracker,
 	workspace: string,
 ): string {
@@ -305,7 +309,18 @@ function buildSummaryMessage(
 	for (const [name, agent] of Object.entries(stateTracker.state.agents)) {
 		const duration =
 			agent.startedAt && agent.completedAt ? formatDuration(agent.completedAt - agent.startedAt) : "n/a";
-		lines.push(`- **${name}**: ${agent.status} (${duration})${agent.error ? ` — ${agent.error}` : ""}`);
+		const meta: string[] = [];
+		if (agent.resolvedModel) meta.push(agent.resolvedModel);
+		if (agent.tokens) meta.push(`${agent.tokens} tok`);
+		const metaSuffix = meta.length > 0 ? ` · ${meta.join(" · ")}` : "";
+		lines.push(`- **${name}**: ${agent.status} (${duration})${metaSuffix}${agent.error ? ` — ${agent.error}` : ""}`);
+	}
+
+	// Persisted per-agent output (planner plan summary, worker reports). Same
+	// source as `/swarm status`, so the two views always agree.
+	const outputs = renderSwarmOutputs(stateTracker.state);
+	if (outputs.length > 0) {
+		lines.push("", "### Agent Output", "", ...outputs);
 	}
 
 	if (result.errors.length > 0) {
@@ -319,3 +334,4 @@ function buildSummaryMessage(
 
 	return lines.join("\n");
 }
+

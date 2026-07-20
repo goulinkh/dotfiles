@@ -57,13 +57,24 @@ any existing content, so re-runs let you tweak the previous request. Cancelling
 Headless runs (`omp-swarm --headless`, `bun cli.ts`) cannot prompt: the
 `request_file` must already exist and be non-empty, otherwise the run errors.
 
+### Results in the session
+
+When a run finishes, a summary lands in the conversation with each agent's
+status, resolved model, token cost, and **final output** (planner plan summary,
+worker reports, validator verdict) — truncated per agent, with a `read`-able
+path to the full artifact.
+
+`/swarm status <name>` replays the same view from `state/pipeline.json`, so it
+works after the run and even from a **fresh omp session** — outputs are persisted,
+not just held in memory.
+
 ## Monitoring
 
 State persists to `<workspace>/.swarm_<name>/` while the pipeline runs:
 
 ```
 .swarm_<name>/
-  state/pipeline.json    # Live pipeline + per-agent status
+  state/pipeline.json    # Live pipeline + per-agent status, model, tokens, output
   logs/orchestrator.log  # Wave transitions, iteration progress
   logs/<agent>.log       # Per-agent timestamps and errors
   context/               # Agent session artifacts
