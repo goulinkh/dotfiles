@@ -7,6 +7,14 @@ set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+FORCE=0
+for arg in "$@"; do
+  case "$arg" in
+    -f|--force) FORCE=1 ;;
+    *) echo "unknown option: $arg" >&2; exit 1 ;;
+  esac
+done
+
 # Guard: repo .zsh.local is a template only. Abort if a credential-named var
 # (TOKEN/SECRET/KEY/PASS/CREDENTIAL/AUTH) carries a real literal value, so no
 # secret gets pulled into / pushed from version control. Non-secret config
@@ -29,7 +37,14 @@ if [ -n "$leaked" ]; then
 fi
 
 echo "==> Pulling repo"
-git -C "$DIR" pull --ff-only
+if [ "$FORCE" -eq 1 ]; then
+  branch="$(git -C "$DIR" rev-parse --abbrev-ref HEAD)"
+  git -C "$DIR" fetch origin
+  echo "   force: discarding local changes"
+  git -C "$DIR" reset --hard "origin/$branch"
+else
+  git -C "$DIR" pull --ff-only
+fi
 
 echo "==> Re-linking dotfiles"
 source "$DIR/files.sh"
