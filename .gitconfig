@@ -48,3 +48,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[url "git+ssh://goulin@git.launchpad.test:9422/"]
+	insteadOf = lptest:
