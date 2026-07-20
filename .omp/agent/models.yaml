@@ -1,13 +1,4 @@
 providers:
-  # Local codex proxy (see `clodex` alias in .alias.zsh: localhost:8080).
-  # OpenAI-compatible; models discovered from /v1/models. Bearer key is the
-  # literal "pwd" (via `!printf pwd` to dodge env-var-name resolution).
-  clodex:
-    baseUrl: http://localhost:8080/v1
-    api: openai-completions
-    apiKey: "!printf pwd"
-    discovery:
-      type: openai-models-list
   openrouter:
     modelOverrides:
       google/gemini-3.5-flash:

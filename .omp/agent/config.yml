@@ -1,20 +1,12 @@
 setupVersion: 1
-modelRoles:
-  # Primary driver (boot model). Ctrl+P / /model cycles default <-> sol.
-  default: github-copilot/claude-opus-4.8:medium
-  # Lightweight explorer: scout subagents + background tasks.
-  # Anthropic Sonnet via OpenRouter. To use Copilot's Sonnet instead,
-  # swap the line for: github-copilot/claude-sonnet-5:medium
+modelRoles: 
+  default: anthropic/claude-opus-4-8:high
   smol: openrouter/anthropic/claude-sonnet-5
-  # Local codex proxy (clodex alias). Alternate main driver to opus.
-  sol: clodex/gpt-5.6-sol:medium
-cycleOrder:
+  sol: openai-codex/gpt-5.6-sol:medium
+cycleOrder: 
   - default
   - sol
-hideThinkingBlock: false
+hideThinkingBlock: true
 textVerbosity: low
-# Swarm orchestration extension (vendored under ~/.omp/swarm-extension).
-# Enables the TUI `/swarm` command; the `omp-swarm` standalone runner is a
-# shell function in .alias.zsh. See .omp/swarm/fable-5.yaml for the pipeline.
-extensions:
+extensions: 
   - ~/.omp/swarm-extension/src/extension.ts
