@@ -4,10 +4,11 @@ modelRoles:
   smol: openrouter/anthropic/claude-sonnet-5:high
   sol: openai-codex/gpt-5.6-sol:high
   plan: anthropic/claude-fable-5:medium
+  fable: anthropic/claude-fable-5:medium
 cycleOrder: 
   - default
   - sol
-  - plan
+  - fable
 hideThinkingBlock: true
 textVerbosity: low
 extensions: 
