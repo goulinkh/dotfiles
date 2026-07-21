@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Update dotfiles to latest:
+# Update dotfiles and installed tooling:
 #   1. pull the repo
 #   2. re-link any new files (via install.sh, no shell exec)
-#   3. update zsh4humans + plugins
+#   3. update packages, CLIs, zsh4humans, and plugins
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -73,6 +73,10 @@ if [ -e "$HOME/.zsh.local" ]; then
     echo "$missing" | sed 's/^/   /'
   fi
 fi
+
+# Update package managers and the CLI tools installed by dotpkg. Keep syncing if
+# an individual updater is unavailable or temporarily fails.
+bash "$DIR/packages/update.sh" || echo "   package updates failed — re-run: ./packages/update.sh" >&2
 
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2

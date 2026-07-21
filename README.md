@@ -7,6 +7,6 @@ git clone https://github.com/goulinkh/dotfiles.git ~/dotfiles && ~/dotfiles/inst
 After install:
 
 ```sh
-dotsync    # pull + re-link dotfiles
+dotsync    # pull, re-link, and update installed tools
 dotpkg     # install packages for this OS
 ```
