@@ -230,3 +230,17 @@ function killport() {
   echo "$pids" | xargs kill -9
   echo "Killed port $1: $pids"
 }
+
+# Print the full (absolute) path of a file, like pwd for a given file.
+# usage: pwf <file>
+function pwf() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: pwf <file>"
+    return 1
+  fi
+  if [[ ! -e "$1" ]]; then
+    echo "pwf: no such file or directory: $1" >&2
+    return 1
+  fi
+  echo "${1:A}"
+}
