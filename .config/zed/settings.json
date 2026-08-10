@@ -165,7 +165,7 @@
         "mode": "acceptEdits",
         "fast": "on",
         "effort": "medium",
-        "model": "claude-fable-5[1m]",
+        "model": "claude-fable-5",
       },
       "type": "registry",
     },
@@ -189,8 +189,9 @@
     },
     "omp": {
       "default_config_options": {
+        "thinking": "high",
         "mode": "default",
-        "model": "github-copilot/claude-opus-4.8",
+        "model": "openai-codex/gpt-5.6-sol",
       },
       "type": "custom",
       "command": "omp",
@@ -233,6 +234,9 @@
     "dock": "left",
   },
   "agent": {
+    "sandbox_permissions": {
+      "allow_unsandboxed": true
+    },
     "default_profile": "write",
     "profiles": {
       "plan": {
@@ -254,11 +258,20 @@
     "model_parameters": [],
     "enable_feedback": false,
     "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": ".*"
+            }
+          ]
+        }
+      },
       "default": "allow",
     },
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "claude-opus-4.8",
+      "provider": "openrouter",
+      "model": "moonshotai/kimi-k3",
     },
     "commit_message_model": {
       "provider": "copilot_chat",

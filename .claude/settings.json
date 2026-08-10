@@ -9,12 +9,22 @@
       "Grep"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "claude-fable-5",
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
-  "fastMode": true,
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  }
 }
