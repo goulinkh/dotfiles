@@ -13,3 +13,8 @@ providers:
         compat:
           openRouterRouting:
             only: [together]
+  github-copilot:
+    modelOverrides:
+      # Copilot ships kimi-k3 only at its full 1M window; cap it at 250K.
+      kimi-k3:
+        contextWindow: 250000

@@ -1,30 +1,27 @@
 swarm:
-  name: fable-5
+  name: cascade
   workspace: .
   mode: parallel
   target_count: 1
 
   # Seeded interactively when you run `/swarm run` in a TUI session (an editor
   # opens for your request). Headless runs require this file to already exist.
-  request_file: .fable/request.md
+  request_file: .cascade/request.md
 
   agents:
     # =========================================================================
-    # WAVE 1 — FABLE PLANNER
+    # WAVE 1 — CASCADE PLANNER
     # =========================================================================
     planner:
-      role: fable-orchestrator-planner
+      role: cascade-orchestrator-planner
 
-      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
-      model: anthropic/claude-fable-5
-
-      # ALTERNATIVE — GitHub Copilot. claude-fable-5 is not offered by this
-      # Copilot account, so Opus 4.8 (strongest available) stands in. Comment
-      # the line above, then uncomment this line:
-      # model: github-copilot/claude-opus-4.8
+      # ACTIVE: GitHub Copilot subscription. claude-fable-5 is listed by the
+      # catalog but not entitled on this account (verified: requests never
+      # complete), so Kimi K3 — 1M context, max thinking — plans instead.
+      model: github-copilot/kimi-k3
 
       extra_context: |
-        You are the Fable orchestrator.
+        You are the Cascade orchestrator.
 
         You only plan, route, assign, and define measurable acceptance
         criteria. You do not implement goals or modify application code.
@@ -44,26 +41,26 @@ swarm:
           Anything that reads, diagnoses, modifies, tests, builds, or validates
           the codebase.
 
-        All orchestration communication must use files under .fable/.
+        All orchestration communication must use files under .cascade/.
       task: |
         Read the user's complete request from:
 
-          .fable/request.md
+          .cascade/request.md
 
         Inspect the repository only as much as required to create an accurate
         plan. Do not modify application source code.
 
         Create these directories if they do not exist:
 
-          .fable/goals/
-          .fable/results/
-          .fable/verdicts/
+          .cascade/goals/
+          .cascade/results/
+          .cascade/verdicts/
 
         Break the request into small, independently measurable goals.
 
         Write the complete plan to:
 
-          .fable/plan.json
+          .cascade/plan.json
 
         The plan must have this shape:
 
@@ -94,7 +91,7 @@ swarm:
 
         Also write each goal separately to:
 
-          .fable/goals/<goal-id>.json
+          .cascade/goals/<goal-id>.json
 
         Planning rules:
 
@@ -108,17 +105,17 @@ swarm:
         8. State dependencies explicitly.
         9. Avoid assigning overlapping writable paths to independent goals.
         10. Do not claim that any goal is complete.
-        11. Do not modify files outside .fable/.
+        11. Do not modify files outside .cascade/.
 
         When planning is complete, write:
 
-          .fable/planner.done
+          .cascade/planner.done
 
         Its contents must include:
 
           status=completed
           goals=<number of goals>
-          plan=.fable/plan.json
+          plan=.cascade/plan.json
 
       reports_to:
         - opus_worker
@@ -131,11 +128,8 @@ swarm:
     opus_worker:
       role: opus-judgment-worker
 
-      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
-      model: anthropic/claude-opus-4.8
-
-      # ALTERNATIVE — GitHub Copilot. Comment the line above, then:
-      # model: github-copilot/claude-opus-4.8
+      # ACTIVE: GitHub Copilot subscription (verified working).
+      model: github-copilot/claude-opus-5
 
       extra_context: |
         You perform only reasoning-heavy judgment work.
@@ -148,9 +142,9 @@ swarm:
       task: |
         Read:
 
-          .fable/planner.done
-          .fable/plan.json
-          .fable/goals/*.json
+          .cascade/planner.done
+          .cascade/plan.json
+          .cascade/goals/*.json
 
         Process only goals whose "tier" is "opus".
 
@@ -164,7 +158,7 @@ swarm:
         6. Do not implement the selected approach.
         7. Write the result to:
 
-             .fable/results/<goal-id>.json
+             .cascade/results/<goal-id>.json
 
         Use this result shape:
 
@@ -184,17 +178,17 @@ swarm:
             ],
             "risks": ["..."],
             "implementation_guidance": ["..."],
-            "artifacts": [".fable/results/goal-001.json"],
+            "artifacts": [".cascade/results/goal-001.json"],
             "checks_performed": ["..."],
             "unresolved_questions": ["..."]
           }
 
         Never write a result for a goal assigned to another tier.
-        Do not modify files outside .fable/.
+        Do not modify files outside .cascade/.
 
         When all assigned goals are processed, write:
 
-          .fable/opus-worker.done
+          .cascade/opus-worker.done
 
         Use:
 
@@ -216,11 +210,8 @@ swarm:
     execution_worker:
       role: scoped-execution-worker
 
-      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
-      model: anthropic/claude-sonnet-5
-
-      # ALTERNATIVE — GitHub Copilot. Comment the line above, then:
-      # model: github-copilot/claude-sonnet-5
+      # ACTIVE: GitHub Copilot subscription (verified working).
+      model: github-copilot/claude-sonnet-5
 
       extra_context: |
         You perform fully scoped, inexpensive execution work.
@@ -233,9 +224,9 @@ swarm:
       task: |
         Read:
 
-          .fable/planner.done
-          .fable/plan.json
-          .fable/goals/*.json
+          .cascade/planner.done
+          .cascade/plan.json
+          .cascade/goals/*.json
 
         Process only goals whose "tier" is "execution".
 
@@ -250,7 +241,7 @@ swarm:
         7. Record concrete evidence.
         8. Write the result to:
 
-             .fable/results/<goal-id>.json
+             .cascade/results/<goal-id>.json
 
         Use this result shape:
 
@@ -281,12 +272,12 @@ swarm:
 
         Never process goals assigned to another tier.
         Do not modify application source code.
-        Do not modify files outside .fable/ unless the goal explicitly names a
+        Do not modify files outside .cascade/ unless the goal explicitly names a
         non-code output path in allowed_paths.
 
         When all assigned goals are processed, write:
 
-          .fable/execution-worker.done
+          .cascade/execution-worker.done
 
         Use:
 
@@ -328,15 +319,15 @@ swarm:
       task: |
         Read:
 
-          .fable/planner.done
-          .fable/plan.json
-          .fable/goals/*.json
-          .fable/results/*.json
+          .cascade/planner.done
+          .cascade/plan.json
+          .cascade/goals/*.json
+          .cascade/results/*.json
 
         Process only goals whose "tier" is "coding".
 
         Respect goal dependencies. If a coding goal depends on an opus decision,
-        read the corresponding file under .fable/results/ before implementing it.
+        read the corresponding file under .cascade/results/ before implementing it.
 
         For each assigned goal:
 
@@ -354,7 +345,7 @@ swarm:
         12. Do not hide, ignore, or misrepresent failures.
         13. Write the result to:
 
-              .fable/results/<goal-id>.json
+              .cascade/results/<goal-id>.json
 
         Use this result shape:
 
@@ -384,7 +375,7 @@ swarm:
 
         When all assigned goals are processed, write:
 
-          .fable/coding-worker.done
+          .cascade/coding-worker.done
 
         Use:
 
@@ -401,21 +392,17 @@ swarm:
         - validator
 
     # =========================================================================
-    # WAVE 3 — FABLE MEASUREMENT / VALIDATION
+    # WAVE 3 — CASCADE MEASUREMENT / VALIDATION
     # =========================================================================
     validator:
-      role: fable-result-measurer
+      role: cascade-result-measurer
 
-      # ACTIVE: Anthropic Claude Pro/Max subscription (verified working).
-      model: anthropic/claude-fable-5
-
-      # ALTERNATIVE — GitHub Copilot. claude-fable-5 is not offered by this
-      # Copilot account, so Opus 4.8 (strongest available) performs validation.
-      # Comment the line above, then uncomment this line:
-      # model: github-copilot/claude-opus-4.8
+      # ACTIVE: GitHub Copilot subscription. claude-fable-5 is not entitled on
+      # this account, so Kimi K3 performs validation.
+      model: github-copilot/kimi-k3
 
       extra_context: |
-        You are the Fable measurement stage.
+        You are the Cascade measurement stage.
 
         A worker claiming that a goal is complete does not prove completion.
         Independently inspect its output and execute its acceptance checks before
@@ -426,13 +413,13 @@ swarm:
       task: |
         Read:
 
-          .fable/planner.done
-          .fable/opus-worker.done
-          .fable/execution-worker.done
-          .fable/coding-worker.done
-          .fable/plan.json
-          .fable/goals/*.json
-          .fable/results/*.json
+          .cascade/planner.done
+          .cascade/opus-worker.done
+          .cascade/execution-worker.done
+          .cascade/coding-worker.done
+          .cascade/plan.json
+          .cascade/goals/*.json
+          .cascade/results/*.json
 
         Independently validate every goal against:
 
@@ -469,7 +456,7 @@ swarm:
 
         Write each verdict to:
 
-          .fable/verdicts/<goal-id>.json
+          .cascade/verdicts/<goal-id>.json
 
         Use this shape:
 
@@ -504,7 +491,7 @@ swarm:
 
         Write the aggregate report to:
 
-          .fable/final.json
+          .cascade/final.json
 
         Use this shape:
 
@@ -523,13 +510,13 @@ swarm:
 
         Finally, write:
 
-          .fable/validator.done
+          .cascade/validator.done
 
         containing:
 
           status=completed
           aggregate=HIT|MISS
-          report=.fable/final.json
+          report=.cascade/final.json
 
         Do not repair misses.
         Do not modify application source code.

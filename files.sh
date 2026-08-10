@@ -14,7 +14,7 @@ FILES=(
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
   .omp/swarm-extension
-  .omp/swarm/fable-5.yaml
+  .omp/swarm/cascade.yaml
   .config/zed/settings.json
   .config/zed/keymap.json
   .config/zed/AGENTS.md

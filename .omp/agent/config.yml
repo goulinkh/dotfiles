@@ -1,14 +1,14 @@
 setupVersion: 1
 modelRoles: 
-  default: anthropic/claude-opus-4-8:high
-  smol: openrouter/anthropic/claude-sonnet-5:high
+  default: github-copilot/claude-opus-5:high
+  smol: github-copilot/claude-sonnet-5:high
   sol: openai-codex/gpt-5.6-sol:high
-  plan: anthropic/claude-fable-5:medium
-  fable: anthropic/claude-fable-5:medium
+  plan: github-copilot/kimi-k3:high
+  kimi: github-copilot/kimi-k3:high
 cycleOrder: 
   - default
   - sol
-  - fable
+  - kimi
 hideThinkingBlock: true
 textVerbosity: low
 extensions: 

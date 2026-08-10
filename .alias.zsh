@@ -100,9 +100,9 @@ function dotpkg() {
 # --- omp swarm (multi-agent orchestration) ---
 # Launches a classic omp TUI session and runs the swarm pipeline inside it via
 # the `/swarm run` command, so the normal shell stays up with a live progress
-# widget. With no argument it runs the default fable-5 pipeline.
+# widget. With no argument it runs the default cascade pipeline.
 #
-# fable-5 sets `request_file: .fable/request.md`, so on launch an editor opens
+# cascade sets `request_file: .cascade/request.md`, so on launch an editor opens
 # in-session for your request — type it there, save, and the pipeline starts.
 # Usage: omp-swarm [path/to/swarm.yaml]
 # For a headless/background run (no TUI, request file must already exist), use:
@@ -114,7 +114,7 @@ if command -v bun &>/dev/null; then
       echo "omp-swarm: extension not wired — run ~/dotfiles/setup-swarm.sh" >&2
       return 1
     fi
-    local default_yaml="$HOME/.omp/swarm/fable-5.yaml"
+    local default_yaml="$HOME/.omp/swarm/cascade.yaml"
     local headless=0
     if [[ "$1" == "--headless" || "$1" == "-H" ]]; then
       headless=1
