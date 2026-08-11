@@ -1,3 +1,6 @@
 .DS_Store
 *.bak
 # Keep .zsh.local a template only — never put real secrets in the repo copy.
+
+# omp writes runtime lock files beside its config.
+.omp/agent/*.lock
