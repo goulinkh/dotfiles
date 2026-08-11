@@ -47,7 +47,7 @@ export BUN_INSTALL="$HOME/.bun"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='code'
+  export EDITOR='zed'
 fi
 
 # --- env ---
