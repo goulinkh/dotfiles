@@ -2,6 +2,18 @@
 // Only non-default values are kept here; run `zed: open default settings`
 // from the command palette to see everything else.
 {
+  "lsp": {
+    "harper-ls": {
+      "settings": {
+        "harper-ls": {
+          "linters": {
+            "Spaces": false,
+            "SentenceCapitalization": false
+          },
+        },
+      },
+    },
+  },
   // === appearance ===
   "format_on_save": "off",
   "ssh_connections": [
@@ -103,6 +115,9 @@
 
   // === languages ===
   "languages": {
+    "JavaScript": {
+      "tab_size": 2
+    },
     "JSON": {
       "tab_size": 2,
     },
@@ -184,14 +199,14 @@
         "ANTHROPIC_MODEL": "gpt-5.6-sol",
         "ANTHROPIC_DEFAULT_OPUS_MODEL": "gpt-5.6-sol",
         "ANTHROPIC_DEFAULT_SONNET_MODEL": "gpt-5.6-terra",
-        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gpt-5.6-luna"
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gpt-5.6-luna",
       },
     },
     "omp": {
       "default_config_options": {
         "thinking": "high",
         "mode": "default",
-        "model": "openai-codex/gpt-5.6-sol",
+        "model": "github-copilot/claude-opus-5",
       },
       "type": "custom",
       "command": "omp",
@@ -235,7 +250,7 @@
   },
   "agent": {
     "sandbox_permissions": {
-      "allow_unsandboxed": true
+      "allow_unsandboxed": true,
     },
     "default_profile": "write",
     "profiles": {
@@ -252,8 +267,8 @@
         "provider": "copilot_chat",
         "model": "claude-opus-4.8",
         "enable_thinking": true,
-        "effort": "high"
-      }
+        "effort": "high",
+      },
     ],
     "model_parameters": [],
     "enable_feedback": false,
@@ -262,16 +277,16 @@
         "terminal": {
           "always_allow": [
             {
-              "pattern": ".*"
-            }
-          ]
-        }
+              "pattern": ".*",
+            },
+          ],
+        },
       },
       "default": "allow",
     },
     "inline_assistant_model": {
-      "provider": "openrouter",
-      "model": "moonshotai/kimi-k3",
+      "provider": "copilot_chat",
+      "model": "kimi-k3",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
