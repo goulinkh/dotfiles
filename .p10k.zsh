@@ -93,6 +93,7 @@
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     chezmoi_shell           # chezmoi shell (https://www.chezmoi.io/)
     vi_mode                 # vi mode (you don't need this if you've enabled prompt_char)
+    my_vpn                  # canonical openvpn tunnel (see prompt_my_vpn below)
     # vpn_ip                # virtual private network indicator
     # load                  # CPU load
     # disk_usage            # disk usage
@@ -1667,6 +1668,23 @@
   # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
   typeset -g POWERLEVEL9K_TIME_PREFIX='%246Fat '
+
+  ##################[ my_vpn: canonical openvpn tunnel ]###################
+  # Names the connected region and renders nothing when no tunnel is up.
+  #
+  # The built-in `vpn_ip` segment covers the same ground, but it forks `ip` on
+  # every prompt and its default interface regex matches tailscale0, which is
+  # permanently up here. systemd drops a runtime marker per active unit, so one
+  # readdir answers the question and yields the region name for free.
+  function prompt_my_vpn() {
+    local -a units=( /run/systemd/units/invocation:openvpn-client@canonical-*.service(N) )
+    (( $#units )) || return
+    local -a regions=( ${${${units:t}#invocation:openvpn-client@canonical-}%.service} )
+    p10k segment -f 2 -i $'\uf023' -t "${(j:,:)regions}"
+  }
+  # No instant_prompt_my_vpn on purpose: instant prompt replays recorded
+  # `p10k segment` calls, so a segment whose output depends on live state must
+  # stay out of it.
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or

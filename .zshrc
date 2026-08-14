@@ -97,6 +97,7 @@ bindkey "^X\x7f" backward-kill-line
 # --- functions / aliases ---
 z4h source ~/.alias.zsh
 z4h source ~/.mp.zsh
+z4h source ~/.vpn.zsh
 
 # --- machine-local secrets & overrides (NOT in git) ---
 z4h source ~/.zsh.local

@@ -7,6 +7,7 @@ FILES=(
   .alias.zsh
   .claupilot.zsh
   .mp.zsh
+  .vpn.zsh
   .gitconfig
   .screenrc
   .gitallowedsigners
