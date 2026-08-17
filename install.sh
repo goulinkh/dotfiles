@@ -54,6 +54,9 @@ bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run
 # Wire the vendored omp swarm extension to the installed omp runtime.
 bash "$DIR/setup-swarm.sh" || echo "   swarm wiring failed — re-run: ./setup-swarm.sh" >&2
 
+# Link VS Code settings/keybindings into the OS-specific user config dir.
+bash "$DIR/setup-vscode.sh" || echo "   vscode linking failed — re-run: ./setup-vscode.sh" >&2
+
 # Make zsh the login shell if it isn't.
 ZSH_BIN="$(command -v zsh || true)"
 if [ -n "$ZSH_BIN" ] && [ "${SHELL:-}" != "$ZSH_BIN" ]; then

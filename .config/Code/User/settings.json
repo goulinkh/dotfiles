@@ -1,0 +1,253 @@
+// VS Code user settings — linked into place by setup-vscode.sh:
+//   macOS  ~/Library/Application Support/Code/User/settings.json
+//   Linux  ~/.config/Code/User/settings.json
+// Machine-specific paths (interpreters, toolchains, project venvs) do NOT belong
+// here — set them per machine in workspace settings.
+{
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "{git,gitlens,git-graph}:/**/*.{md,csv,svg}": "default"
+  },
+  "editor.suggestSelection": "first",
+  "explorer.confirmDelete": false,
+  "editor.tabSize": 2,
+  // fonts — ported from Zed (buffer_font_* / terminal.font_*).
+  // First installed family wins, so macOS and Ubuntu can degrade gracefully.
+  "editor.fontFamily": "Maple Mono NF, MonoLisa Nerd Font Mono, MesloLGS NF, monospace",
+  "editor.fontSize": 13.5,
+  // <8 is a multiplier — matches Zed's "comfortable" line height.
+  "editor.lineHeight": 1.6,
+  // Maple Mono stylistic sets from Zed's buffer_font_features: cv02 top-arm `a`,
+  // cv05 double-story `g`, cv61 straight-tail `,`/`;`, cv63 arrow-style `<=`.
+  "editor.fontLigatures": "'calt' on, 'cv02' on, 'cv05' on, 'cv61' on, 'cv63' on",
+  "terminal.integrated.fontFamily": "Maple Mono NF, MesloLGS NF, monospace",
+  "terminal.integrated.fontSize": 13.5,
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"cv02\" on, \"cv05\" on, \"cv61\" on, \"cv63\" on",
+  // themes
+  "workbench.iconTheme": "vscode-icons",
+  // Zed is on GitHub Light (theme.mode = light); needs github.github-vscode-theme.
+  "workbench.colorTheme": "GitHub Light Default",
+  // Zed's experimental.theme_overrides: italic comments and keywords.
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": ["comment"],
+        "settings": { "fontStyle": "italic" }
+      },
+      {
+        "scope": ["keyword", "keyword.control", "storage.type", "storage.modifier", "entity.name.type", "support.type"],
+        "settings": { "fontStyle": "italic" }
+      }
+    ]
+  },
+  // ui
+  // `true` in the Cursor config; VS Code migrates it to this enum value.
+  "editor.minimap.autohide": "mouseover",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.rulers": [80, 120],
+  "editor.wordWrap": "on",
+  "editor.stickyScroll.enabled": true,
+  "editor.padding.top": 16,
+  "editor.scrollBeyondLastLine": false,
+  "editor.guides.bracketPairs": true,
+  "editor.inlayHints.enabled": "off",
+  "editor.find.seedSearchStringFromSelection": "selection",
+  "search.smartCase": true,
+  "explorer.compactFolders": false,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.editor.empty.hint": "hidden",
+  "window.zoomLevel": 0,
+  "window.customTitleBarVisibility": "windowed",
+  "window.autoDetectColorScheme": false,
+  // general
+  "update.showReleaseNotes": false,
+  "security.promptForLocalFileProtocolHandling": false,
+  "security.promptForRemoteFileProtocolHandling": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.workspace.trust.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "editor.accessibilitySupport": "off",
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "json.schemaDownload.enable": true,
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.ts": "typescript",
+    "*.scss": "scss"
+  },
+  // terminal
+  "terminal.integrated.tabs.enabled": false,
+  "terminal.integrated.tabs.showActions": "never",
+  "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+  "terminal.integrated.shellIntegration.showCommandGuide": false,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.scrollback": 5000000,
+  // formatters
+  "editor.formatOnSave": false,
+  "biome.enabled": false,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "mtxr.sqltools"
+  },
+  "[html][django-html][handlebars][hbs][mustache][jinja][jinja-html][nj][njk][nunjucks][twig]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  // language tooling
+  "djlint.useVenv": false,
+  "svelte.enable-ts-plugin": true,
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  // agents
+  "claudeCode.selectedModel": "default",
+  "claudeCode.preferredLocation": "panel",
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "scminput": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    { "text": "follow conventional commits" }
+  ],
+  "vsicons.dontShowNewVersionMessage": true,
+  "pendant.runtimeSource": "external",
+  "pendant.binaryPath": "omp",
+  "acp.agents": {
+    "GitHub Copilot": {
+      "command": "npx",
+      "args": [
+        "@github/copilot-language-server@latest",
+        "--acp"
+      ],
+      "env": {}
+    },
+    "Claude Code": {
+      "command": "npx",
+      "args": [
+        "@agentclientprotocol/claude-agent-acp@latest"
+      ],
+      "env": {}
+    },
+    "Gemini CLI": {
+      "command": "npx",
+      "args": [
+        "@google/gemini-cli@latest",
+        "--experimental-acp"
+      ],
+      "env": {}
+    },
+    "Qwen Code": {
+      "command": "npx",
+      "args": [
+        "@qwen-code/qwen-code@latest",
+        "--acp",
+        "--experimental-skills"
+      ],
+      "env": {}
+    },
+    "Auggie CLI": {
+      "command": "npx",
+      "args": [
+        "@augmentcode/auggie@latest",
+        "--acp"
+      ],
+      "env": {
+        "AUGMENT_DISABLE_AUTO_UPDATE": "1"
+      }
+    },
+    "Qoder CLI": {
+      "command": "npx",
+      "args": [
+        "@qoder-ai/qodercli@latest",
+        "--acp"
+      ],
+      "env": {}
+    },
+    "Codex CLI": {
+      "command": "npx",
+      "args": [
+        "@zed-industries/codex-acp@latest"
+      ],
+      "env": {}
+    },
+    "OpenCode": {
+      "command": "npx",
+      "args": [
+        "opencode-ai@latest",
+        "acp"
+      ],
+      "env": {}
+    },
+    "OpenClaw": {
+      "command": "npx",
+      "args": [
+        "openclaw",
+        "acp"
+      ],
+      "env": {}
+    },
+    "Kiro CLI": {
+      "command": "kiro-cli",
+      "args": [
+        "acp"
+      ],
+      "env": {}
+    },
+    "Hermes Agent": {
+      "command": "hermes",
+      "args": [
+        "acp"
+      ],
+      "env": {}
+    },
+    "omp": {
+      "command": "omp",
+      "args": [
+        "acp"
+      ]
+    }
+  }
+}
