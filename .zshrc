@@ -44,10 +44,12 @@ export PNPM_HOME="/Users/goulin/Library/pnpm"
 export BUN_INSTALL="$HOME/.bun"
 
 # --- editor ---
+# `--wait` is required: without it `code` returns immediately and git (or any
+# tool that waits on $EDITOR) reads an empty buffer.
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='zed'
+  export EDITOR='code --wait'
 fi
 
 # --- env ---
@@ -60,6 +62,12 @@ if [[ $OSTYPE == darwin* ]]; then
   _chrome="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
   [[ -x $_chrome ]] && export PUPPETEER_EXECUTABLE_PATH=$_chrome
   unset _chrome
+
+  # VS Code keeps its `code` CLI inside the app bundle; macOS only puts it on
+  # PATH if "Shell Command: Install 'code' command" was run (needs sudo).
+  _vscode_bin="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  [[ -d $_vscode_bin ]] && path+=($_vscode_bin)
+  unset _vscode_bin
 
   # Homebrew openssl (Apple Silicon prefix)
   [[ -d /opt/homebrew/opt/openssl ]] && \
