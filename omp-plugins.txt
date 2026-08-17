@@ -1,0 +1,12 @@
+# omp plugins installed by setup-omp-plugins.sh — one spec per line.
+# Specs are what `omp plugin install` accepts: an npm package name or
+# github:<owner>/<repo>. Comments and blank lines are ignored.
+#
+# omp materialises plugins in ~/.omp/plugins (package.json, lockfiles,
+# node_modules) — machine-local build output, so the repo tracks only the
+# wanted specs and lets omp resolve them per machine.
+
+# Receives editor selections sent with Cmd/Ctrl+Alt+K. Its client half is the
+# VS Code extension klondikemarlen.omp-send-context (see setup-vscode.sh);
+# both halves must be installed for the shortcut to work.
+github:klondikemarlen/omp-send-context

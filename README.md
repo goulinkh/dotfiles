@@ -16,3 +16,9 @@ VS Code config lives in `.config/Code/User/` and is linked by `setup-vscode.sh`
 points at `keybindings.macos.json` or `keybindings.linux.json` depending on the
 OS. Machine-specific paths (interpreters, toolchains) stay out of the repo —
 set them in workspace settings.
+
+omp plugins are listed in `omp-plugins.txt` and installed by
+`setup-omp-plugins.sh`; `~/.omp/plugins/` itself (lockfiles, `node_modules`)
+is machine-local and untracked. `omp-send-context` needs both halves — the omp
+plugin from that list and the VS Code extension `klondikemarlen.omp-send-context`
+installed by `setup-vscode.sh` — for Cmd/Ctrl+Alt+K to reach omp.

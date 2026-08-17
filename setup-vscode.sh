@@ -4,6 +4,8 @@
 #   Linux  ${XDG_CONFIG_HOME:-~/.config}/Code/User
 # settings.json is shared; keybindings.json is picked per OS (cmd vs ctrl).
 # Real files found in place are moved aside to *.bak before linking.
+# Extensions listed in EXTENSIONS below are installed if missing — only ones
+# that pair with something else in this repo; the rest stay per-machine.
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,3 +45,35 @@ echo "==> Linking VS Code config"
 mkdir -p "$USER_DIR"
 link "$SRC/settings.json" "$USER_DIR/settings.json"
 link "$SRC/$KEYMAP" "$USER_DIR/keybindings.json"
+
+# Client half of the omp-send-context plugin (see setup-omp-plugins.sh): it
+# captures the selection that Cmd/Ctrl+Alt+K hands to the omp bridge.
+EXTENSIONS=(klondikemarlen.omp-send-context)
+
+# macOS ships no `code` on PATH unless the user ran "Install 'code' command".
+code_bin() {
+  if command -v code >/dev/null 2>&1; then
+    command -v code
+    return 0
+  fi
+  app="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+  [ -x "$app" ] && echo "$app"
+}
+
+CODE="$(code_bin || true)"
+if [ -z "$CODE" ]; then
+  echo "   code CLI not found — skipping extensions"
+  exit 0
+fi
+
+installed="$("$CODE" --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')"
+for ext in "${EXTENSIONS[@]}"; do
+  if printf '%s\n' "$installed" | grep -qxF "$(printf '%s' "$ext" | tr '[:upper:]' '[:lower:]')"; then
+    echo "   ext:    $ext (present)"
+  elif "$CODE" --install-extension "$ext" --force >/dev/null 2>&1; then
+    echo "   ext:    $ext installed"
+  else
+    echo "   ext:    $ext FAILED — re-run: code --install-extension $ext" >&2
+    exit 1
+  fi
+done

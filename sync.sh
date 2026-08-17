@@ -84,6 +84,9 @@ bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run
 # Re-wire the vendored omp swarm extension (deps symlinks, smoke check).
 bash "$DIR/setup-swarm.sh" || echo "   swarm wiring failed — re-run: ./setup-swarm.sh" >&2
 
+# Install/update the omp plugins listed in omp-plugins.txt.
+bash "$DIR/setup-omp-plugins.sh" || echo "   omp plugin install failed — re-run: ./setup-omp-plugins.sh" >&2
+
 # Re-link VS Code settings/keybindings (OS-specific user config dir).
 bash "$DIR/setup-vscode.sh" || echo "   vscode linking failed — re-run: ./setup-vscode.sh" >&2
 
