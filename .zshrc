@@ -71,15 +71,16 @@ fi
 
 # --- editor ---
 # Runs after the PATH tweaks above so `code` is resolvable when it exists.
-# `--wait` is required: without it `code` returns immediately and git (or any
-# tool that waits on $EDITOR) reads an empty buffer.
+# No `--wait`: `code` returns as soon as the window has the file, so tools
+# that block on $EDITOR (git commit, fc, crontab) must set their own editor
+# — git uses core.editor from .gitconfig.
 # A VS Code Remote-SSH terminal exports VSCODE_IPC_HOOK_CLI and puts the
 # server's remote-cli `code` on PATH, so it edits in the attached window; a
 # plain SSH login has no window to attach to and gets vim.
 if [[ -n $SSH_CONNECTION && -z $VSCODE_IPC_HOOK_CLI ]]; then
   export EDITOR='vim'
 elif (( $+commands[code] )); then
-  export EDITOR='code --wait'
+  export EDITOR='code'
 else
   export EDITOR='vim'
 fi
