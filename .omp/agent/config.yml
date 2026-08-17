@@ -13,3 +13,5 @@ hideThinkingBlock: true
 textVerbosity: low
 extensions: 
   - ~/.omp/swarm-extension/src/extension.ts
+codexResets: 
+  autoRedeem: "yes"

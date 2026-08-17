@@ -8,7 +8,7 @@
         "harper-ls": {
           "linters": {
             "Spaces": false,
-            "SentenceCapitalization": false
+            "SentenceCapitalization": false,
           },
         },
       },
@@ -23,29 +23,42 @@
       "projects": [
         {
           "paths": [
-            "/home/goulin.khoge@canonical.com/Lab/canonical/sd-tools/./",
-          ],
+            "/home/goulin.khoge@canonical.com/Lab/canonical/sd-tools/./"
+          ]
         },
         {
           "paths": [
-            "/home/goulin.khoge@canonical.com/Lab/canonical/slupgrader/./",
-          ],
-        },
-      ],
+            "/home/goulin.khoge@canonical.com/Lab/canonical/slupgrader/./"
+          ]
+        }
+      ]
     },
     {
       "host": "launchpad-container-1",
       "args": [],
       "projects": [
         {
-          "paths": ["/home/ubuntu/launchpad-workdir/launchpad"],
-        },
-      ],
+          "paths": [
+            "/home/ubuntu/launchpad-workdir/launchpad"
+          ]
+        }
+      ]
     },
+    {
+      "host": "launchpad-container",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/ubuntu/launchpad-workdir/launchpad/./"
+          ]
+        }
+      ]
+    }
   ],
   "theme": {
-    "mode": "dark",
-    "light": "macOS Classic Light",
+    "mode": "light",
+    "light": "GitHub Light",
     "dark": "Zedokai Classic",
   },
   "icon_theme": {
@@ -116,13 +129,16 @@
   // === languages ===
   "languages": {
     "JavaScript": {
-      "tab_size": 2
+      "tab_size": 2,
     },
     "JSON": {
       "tab_size": 2,
     },
     "JSONC": {
       "tab_size": 2,
+    },
+    "Svelte": {
+      "formatter": "prettier",
     },
     "YAML": {
       "tab_size": 2,
@@ -241,7 +257,7 @@
       "model": "z-ai/glm-5.2",
       "api_url": "https://openrouter.ai/api/v1",
     },
-    "provider": "open_ai_compatible_api",
+    "provider": "copilot",
     "allow_data_collection": "no",
   },
   "cli_default_open_behavior": "new_window",
@@ -286,7 +302,7 @@
     },
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "kimi-k3",
+      "model": "claude-opus-5",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
