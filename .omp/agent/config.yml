@@ -15,3 +15,8 @@ extensions:
   - ~/.omp/swarm-extension/src/extension.ts
 codexResets: 
   autoRedeem: "yes"
+dev: 
+  autoqaConsent: denied
+composer:
+  shape: pi
+
