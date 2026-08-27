@@ -14,7 +14,6 @@ FILES=(
   .omp/agent/config.yml
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
-  .omp/swarm-extension
   .omp/swarm/cascade.yaml
   .config/zed/settings.json
   .config/zed/keymap.json
