@@ -13,6 +13,11 @@ zstyle ':z4h:bindkey'         keyboard         'mac'
 # Semantic terminal integration.
 zstyle ':z4h:'                term-shell-integration 'yes'
 
+# Keep the prompt at the top of the viewport. z4h defaults this to 'yes' when
+# unset (`zstyle -T`), which pads the screen with blank lines on startup (new
+# terminal / SSH login) and binds Ctrl+L to z4h-clear-screen-soft-bottom.
+zstyle ':z4h:'                prompt-at-bottom 'no'
+
 # Right-arrow accepts one char of autosuggestion.
 zstyle ':z4h:autosuggestions' forward-char     'accept'
 
