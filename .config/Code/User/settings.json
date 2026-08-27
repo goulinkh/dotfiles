@@ -27,7 +27,7 @@
   // themes
   "workbench.iconTheme": "vscode-icons",
   // Zed is on GitHub Light (theme.mode = light); needs github.github-vscode-theme.
-  "workbench.colorTheme": "GitHub Light Default",
+  "workbench.colorTheme": "Dark+",
   // Zed's experimental.theme_overrides: italic comments and keywords.
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -249,5 +249,13 @@
         "acp"
       ]
     }
-  }
+  },
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ]
 }
