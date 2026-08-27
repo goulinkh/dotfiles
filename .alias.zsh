@@ -44,16 +44,38 @@ elif command -v batcat &>/dev/null; then
 fi
 
 if [[ $(uname -s) == Linux ]]; then
+  # Copy stdin (or arguments) to the clipboard.
+  # Backends are probed for a *live* target, not just an installed binary, so an
+  # SSH session doesn't try to talk to a Wayland/X server that isn't there.
+  # Fallbacks: tmux buffer (pushed outward with OSC 52), then raw OSC 52 to the
+  # controlling terminal -> the clipboard of the machine you're typing on.
   function pbcopy() {
-    if command -v wl-copy &>/dev/null; then
-      wl-copy "$@"
-    elif command -v xclip &>/dev/null; then
-      xclip -selection clipboard "$@"
-    elif command -v xsel &>/dev/null; then
-      xsel --clipboard --input "$@"
+    if (( $# )); then
+      print -rn -- "$*" | pbcopy
+      return
+    fi
+
+    local wl_sock=$WAYLAND_DISPLAY
+    [[ -n $wl_sock && $wl_sock != /* ]] && wl_sock=${XDG_RUNTIME_DIR:-/nonexistent}/$wl_sock
+
+    if [[ -S $wl_sock ]] && command -v wl-copy &>/dev/null; then
+      wl-copy
+    elif [[ -n $DISPLAY ]] && command -v xclip &>/dev/null; then
+      xclip -selection clipboard
+    elif [[ -n $DISPLAY ]] && command -v xsel &>/dev/null; then
+      xsel --clipboard --input
+    elif [[ -n $TMUX ]] && command -v tmux &>/dev/null; then
+      # -w also forwards the buffer to the outer terminal via OSC 52.
+      tmux load-buffer -w -
     else
-      echo "pbcopy: install wl-clipboard, xclip, or xsel" >&2
-      return 1
+      local b64
+      b64=$(base64 | tr -d '\n') || return
+      if (( ${#b64} > 100000 )); then
+        print -u2 "pbcopy: ${#b64}B OSC 52 payload may be truncated by the terminal"
+      fi
+      local seq=$'\e]52;c;'$b64$'\a'
+      # Write to the controlling terminal; fall back to stderr when there is none.
+      ( print -rn -- "$seq" > /dev/tty ) 2>/dev/null || print -rn -- "$seq" >&2
     fi
   }
 
