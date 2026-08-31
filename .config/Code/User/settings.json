@@ -257,5 +257,6 @@
     "**/.gitea/workflows/*.yaml",
     "**/.forgejo/workflows/*.yml",
     "**/.forgejo/workflows/*.yaml"
-  ]
+  ],
+  "launchpad.mergeProposals.reconstructWholeDiffs": true
 }
