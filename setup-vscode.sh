@@ -4,8 +4,8 @@
 #   Linux  ${XDG_CONFIG_HOME:-~/.config}/Code/User
 # settings.json is shared; keybindings.json is picked per OS (cmd vs ctrl).
 # Real files found in place are moved aside to *.bak before linking.
-# Extensions listed in EXTENSIONS below are installed if missing — only ones
-# that pair with something else in this repo; the rest stay per-machine.
+# Extensions listed in EXTENSIONS below are installed if missing — it is a
+# snapshot of the set installed here; refresh with `code --list-extensions`.
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -46,9 +46,77 @@ mkdir -p "$USER_DIR"
 link "$SRC/settings.json" "$USER_DIR/settings.json"
 link "$SRC/$KEYMAP" "$USER_DIR/keybindings.json"
 
-# Client half of the omp-send-context plugin (see setup-omp-plugins.sh): it
-# captures the selection that Cmd/Ctrl+Alt+K hands to the omp bridge.
-EXTENSIONS=(klondikemarlen.omp-send-context)
+EXTENSIONS=(
+  adamhartford.vscode-base64
+  ahmadalli.vscode-nginx-conf
+  akamud.vscode-theme-onelight
+  alexandernanberg.horizon-theme-vscode
+  alexcvzz.vscode-sqlite
+  anhoder.gruvbox-anhoder
+  apollographql.vscode-apollo
+  astro-build.astro-vscode
+  batisteo.vscode-django
+  bierner.lit-html
+  biomejs.biome
+  christian-kohler.npm-intellisense
+  dbaeumer.vscode-eslint
+  dracula-theme.theme-dracula
+  dsznajder.es7-react-js-snippets
+  eamodio.gitlens
+  enkia.tokyo-night
+  esbenp.prettier-vscode
+  fabianlauer.vs-code-xml-format
+  figma.figma-vscode-extension
+  fivethree.vscode-svelte-snippets
+  formulahendry.auto-rename-tag
+  foxundermoon.shell-format
+  github.github-vscode-theme
+  github.vscode-github-actions
+  golang.go
+  gruntfuggly.todo-tree
+  junstyle.vscode-django-support
+  klondikemarlen.omp-send-context
+  magicstack.magicpython
+  mikestead.dotenv
+  monosans.djlint
+  mrmlnc.vscode-scss
+  ms-azuretools.vscode-containers
+  ms-azuretools.vscode-docker
+  ms-python.autopep8
+  ms-python.black-formatter
+  ms-python.debugpy
+  ms-python.isort
+  ms-python.python
+  ms-python.vscode-pylance
+  ms-python.vscode-python-envs
+  ms-vscode-remote.remote-ssh
+  ms-vscode-remote.remote-ssh-edit
+  ms-vscode.remote-explorer
+  ms-vscode.remote-server
+  mtxr.sqltools
+  mtxr.sqltools-driver-pg
+  obstinate.vesper-pp
+  opedrodev.vesper-pp-lighter
+  oven.bun-vscode
+  rangav.vscode-thunder-client
+  raynigon.nginx-formatter
+  redhat.vscode-yaml
+  robbowen.synthwave-vscode
+  stardog-union.stardog-rdf-grammars
+  steciuk.launchpad-merge-proposals-preview
+  streetsidesoftware.code-spell-checker
+  svelte.svelte-vscode
+  tamasfe.even-better-toml
+  tauri-apps.tauri-vscode
+  tht13.rst-vscode
+  usernamehw.errorlens
+  vscode-icons-team.vscode-icons
+  wesbos.theme-cobalt2
+  wholroyd.jinja
+  william-voyek.vscode-nginx
+  yoavbls.pretty-ts-errors
+  zhuangtongfa.material-theme
+)
 
 # macOS ships no `code` on PATH unless the user ran "Install 'code' command".
 code_bin() {
