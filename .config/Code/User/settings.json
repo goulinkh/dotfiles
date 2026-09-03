@@ -258,5 +258,37 @@
     "**/.forgejo/workflows/*.yml",
     "**/.forgejo/workflows/*.yaml"
   ],
-  "launchpad.mergeProposals.reconstructWholeDiffs": true
+  "launchpad.mergeProposals.reconstructWholeDiffs": true,
+  "workbench.colorCustomizations": {
+    "terminal.background": "#00000000",
+    "editorPane.background": "#1e1e1e00",
+    "editorGroupHeader.tabsBackground": "#1e1e1e00",
+    "editorGroupHeader.noTabsBackground": "#1e1e1e00",
+    "breadcrumb.background": "#1e1e1e00",
+    "editorGutter.background": "#1e1e1e00",
+    "panel.background": "#1e1e1e00",
+    "tab.activeBackground": "#1e1e1e00",
+    "tab.unfocusedActiveBackground": "#1e1e1e00",
+    "sideBar.background": "#1e1e1e4d",
+    "sideBarTitle.background": "#1e1e1e4d",
+    "activityBar.background": "#1e1e1e4d",
+    "editor.background": "#1e1e1e4d",
+    "tab.inactiveBackground": "#1e1e1e4d",
+    "tab.unfocusedInactiveBackground": "#1e1e1e4d",
+    "editorStickyScroll.background": "#1e1e1ebf",
+    "editorStickyScrollGutter.background": "#1e1e1ebf",
+    "sideBarStickyScroll.background": "#1e1e1ebf",
+    "panelStickyScroll.background": "#1e1e1ebf",
+    "terminalStickyScroll.background": "#1e1e1ebf",
+    "inlineChat.background": "#1e1e1ee6",
+    "editorWidget.background": "#1e1e1ee6",
+    "editorHoverWidget.background": "#1e1e1ee6",
+    "editorSuggestWidget.background": "#1e1e1ee6",
+    "notifications.background": "#1e1e1ee6",
+    "notificationCenterHeader.background": "#1e1e1ee6",
+    "menu.background": "#1e1e1ee6",
+    "quickInput.background": "#1e1e1ee6"
+  },
+  "terminal.integrated.gpuAcceleration": "off",
+  "window.systemColorTheme": "dark"
 }
