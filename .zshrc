@@ -13,6 +13,12 @@ zstyle ':z4h:bindkey'         keyboard         'mac'
 # Semantic terminal integration.
 zstyle ':z4h:'                term-shell-integration 'yes'
 
+# Don't wrap the shell in a tmux server. z4h defaults this to 'isolated' when
+# unset, spawning a private tmux per shell; tmux clears the outer terminal on
+# attach (and .tmux.conf sets history-limit 0, so nothing is restored), which
+# wipes the terminal's welcome banner. It also leaked orphaned tmux servers.
+zstyle ':z4h:'                start-tmux       'no'
+
 # Keep the prompt at the top of the viewport. z4h defaults this to 'yes' when
 # unset (`zstyle -T`), which pads the screen with blank lines on startup (new
 # terminal / SSH login) and binds Ctrl+L to z4h-clear-screen-soft-bottom.
