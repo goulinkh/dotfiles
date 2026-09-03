@@ -19,6 +19,23 @@ dev:
   autoqaConsent: denied
 composer:
   shape: pi
+statusLine:
+  preset: custom
+  leftSegments:
+    - pi
+    - model
+    - mode
+    - collab
+    - path
+    - git
+    - pr
+    - context_pct
+    - cost
+  rightSegments:
+    - usage
+    - session_name
+startup:
+  quiet: true
 retry:
   fallbackChains:
     openai-codex/gpt-5.6-sol:
