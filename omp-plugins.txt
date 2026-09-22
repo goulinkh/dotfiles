@@ -6,7 +6,12 @@
 # node_modules) — machine-local build output, so the repo tracks only the
 # wanted specs and lets omp resolve them per machine.
 
-# Receives editor selections sent with Cmd/Ctrl+Alt+K. Its client half is the
-# VS Code extension klondikemarlen.omp-send-context (see setup-vscode.sh);
-# both halves must be installed for the shortcut to work.
-github:klondikemarlen/omp-send-context
+# Locally developed plugins.
+#
+# Adds Launchpad bugs, repositories, merge proposals, diffs, search, checkout,
+# and write operations through lp-shell/launchpadlib.
+github:goulinkh/omp-launchpad
+
+# Enforces semantic policies around mutating, executing, delegating, and
+# process-control tools.
+github:goulinkh/omp-semantic-policy

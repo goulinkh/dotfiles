@@ -121,7 +121,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[svelte]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
@@ -269,12 +269,12 @@
     "panel.background": "#1e1e1e00",
     "tab.activeBackground": "#1e1e1e00",
     "tab.unfocusedActiveBackground": "#1e1e1e00",
-    "sideBar.background": "#1e1e1e4d",
-    "sideBarTitle.background": "#1e1e1e4d",
-    "activityBar.background": "#1e1e1e4d",
-    "editor.background": "#1e1e1e4d",
-    "tab.inactiveBackground": "#1e1e1e4d",
-    "tab.unfocusedInactiveBackground": "#1e1e1e4d",
+    "sideBar.background": "#1e1e1e33",
+    "sideBarTitle.background": "#1e1e1e33",
+    "activityBar.background": "#1e1e1e33",
+    "editor.background": "#1e1e1e33",
+    "tab.inactiveBackground": "#1e1e1e33",
+    "tab.unfocusedInactiveBackground": "#1e1e1e33",
     "editorStickyScroll.background": "#1e1e1ebf",
     "editorStickyScrollGutter.background": "#1e1e1ebf",
     "sideBarStickyScroll.background": "#1e1e1ebf",
@@ -290,5 +290,10 @@
     "quickInput.background": "#1e1e1ee6"
   },
   "terminal.integrated.gpuAcceleration": "off",
-  "window.systemColorTheme": "dark"
+  "window.systemColorTheme": "dark",
+  "vscode_vibrancy.type": "under-window",
+  "vscode_vibrancy.opacity": 0.2,
+  "workbench.startupEditor": "none",
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "diffEditor.renderSideBySide": false
 }

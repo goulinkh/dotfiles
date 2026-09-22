@@ -19,6 +19,4 @@ set them in workspace settings.
 
 omp plugins are listed in `omp-plugins.txt` and installed by
 `setup-omp-plugins.sh`; `~/.omp/plugins/` itself (lockfiles, `node_modules`)
-is machine-local and untracked. `omp-send-context` needs both halves — the omp
-plugin from that list and the VS Code extension `klondikemarlen.omp-send-context`
-installed by `setup-vscode.sh` — for Cmd/Ctrl+Alt+K to reach omp.
+is machine-local and untracked.

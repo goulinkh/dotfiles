@@ -128,3 +128,5 @@ z4h source ~/.vpn.zsh
 # --- machine-local secrets & overrides (NOT in git) ---
 z4h source ~/.zsh.local
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

@@ -74,8 +74,8 @@ EXTENSIONS=(
   github.vscode-github-actions
   golang.go
   gruntfuggly.todo-tree
+  illixion.vscode-vibrancy-continued
   junstyle.vscode-django-support
-  klondikemarlen.omp-send-context
   magicstack.magicpython
   mikestead.dotenv
   monosans.djlint
