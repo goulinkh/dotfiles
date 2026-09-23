@@ -1,7 +1,7 @@
 # Aliases & functions. Sourced from .zshrc.
 
 alias copilot-usage="gh api /copilot_internal/user --jq '.quota_snapshots.premium_interactions'"
-alias commit="omp -p 'Commit following conventional commits'" 
+alias commit="command omp -p 'Commit following conventional commits'"
 # Launchpad username (override in ~/.zsh.local).
 : ${LAUNCHPAD_USERNAME:=goulinkh}
 
@@ -36,6 +36,19 @@ fi
 command -v code   &>/dev/null && alias c="code"
 command -v zoxide &>/dev/null && alias zz="zi"
 command -v lsd &>/dev/null && alias ls="lsd --group-dirs first --color always --human-readable --hyperlink auto"
+# Keep OMP's TUI in a status-free tmux session and forward its title.
+function omp() {
+  if [[ ! -t 0 || ! -t 1 || -n $TMUX ]] || ! command -v tmux &>/dev/null; then
+    command omp "$@"
+  else
+    local session
+    session=$(tmux new-session -d -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- /usr/bin/env omp "$@") || return
+    tmux set-option -t "$session" status off || return
+    tmux set-option -t "$session" set-titles-string '#{pane_title}' || return
+    tmux set-option -t "$session" set-titles on || return
+    tmux attach-session -t "$session"
+  fi
+}
 # bat ships as `batcat` on Debian/Ubuntu.
 if command -v bat &>/dev/null; then
   alias bat="bat --paging never"

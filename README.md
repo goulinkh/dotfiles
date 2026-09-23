@@ -20,3 +20,9 @@ set them in workspace settings.
 omp plugins are listed in `omp-plugins.txt` and installed by
 `setup-omp-plugins.sh`; `~/.omp/plugins/` itself (lockfiles, `node_modules`)
 is machine-local and untracked.
+
+Interactive `omp` runs inside tmux when installed, keeping resize replies out
+of its input and providing session scrollback. `command omp` bypasses tmux for
+CLI subcommands; piped calls and existing tmux panes also run OMP directly.
+Its tmux status bar is hidden and OMP's own title is forwarded to the terminal,
+without changing other tmux sessions.
