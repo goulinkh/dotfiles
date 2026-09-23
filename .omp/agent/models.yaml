@@ -11,7 +11,7 @@ providers:
         reasoning: true
         input: [text, image]
         supportsTools: true
-        contextWindow: 272000
+        contextWindow: 125000
         maxTokens: 128000
         preferWebsockets: true
         thinking:
@@ -33,6 +33,8 @@ providers:
             only: [together]
   github-copilot:
     modelOverrides:
+      gpt-6-sol:
+        contextWindow: 125000
       # Copilot ships kimi-k3 only at its full 1M window; cap it at 250K.
       kimi-k3:
         contextWindow: 250000
