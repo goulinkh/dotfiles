@@ -3,7 +3,7 @@ modelRoles:
   default: github-copilot/gpt-6-sol:max
   #default: openai-codex/gpt-6-sol:max
   smol: github-copilot/claude-sonnet-5:high
-  opus: github-copilot/claude-opus-5:high
+  opus: github-copilot/claude-opus-5.5:max
   astra: openai-codex/gpt-6-astra:high
   plan: github-copilot/kimi-k3:high
   kimi: github-copilot/kimi-k3:high
