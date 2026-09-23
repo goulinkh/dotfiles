@@ -119,47 +119,11 @@ function dotpkg() {
   esac
 }
 
-# --- omp swarm (multi-agent orchestration) ---
-# Launches a classic omp TUI session and runs the swarm pipeline inside it via
-# the `/swarm run` command, so the normal shell stays up with a live progress
-# widget. With no argument it runs the default cascade pipeline.
-#
-# cascade sets `request_file: .cascade/request.md`, so on launch an editor opens
-# in-session for your request — type it there, save, and the pipeline starts.
-# Usage: omp-swarm [path/to/swarm.yaml]
-# For a headless/background run (no TUI, request file must already exist), use:
-#   omp-swarm --headless [yaml]
-if command -v bun &>/dev/null; then
-  function omp-swarm() {
-    local ext="$HOME/.omp/swarm-extension"
-    if [[ ! -e "$ext/node_modules/@oh-my-pi/pi-coding-agent" ]]; then
-      echo "omp-swarm: extension not wired — run ~/dotfiles/setup-swarm.sh" >&2
-      return 1
-    fi
-    local default_yaml="$HOME/.omp/swarm/cascade.yaml"
-    local headless=0
-    if [[ "$1" == "--headless" || "$1" == "-H" ]]; then
-      headless=1
-      shift
-    fi
-    local yaml="${1:-$default_yaml}"
-    if [[ $headless -eq 1 ]]; then
-      bun "$ext/src/cli.ts" "$yaml"
-    else
-      omp "/swarm run $yaml"
-    fi
-  }
-fi
-
 # --- ssh ---
 alias ubuntu='orb -m ubuntu-arm lxc exec ${ORBSTACK_MAIN_VM_HOST} -- su - ubuntu'
 alias ps6="ssh $LAUNCHPAD_USERNAME@webdesign-bastion-ps6.internal"
 alias ps5="ssh $LAUNCHPAD_USERNAME@webdesign-bastion-ps5.internal"
 
-# --- claude variants (tokens come from ~/.zsh.local) ---
-alias klaude='ANTHROPIC_BASE_URL=https://api.kimi.com/coding ANTHROPIC_AUTH_TOKEN=$KIMI_API_TOKEN ANTHROPIC_MODEL=kimi-k2.6 ANTHROPIC_DEFAULT_OPUS_MODEL=kimi-k2.6 ANTHROPIC_DEFAULT_SONNET_MODEL=kimi-k2.6 ANTHROPIC_DEFAULT_HAIKU_MODEL=kimi-k2.6 CLAUDE_CODE_SUBAGENT_MODEL=kimi-k2.6 ENABLE_TOOL_SEARCH=false claude'
-alias clodex="ANTHROPIC_BASE_URL=http://localhost:8080 ANTHROPIC_API_KEY=pwd ANTHROPIC_DEFAULT_OPUS_MODEL=gpt-5.6-sol ANTHROPIC_DEFAULT_SONNET_MODEL=gpt-5.6-terra ANTHROPIC_DEFAULT_HAIKU_MODEL=gpt-5.6-luna ANTHROPIC_MODEL='gpt-5.6-sol' claude"
-alias orc='ANTHROPIC_API_KEY="" ANTHROPIC_BASE_URL="$CLAUDE_OR_BASE_URL" ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY" ANTHROPIC_MODEL="$CLAUDE_OR_MODEL_MAIN" ANTHROPIC_DEFAULT_OPUS_MODEL="$CLAUDE_OR_MODEL_MAIN" ANTHROPIC_DEFAULT_SONNET_MODEL="$CLAUDE_OR_MODEL_FAST" ANTHROPIC_DEFAULT_HAIKU_MODEL="$CLAUDE_OR_MODEL_LIGHT" CLAUDE_CODE_SUBAGENT_MODEL="$CLAUDE_OR_MODEL_FAST" ENABLE_TOOL_SEARCH=false claude'
 # --- load claupilot logic from its dedicated file ---
 if [ -f ~/.claupilot.zsh ]; then
   source ~/.claupilot.zsh

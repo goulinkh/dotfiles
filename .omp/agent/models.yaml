@@ -1,4 +1,22 @@
 providers:
+  openai-codex:
+    baseUrl: https://chatgpt.com/backend-api
+    api: openai-codex-responses
+    auth: oauth
+    models:
+      # Keep Codex resolution exact; otherwise an absent catalog entry fuzzily
+      # selects an older Sol release before retry fallbacks can run.
+      - id: gpt-6-sol
+        name: GPT-6 Sol
+        reasoning: true
+        input: [text, image]
+        supportsTools: true
+        contextWindow: 272000
+        maxTokens: 128000
+        preferWebsockets: true
+        thinking:
+          mode: effort
+          efforts: [low, medium, high, xhigh, max]
   openrouter:
     modelOverrides:
       google/gemini-3.5-flash:

@@ -46,13 +46,8 @@ if [ "${SKIP_PACKAGES:-0}" != "1" ]; then
   fi
 fi
 
-bash "$DIR/remove-caveman.sh" || echo "   caveman cleanup failed — re-run: ./remove-caveman.sh" >&2
-
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
-
-# Wire the vendored omp swarm extension to the installed omp runtime.
-bash "$DIR/setup-swarm.sh" || echo "   swarm wiring failed — re-run: ./setup-swarm.sh" >&2
 
 # Install the omp plugins listed in omp-plugins.txt.
 bash "$DIR/setup-omp-plugins.sh" || echo "   omp plugin install failed — re-run: ./setup-omp-plugins.sh" >&2

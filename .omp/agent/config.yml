@@ -1,6 +1,6 @@
 setupVersion: 2
 modelRoles:
-  default: openai-codex/gpt-5.6-sol:max
+  default: openai-codex/gpt-6-sol:max
   smol: github-copilot/claude-sonnet-5:high
   opus: github-copilot/claude-opus-5:high
   astra: openai-codex/gpt-6-astra:high
@@ -10,10 +10,8 @@ cycleOrder:
   - default
   - opus
   - astra
-hideThinkingBlock: true
+hideThinkingBlock: false
 textVerbosity: low
-extensions:
-  - ~/.omp/swarm-extension/src/extension.ts
 codexResets:
   autoRedeem: "yes"
 dev:
@@ -39,5 +37,5 @@ startup:
   quiet: true
 retry:
   fallbackChains:
-    openai-codex/gpt-5.6-sol:
-      - github-copilot/gpt-5.6-sol
+    openai-codex/gpt-6-sol:
+      - github-copilot/gpt-6-sol
