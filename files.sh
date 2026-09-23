@@ -13,6 +13,19 @@ FILES=(
   .omp/agent/config.yml
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
+  .omp/agent/rules/boundary-value-validation.md
+  .omp/agent/rules/code-no-placeholder-implementations.md
+  .omp/agent/rules/go-no-ignored-errors.md
+  .omp/agent/rules/jsdoc-tsdoc-contracts.md
+  .omp/agent/rules/js-no-dynamic-eval.md
+  .omp/agent/rules/js-ts-missing-contract-docs.md
+  .omp/agent/rules/js-ts-oversized-functions.md
+  .omp/agent/rules/py-no-mutable-default.md
+  .omp/agent/rules/py-no-swallowed-exceptions.md
+  .omp/agent/rules/sh-avoid-unsafe-recursive-removal.md
+  .omp/agent/rules/sql-use-bound-parameters.md
+  .omp/agent/rules/ts-avoid-unsafe-assertions.md
+  .omp/agent/rules/ts-avoid-weak-types.md
   .config/zed/settings.json
   .config/zed/keymap.json
   .config/zed/AGENTS.md

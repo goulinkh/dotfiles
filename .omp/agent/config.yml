@@ -1,7 +1,6 @@
 setupVersion: 2
 modelRoles:
   default: github-copilot/gpt-6-sol:max
-  #default: openai-codex/gpt-6-sol:max
   smol: github-copilot/claude-sonnet-5:high
   opus: github-copilot/claude-opus-5.5:max
   astra: openai-codex/gpt-6-astra:high
@@ -11,8 +10,10 @@ cycleOrder:
   - default
   - opus
   - astra
-hideThinkingBlock: false
+hideThinkingBlock: true
 textVerbosity: low
+ttsr:
+  judge: "on"
 codexResets:
   autoRedeem: "yes"
 dev:

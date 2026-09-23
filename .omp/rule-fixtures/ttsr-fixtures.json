@@ -1,0 +1,578 @@
+{
+  "fixtures": [
+    {
+      "id": "js-eval-write",
+      "rule": "js-no-dynamic-eval",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/calc.js",
+      "snippet": "const value = eval(source);"
+    },
+    {
+      "id": "js-function-edit",
+      "rule": "js-no-dynamic-eval",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/calc.ts",
+      "snippet": "const compile = new Function(\"input\", body);"
+    },
+    {
+      "id": "js-string-literal",
+      "rule": "js-no-dynamic-eval",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/calc.js",
+      "snippet": "const example = \"eval(source)\";"
+    },
+    {
+      "id": "js-safe-dispatch",
+      "rule": "js-no-dynamic-eval",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/calc.ts",
+      "snippet": "const handler = handlers[name]; handler(input);"
+    },
+    {
+      "id": "js-out-of-scope-path",
+      "rule": "js-no-dynamic-eval",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/example.md",
+      "snippet": "const value = eval(source);"
+    },
+    {
+      "id": "js-out-of-scope-surface",
+      "rule": "js-no-dynamic-eval",
+      "kind": "negative",
+      "source": "text",
+      "path": "src/calc.js",
+      "snippet": "const value = eval(source);"
+    },
+    {
+      "id": "py-list-literal-write",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def gather(items=[]):\n    items.append(1)\n    return items"
+    },
+    {
+      "id": "py-typed-dict-edit",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/items.py",
+      "snippet": "def options(settings: dict[str, str] = {}):\n    return settings"
+    },
+    {
+      "id": "py-nonempty-dict-default",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def options(settings: dict[str, int] = {\"a\": 1, \"b\": 2}):\n    return settings"
+    },
+    {
+      "id": "py-one-entry-dict-default",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def options(settings={\"enabled\": True}):\n    return settings"
+    },
+    {
+      "id": "py-set-literal-default",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def collect(tags={\"urgent\"}):\n    return tags"
+    },
+    {
+      "id": "py-nonfinal-list-default",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def gather(items=[], count=0):\n    return items[:count]"
+    },
+    {
+      "id": "py-async-set-constructor",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "async def gather(items: set[str] = set()):\n    return items"
+    },
+    {
+      "id": "py-list-constructor-edit",
+      "rule": "py-no-mutable-default",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/items.py",
+      "snippet": "def gather(item, items=list()):\n    items.append(item)\n    return items"
+    },
+    {
+      "id": "py-none-sentinel",
+      "rule": "py-no-mutable-default",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def gather(items=None):\n    if items is None:\n        items = []\n    return items"
+    },
+    {
+      "id": "py-string-literal",
+      "rule": "py-no-mutable-default",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "example = 'def gather(items=[]): pass'"
+    },
+    {
+      "id": "py-immutable-default",
+      "rule": "py-no-mutable-default",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/items.py",
+      "snippet": "def gather(items=()):\n    return items"
+    },
+    {
+      "id": "py-out-of-scope-path",
+      "rule": "py-no-mutable-default",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/example.md",
+      "snippet": "def gather(items=[]):\n    return items"
+    },
+    {
+      "id": "ts-empty-type-alias",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "type Payload = {};"
+    },
+    {
+      "id": "ts-function-type-alias-edit",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/state.ts",
+      "snippet": "type Handler = Function;"
+    },
+    {
+      "id": "ts-function-variable",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "let handler: Function;"
+    },
+    {
+      "id": "ts-empty-interface-field",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "interface State { value: {} }"
+    },
+    {
+      "id": "ts-function-return",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "function choose(flag: boolean): Function {\n    if (flag) return handlers.on;\n    return handlers.off;\n}"
+    },
+    {
+      "id": "ts-function-parameter-edit",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/state.ts",
+      "snippet": "function register(callback: Function) { callback(); }"
+    },
+    {
+      "id": "ts-weak-callback-alias",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "type Register = (callback: Function) => void;"
+    },
+    {
+      "id": "ts-empty-arrow-parameter",
+      "rule": "ts-avoid-weak-types",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/state.ts",
+      "snippet": "const countKeys = (value: {}) => {\n    const keys = Object.keys(value);\n    return keys.length;\n};"
+    },
+    {
+      "id": "ts-string-literal",
+      "rule": "ts-avoid-weak-types",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "const example = 'type Handler = Function';"
+    },
+    {
+      "id": "ts-precise-callback",
+      "rule": "ts-avoid-weak-types",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "type Handler = (value: number) => number;"
+    },
+    {
+      "id": "ts-opaque-object",
+      "rule": "ts-avoid-weak-types",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.ts",
+      "snippet": "type Payload = object;"
+    },
+    {
+      "id": "ts-out-of-scope-path",
+      "rule": "ts-avoid-weak-types",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/state.js",
+      "snippet": "type Payload = {};"
+    },
+    {
+      "id": "code-placeholder-python",
+      "rule": "code-no-placeholder-implementations",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/parser.py",
+      "snippet": "def parse(data):\n    # TODO: implement parser\n    raise NotImplementedError()"
+    },
+    {
+      "id": "code-elision-typescript",
+      "rule": "code-no-placeholder-implementations",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/parser.ts",
+      "snippet": "function parse(input: string) {\n  // ... existing code\n  return input;\n}"
+    },
+    {
+      "id": "code-string-literal",
+      "rule": "code-no-placeholder-implementations",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/parser.py",
+      "snippet": "message = '# TODO: implement parser'"
+    },
+    {
+      "id": "code-out-of-scope-path",
+      "rule": "code-no-placeholder-implementations",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/notes.md",
+      "snippet": "# TODO: implement parser"
+    },
+    {
+      "id": "code-out-of-scope-surface",
+      "rule": "code-no-placeholder-implementations",
+      "kind": "negative",
+      "source": "text",
+      "path": "src/parser.py",
+      "snippet": "# TODO: implement parser"
+    },
+    {
+      "id": "go-empty-error-branch",
+      "rule": "go-no-ignored-errors",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/reader.go",
+      "snippet": "if err != nil {}"
+    },
+    {
+      "id": "go-success-on-error",
+      "rule": "go-no-ignored-errors",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.go",
+      "snippet": "func read() (string, error) { if err != nil { return \"\", nil }; return \"ok\", nil }"
+    },
+    {
+      "id": "go-wrap-error",
+      "rule": "go-no-ignored-errors",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.go",
+      "snippet": "func read() error { if err != nil { return fmt.Errorf(\"load: %w\", err) }; return nil }"
+    },
+    {
+      "id": "go-logged-best-effort",
+      "rule": "go-no-ignored-errors",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.go",
+      "snippet": "for range items { if err != nil { log.Printf(\"skip: %v\", err); continue } }"
+    },
+    {
+      "id": "go-out-of-scope-path",
+      "rule": "go-no-ignored-errors",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/reader.md",
+      "snippet": "if err != nil {}"
+    },
+    {
+      "id": "py-swallowed-specific-exception",
+      "rule": "py-no-swallowed-exceptions",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.py",
+      "snippet": "try:\n    open(path)\nexcept OSError:\n    pass"
+    },
+    {
+      "id": "py-swallowed-named-exception",
+      "rule": "py-no-swallowed-exceptions",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/reader.py",
+      "snippet": "try:\n    open(path)\nexcept OSError as exc:\n    pass"
+    },
+    {
+      "id": "py-reraises-with-context",
+      "rule": "py-no-swallowed-exceptions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.py",
+      "snippet": "try:\n    open(path)\nexcept OSError as exc:\n    raise RuntimeError('cannot read') from exc"
+    },
+    {
+      "id": "py-handler-string-literal",
+      "rule": "py-no-swallowed-exceptions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/reader.py",
+      "snippet": "example = 'except OSError: pass'"
+    },
+    {
+      "id": "py-exception-out-of-scope-path",
+      "rule": "py-no-swallowed-exceptions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/reader.md",
+      "snippet": "try:\n    open(path)\nexcept OSError:\n    pass"
+    },
+    {
+      "id": "sql-go-concatenated-value",
+      "rule": "sql-use-bound-parameters",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/search.go",
+      "snippet": "query := \"SELECT * FROM users WHERE id = \" + userID"
+    },
+    {
+      "id": "sql-go-formatted-value",
+      "rule": "sql-use-bound-parameters",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/search.go",
+      "snippet": "query := fmt.Sprintf(\"SELECT * FROM users WHERE id = %d\", userID)"
+    },
+    {
+      "id": "sql-template-value",
+      "rule": "sql-use-bound-parameters",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/search.ts",
+      "snippet": "const query = `SELECT * FROM users WHERE id = ${userID}`;"
+    },
+    {
+      "id": "sql-bound-parameter",
+      "rule": "sql-use-bound-parameters",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/search.go",
+      "snippet": "db.Query(\"SELECT * FROM users WHERE id = ?\", userID)"
+    },
+    {
+      "id": "sql-allowlisted-identifier",
+      "rule": "sql-use-bound-parameters",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/search.go",
+      "snippet": "query := \"SELECT * FROM \" + allowedTable + \" WHERE id = ?\""
+    },
+    {
+      "id": "sql-out-of-scope-path",
+      "rule": "sql-use-bound-parameters",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "docs/sql.md",
+      "snippet": "SELECT * FROM users WHERE id = ${userID}"
+    },
+    {
+      "id": "sh-unquoted-recursive-target",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "scripts/clean.zsh",
+      "snippet": "rm -rf $venv_path"
+    },
+    {
+      "id": "sh-absolute-variable-target",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "scripts/clean.sh",
+      "snippet": "rm -rf /$NAME"
+    },
+    {
+      "id": "sh-quoted-root-with-suffix",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "scripts/clean.sh",
+      "snippet": "rm -rf \"$ROOT\"/cache"
+    },
+    {
+      "id": "sh-guarded-quoted-target",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "scripts/clean.zsh",
+      "snippet": "if [[ $target == \"$root\"/* ]]; then\n  rm -rf -- \"$target\"\nfi"
+    },
+    {
+      "id": "sh-comment-only",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "scripts/clean.sh",
+      "snippet": "# rm -rf $HOME"
+    },
+    {
+      "id": "sh-out-of-scope-path",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/clean.py",
+      "snippet": "rm -rf $target"
+    },
+    {
+      "id": "ts-non-null-assertion",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/user.ts",
+      "snippet": "const id = user.id!;"
+    },
+    {
+      "id": "ts-double-cast-unknown",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "src/user.ts",
+      "snippet": "const id = raw as unknown as UserId;"
+    },
+    {
+      "id": "ts-double-cast-any",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/user.ts",
+      "snippet": "const id = raw as any as UserId;"
+    },
+    {
+      "id": "ts-checked-value",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/user.ts",
+      "snippet": "if (user.id != null) send(user.id);"
+    },
+    {
+      "id": "ts-comment-assertion",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/user.ts",
+      "snippet": "// Avoid user.id! without a check"
+    },
+    {
+      "id": "ts-assertion-out-of-scope-path",
+      "rule": "ts-avoid-unsafe-assertions",
+      "kind": "negative",
+      "source": "tool",
+      "tool": "write",
+      "path": "src/user.js",
+      "snippet": "const id = user.id!;"
+    },
+    {
+      "id": "sh-dotfile-unquoted-target",
+      "rule": "sh-avoid-unsafe-recursive-removal",
+      "kind": "positive",
+      "source": "tool",
+      "tool": "edit",
+      "path": "../.alias.zsh",
+      "snippet": "rm -rf $venv_path"
+    }
+  ]
+}

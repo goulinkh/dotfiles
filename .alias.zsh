@@ -42,7 +42,9 @@ function omp() {
     command omp "$@"
   else
     local session
-    session=$(tmux new-session -d -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- /usr/bin/env omp "$@") || return
+    # tmux forwards OSC 7 from its pane to the terminal; encode the cwd for new tabs.
+    session=$(tmux new-session -d -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- python3 -c 'import os, sys, urllib.parse; print("\033]7;file://" + os.uname().nodename + urllib.parse.quote(os.getcwd(), safe="/") + "\a", end="", flush=True); os.execvp("omp", ["omp", *sys.argv[1:]])' "$@") || return
+    tmux set-option -w -t "$session" mouse on || return
     tmux set-option -t "$session" status off || return
     tmux set-option -t "$session" set-titles-string '#{pane_title}' || return
     tmux set-option -t "$session" set-titles on || return
@@ -152,13 +154,13 @@ function venv() {
   fi
   local venv_path=${1:-.venv}
   if $clean; then
-    venv-clean $venv_path
+    venv-clean "$venv_path" || return
   fi
   echo "Creating virtual environment at $venv_path"
   echo "Python version: $(python3 --version)"
-  python3 -m venv $venv_path
-  source $venv_path/bin/activate
-  $venv_path/bin/pip install -r requirements.txt
+  python3 -m venv "$venv_path"
+  source "$venv_path/bin/activate"
+  "$venv_path/bin/pip" install -r requirements.txt
 }
 
 function poetry-venv() {
@@ -171,12 +173,21 @@ function poetry-venv() {
 
 function venv-clean() {
   local venv_path=${1:-.venv}
-  if [[ $venv_path == /* ]]; then
-    echo "Invalid path: $venv_path"
+  local cwd=${PWD:A}
+  local target=${venv_path:A}
+  if [[ $target != "$cwd"/* ]]; then
+    echo "Invalid path: $venv_path" >&2
+    return 1
+  fi
+  if [[ ! -e $venv_path && ! -L $venv_path ]]; then
+    return 0
+  fi
+  if [[ ! -d $venv_path || ! -f $venv_path/pyvenv.cfg ]]; then
+    echo "Not a virtual environment: $venv_path" >&2
     return 1
   fi
   echo "Removing virtual environment at $venv_path"
-  rm -rf $venv_path
+  rm -rf -- "$venv_path"
 }
 
 # Load .env / .env.local into the environment

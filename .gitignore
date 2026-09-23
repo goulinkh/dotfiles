@@ -4,3 +4,6 @@
 
 # omp writes runtime lock files beside its config.
 .omp/agent/*.lock
+
+# OMP writes its SQLite runtime database beside the agent config.
+.omp/agent/agent.db*
