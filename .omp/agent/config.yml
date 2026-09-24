@@ -41,3 +41,5 @@ retry:
   fallbackChains:
     openai-codex/gpt-6-sol:
       - github-copilot/gpt-6-sol
+display:
+  collapseCompacted: false

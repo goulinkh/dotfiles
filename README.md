@@ -45,3 +45,9 @@ without changing other tmux sessions.
 The wrapper enables mouse-wheel history scrolling only in OMP's tmux window.
 OSC 7 reports its starting directory to compatible terminals so new tabs can
 inherit it.
+
+The OMP pane starts at the terminal's size and retains 50,000 history rows
+instead of tmux's 2,000-row default; other sessions are unaffected. OMP keeps
+pre-compaction messages inline instead of clearing terminal scrollback. While
+an answer is streaming, unfinished text may still be clipped until OMP
+finalizes it.

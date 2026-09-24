@@ -43,7 +43,9 @@ function omp() {
   else
     local session
     # tmux forwards OSC 7 from its pane to the terminal; encode the cwd for new tabs.
-    session=$(tmux new-session -d -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- python3 -c 'import os, sys, urllib.parse; print("\033]7;file://" + os.uname().nodename + urllib.parse.quote(os.getcwd(), safe="/") + "\a", end="", flush=True); os.execvp("omp", ["omp", *sys.argv[1:]])' "$@") || return
+    # Start at the client's size; a detached pane otherwise begins at tmux's default size.
+    session=$(tmux new-session -d -x "$COLUMNS" -y "$LINES" -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- python3 -c 'import os, sys, urllib.parse; print("\033]7;file://" + os.uname().nodename + urllib.parse.quote(os.getcwd(), safe="/") + "\a", end="", flush=True); os.execvp("omp", ["omp", *sys.argv[1:]])' "$@") || return
+    tmux set-option -t "$session" history-limit 50000 || return
     tmux set-option -w -t "$session" mouse on || return
     tmux set-option -t "$session" status off || return
     tmux set-option -t "$session" set-titles-string '#{pane_title}' || return
