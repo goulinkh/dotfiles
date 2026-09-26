@@ -11,7 +11,3 @@
 # Adds Launchpad bugs, repositories, merge proposals, diffs, search, checkout,
 # and write operations through lp-shell/launchpadlib.
 github:goulinkh/omp-launchpad
-
-# Enforces semantic policies around mutating, executing, delegating, and
-# process-control tools.
-github:goulinkh/omp-semantic-policy
