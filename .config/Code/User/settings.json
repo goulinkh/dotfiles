@@ -6,7 +6,8 @@
 {
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
-    "{git,gitlens,git-graph}:/**/*.{md,csv,svg}": "default"
+    "{git,gitlens,git-graph}:/**/*.{md,csv,svg}": "default",
+    "*.md": "vscode.markdown.preview.editor"
   },
   "editor.suggestSelection": "first",
   "explorer.confirmDelete": false,
@@ -27,7 +28,7 @@
   // themes
   "workbench.iconTheme": "vscode-icons",
   // Zed is on GitHub Light (theme.mode = light); needs github.github-vscode-theme.
-  "workbench.colorTheme": "Dark+",
+  "workbench.colorTheme": "Vesper ++ Lighter",
   // Zed's experimental.theme_overrides: italic comments and keywords.
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -76,8 +77,6 @@
     "*.ts": "typescript",
     "*.scss": "scss"
   },
-  // terminal
-  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.tabs.showActions": "never",
   "terminal.integrated.shellIntegration.enabled": false,
   "terminal.integrated.shellIntegration.decorationsEnabled": "never",
@@ -259,41 +258,9 @@
     "**/.forgejo/workflows/*.yaml"
   ],
   "launchpad.mergeProposals.reconstructWholeDiffs": true,
-  "workbench.colorCustomizations": {
-    "terminal.background": "#00000000",
-    "editorPane.background": "#1e1e1e00",
-    "editorGroupHeader.tabsBackground": "#1e1e1e00",
-    "editorGroupHeader.noTabsBackground": "#1e1e1e00",
-    "breadcrumb.background": "#1e1e1e00",
-    "editorGutter.background": "#1e1e1e00",
-    "panel.background": "#1e1e1e00",
-    "tab.activeBackground": "#1e1e1e00",
-    "tab.unfocusedActiveBackground": "#1e1e1e00",
-    "sideBar.background": "#1e1e1e33",
-    "sideBarTitle.background": "#1e1e1e33",
-    "activityBar.background": "#1e1e1e33",
-    "editor.background": "#1e1e1e33",
-    "tab.inactiveBackground": "#1e1e1e33",
-    "tab.unfocusedInactiveBackground": "#1e1e1e33",
-    "editorStickyScroll.background": "#1e1e1ebf",
-    "editorStickyScrollGutter.background": "#1e1e1ebf",
-    "sideBarStickyScroll.background": "#1e1e1ebf",
-    "panelStickyScroll.background": "#1e1e1ebf",
-    "terminalStickyScroll.background": "#1e1e1ebf",
-    "inlineChat.background": "#1e1e1ee6",
-    "editorWidget.background": "#1e1e1ee6",
-    "editorHoverWidget.background": "#1e1e1ee6",
-    "editorSuggestWidget.background": "#1e1e1ee6",
-    "notifications.background": "#1e1e1ee6",
-    "notificationCenterHeader.background": "#1e1e1ee6",
-    "menu.background": "#1e1e1ee6",
-    "quickInput.background": "#1e1e1ee6"
-  },
-  "terminal.integrated.gpuAcceleration": "off",
-  "window.systemColorTheme": "dark",
+  "workbench.colorCustomizations": {},
   "vscode_vibrancy.type": "under-window",
   "vscode_vibrancy.opacity": 0.2,
   "workbench.startupEditor": "none",
-  "diffEditor.hideUnchangedRegions.enabled": true,
   "diffEditor.renderSideBySide": false
 }
