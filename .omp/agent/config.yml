@@ -1,6 +1,6 @@
 setupVersion: 2
 modelRoles:
-  default: github-copilot/gpt-6.1-sol:xhigh
+  default: openai-codex/gpt-6.1-sol:xhigh
   smol: github-copilot/claude-sonnet-5:xhigh
   opus: github-copilot/claude-opus-5.5:xhigh
   astra: openai-codex/gpt-6-astra:high
