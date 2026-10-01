@@ -28,7 +28,7 @@
   // themes
   "workbench.iconTheme": "vscode-icons",
   // Zed is on GitHub Light (theme.mode = light); needs github.github-vscode-theme.
-  "workbench.colorTheme": "Vesper ++ Lighter",
+  "workbench.colorTheme": "Gruvbox Dark Hard",
   // Zed's experimental.theme_overrides: italic comments and keywords.
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -262,5 +262,6 @@
   "vscode_vibrancy.type": "under-window",
   "vscode_vibrancy.opacity": 0.2,
   "workbench.startupEditor": "none",
-  "diffEditor.renderSideBySide": false
+  "diffEditor.renderSideBySide": false,
+  "chat.viewSessions.orientation": "stacked"
 }
