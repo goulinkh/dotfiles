@@ -1,22 +1,10 @@
 providers:
   openai-codex:
-    baseUrl: https://chatgpt.com/backend-api
-    api: openai-codex-responses
-    auth: oauth
-    models:
-      # Keep Codex resolution exact; otherwise an absent catalog entry fuzzily
-      # selects an older Sol release before retry fallbacks can run.
-      - id: gpt-6-sol
-        name: GPT-6 Sol
-        reasoning: true
-        input: [text, image]
-        supportsTools: true
+    modelOverrides:
+      gpt-6-astra:
         contextWindow: 250000
-        maxTokens: 128000
-        preferWebsockets: true
-        thinking:
-          mode: effort
-          efforts: [low, medium, high, xhigh, max]
+      gpt-6-sol:
+        contextWindow: 250000
   openrouter:
     modelOverrides:
       google/gemini-3.5-flash:
@@ -35,7 +23,9 @@ providers:
     modelOverrides:
       claude-opus-5.5:
         contextWindow: 250000
-      gpt-6-sol:
+      claude-sonnet-5:
+        contextWindow: 250000
+      gpt-6.1-sol:
         contextWindow: 250000
       # Copilot ships kimi-k3 only at its full 1M window; cap it at 250K.
       kimi-k3:
