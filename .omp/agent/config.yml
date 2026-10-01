@@ -26,6 +26,10 @@ retry:
   fallbackChains:
     github-copilot/gpt-6.1-sol:
       - openai-codex/gpt-6-sol
+tier:
+  openai: priority
+  anthropic: priority
+  google: priority
 display:
   collapseCompacted: false
 statusLine:
