@@ -14,8 +14,7 @@ zstyle ':z4h:bindkey'         keyboard         'mac'
 zstyle ':z4h:'                term-shell-integration 'yes'
 
 # Leave shells outside tmux by default: z4h's implicit per-shell server wipes
-# the terminal welcome banner and can leave orphaned sessions. Interactive
-# OMP sessions opt into tmux explicitly via .alias.zsh.
+# the terminal welcome banner and can leave orphaned sessions.
 zstyle ':z4h:'                start-tmux       'no'
 
 # Keep the prompt at the top of the viewport. z4h defaults this to 'yes' when

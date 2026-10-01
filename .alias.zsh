@@ -36,23 +36,6 @@ fi
 command -v code   &>/dev/null && alias c="code"
 command -v zoxide &>/dev/null && alias zz="zi"
 command -v lsd &>/dev/null && alias ls="lsd --group-dirs first --color always --human-readable --hyperlink auto"
-# Keep OMP's TUI in a status-free tmux session and forward its title.
-function omp() {
-  if [[ ! -t 0 || ! -t 1 || -n $TMUX ]] || ! command -v tmux &>/dev/null; then
-    command omp "$@"
-  else
-    local session
-    # tmux forwards OSC 7 from its pane to the terminal; encode the cwd for new tabs.
-    # Start at the client's size; a detached pane otherwise begins at tmux's default size.
-    session=$(tmux new-session -d -x "$COLUMNS" -y "$LINES" -P -F '#{session_id}' -n omp -c "$PWD" -e "PATH=$PATH" -- python3 -c 'import os, sys, urllib.parse; print("\033]7;file://" + os.uname().nodename + urllib.parse.quote(os.getcwd(), safe="/") + "\a", end="", flush=True); os.execvp("omp", ["omp", *sys.argv[1:]])' "$@") || return
-    tmux set-option -t "$session" history-limit 50000 || return
-    tmux set-option -w -t "$session" mouse on || return
-    tmux set-option -t "$session" status off || return
-    tmux set-option -t "$session" set-titles-string '#{pane_title}' || return
-    tmux set-option -t "$session" set-titles on || return
-    tmux attach-session -t "$session"
-  fi
-}
 # bat ships as `batcat` on Debian/Ubuntu.
 if command -v bat &>/dev/null; then
   alias bat="bat --paging never"
