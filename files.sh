@@ -26,6 +26,7 @@ FILES=(
   .omp/agent/rules/sql-use-bound-parameters.md
   .omp/agent/rules/ts-avoid-unsafe-assertions.md
   .omp/agent/rules/ts-avoid-weak-types.md
+  .omp/agent/extensions/inherit-subagent-model.ts
   .config/zed/settings.json
   .config/zed/keymap.json
   .config/zed/AGENTS.md
