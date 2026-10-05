@@ -29,6 +29,7 @@ if ! command -v copilot >/dev/null 2>&1; then
 else
   echo "==> GitHub Copilot CLI already installed"
 fi
+
 # Install Bun (required by omp) and oh-my-pi (omp) CLI
 if ! command -v bun >/dev/null 2>&1; then
   echo "==> installing bun"
