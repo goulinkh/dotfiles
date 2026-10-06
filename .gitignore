@@ -7,3 +7,7 @@
 
 # OMP writes its SQLite runtime database beside the agent config.
 .omp/agent/agent.db*
+
+# Pi credentials and runtime files stay local; only settings are portable.
+.pi/agent/*
+!.pi/agent/settings.json

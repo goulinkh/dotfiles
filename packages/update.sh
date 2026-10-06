@@ -48,6 +48,11 @@ if command -v bun >/dev/null 2>&1; then
   run_update "Updating Bun" bun upgrade
 fi
 
+if command -v pi >/dev/null 2>&1; then
+  run_update "Updating Pi" pi update self
+  run_update "Updating Pi extensions" pi update --extensions
+fi
+
 if command -v omp >/dev/null 2>&1; then
   run_update "Updating oh-my-pi" omp update
   run_update "Updating oh-my-pi plugins" omp update --plugins

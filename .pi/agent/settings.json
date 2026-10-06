@@ -1,0 +1,12 @@
+{
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "xhigh",
+  "hideThinkingBlock": true,
+  "quietStartup": true,
+  "tuiMode": "regular",
+  "packages": [
+    "npm:pi-notify@1.4.0"
+  ],
+  "lastChangelogVersion": "1.0.4"
+}
