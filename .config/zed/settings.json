@@ -2,6 +2,10 @@
 // Only non-default values are kept here; run `zed: open default settings`
 // from the command palette to see everything else.
 {
+  "markdown_preview": {
+    "font_size": 14.5
+  },
+  "agent_buffer_font_size": 14.5,
   "lsp": {
     "harper-ls": {
       "settings": {
@@ -57,9 +61,9 @@
     }
   ],
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "GitHub Light",
-    "dark": "Zedokai Classic",
+    "dark": "Gruvbox Dark",
   },
   "icon_theme": {
     "mode": "dark",
@@ -67,10 +71,10 @@
     "dark": "Material Icon Theme",
   },
   "ui_font_family": ".ZedSans",
-  "ui_font_size": 15,
+  "ui_font_size": 16,
   "buffer_font_family": "Maple Mono NF",
-  "buffer_font_size": 13.5,
-  "agent_ui_font_size": 13.5,
+  "buffer_font_size": 14.5,
+  "agent_ui_font_size": 16,
   "buffer_font_features": {
     "calt": true, // standard ligatures (-> => != etc)
     "cv02": true, // alternative `a` with top arm
@@ -171,6 +175,7 @@
 
   // === Panels ===
   "collaboration_panel": {
+    "dock": "left",
     "button": false,
   },
   "git_panel": {
@@ -191,6 +196,13 @@
     "git_status_indicator": true,
   },
   "agent_servers": {
+    "pi-acp": {
+      "default_config_options": {
+        "thought_level": "high",
+        "model": "openai-codex/gpt-6-astra"
+      },
+      "type": "registry"
+    },
     "claude-acp": {
       "default_config_options": {
         "mode": "acceptEdits",
@@ -265,6 +277,16 @@
     "dock": "left",
   },
   "agent": {
+    "show_turn_stats": true,
+    "message_editor_min_lines": 2,
+    "cancel_generation_on_terminal_stop": false,
+    "thinking_display": "always_collapsed",
+    "prevent_idle_sleep": false,
+    "play_sound_when_agent_done": "always",
+    "threads_sidebar": {
+      "position": "right",
+      "default_width": 307.0
+    },
     "sandbox_permissions": {
       "allow_unsandboxed": true,
     },

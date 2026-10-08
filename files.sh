@@ -28,6 +28,7 @@ FILES=(
   .omp/agent/rules/ts-avoid-weak-types.md
   .omp/agent/extensions/inherit-subagent-model.ts
   .pi/agent/settings.json
+  .pi/agent/APPEND_SYSTEM.md
   .config/pi/compact-status-line
   .config/zed/settings.json
   .config/zed/keymap.json

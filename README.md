@@ -28,8 +28,10 @@ startup if missing. Allow Ghostty notifications in macOS for desktop banners.
 
 Settings use Codex `gpt-6.1-sol`, `xhigh` thinking, quiet startup, hidden
 thinking blocks, and `tuiMode: "regular"` for native terminal scrollback instead
-of fullscreen scrolling. No custom system instructions, model overrides,
-web-search, subagent, LSP, or Playwright packages are added.
+of fullscreen scrolling. Global system instructions in
+`.pi/agent/APPEND_SYSTEM.md` preserve Pi's default prompt, require explicit
+requests for commits and pushes, and describe the GitHub (`gh`) and Launchpad
+(`lp`) CLIs. Run `/reload` after changing instructions.
 
 Credentials stay in `~/.pi/agent/auth.json` (mode `0600`), never in dotfiles.
 Only the active Codex credential was copied from OMP on this machine; use

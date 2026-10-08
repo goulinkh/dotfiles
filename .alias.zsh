@@ -1,3 +1,4 @@
+alias lp=lpci
 # Aliases & functions. Sourced from .zshrc.
 
 alias copilot-usage="gh api /copilot_internal/user --jq '.quota_snapshots.premium_interactions'"
