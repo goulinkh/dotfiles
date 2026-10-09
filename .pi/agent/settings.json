@@ -1,6 +1,11 @@
 {
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6.1-sol",
+  "enabledModels": [
+    "openai-codex/gpt-6.1-sol",
+    "openai-codex/gpt-6-astra",
+    "github-copilot/claude-opus-5.5"
+  ],
   "defaultThinkingLevel": "xhigh",
   "hideThinkingBlock": true,
   "quietStartup": true,
@@ -9,7 +14,8 @@
     "npm:pi-notify@1.4.0",
     "local/pi-usage",
     "npm:better-claude-code-ui",
-    "~/.config/pi/compact-status-line"
+    "~/.config/pi/compact-status-line",
+    "npm:@pi-plugins/fast-mode@0.1.13"
   ],
   "lastChangelogVersion": "1.1.0",
   "pi-usage": {

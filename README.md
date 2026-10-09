@@ -1,39 +1,36 @@
 # dotfiles
 
+Personal configuration and machine bootstrap for macOS and Ubuntu.
+
+## Setup
+
 ```sh
-git clone https://github.com/goulinkh/dotfiles.git ~/dotfiles && ~/dotfiles/install.sh
+git clone https://github.com/goulinkh/dotfiles.git ~/dotfiles
+~/dotfiles/install.sh
 ```
 
-After install:
+The installer links configuration into your home directory, backs up existing
+files as `*.bak`, and runs the setup scripts. Open a new terminal to finish
+shell initialization.
+
+## Updates
 
 ```sh
-dotsync    # pull, re-link, and update installed tools
+dotsync    # pull changes, re-link configuration, and update installed tooling
 dotpkg     # install packages for this OS
 ```
 
-VS Code config lives in `.config/Code/User/` and is linked by `setup-vscode.sh`
-(run by `install.sh` / `dotsync`): `settings.json` is shared, `keybindings.json`
-points at `keybindings.macos.json` or `keybindings.linux.json` depending on the
-OS. Machine-specific paths (interpreters, toolchains) stay out of the repo —
-set them in workspace settings.
+## Making changes
 
-## Pi
+Edit the configuration files directly; they are the source of truth for
+settings, plugins, and defaults. [files.sh](files.sh) controls which paths are
+linked, and [packages/](packages/) contains package installation and update
+logic. Keep tool inventories and configuration details in those files rather
+than duplicating them here.
 
-`dotpkg` installs the official `@earendil-works/pi-coding-agent` CLI alongside OMP.
-Start it with `pi`. `dotsync` updates Pi; pinned plugin versions stay fixed.
+## Local settings
 
-Only `pi-notify@1.4.0` is added: Ghostty notifications when Pi finishes and waits
-for input. Pi installs it from the linked `.pi/agent/settings.json` on first
-startup if missing. Allow Ghostty notifications in macOS for desktop banners.
-
-Settings use Codex `gpt-6.1-sol`, `xhigh` thinking, quiet startup, hidden
-thinking blocks, and `tuiMode: "regular"` for native terminal scrollback instead
-of fullscreen scrolling. Global system instructions in
-`.pi/agent/APPEND_SYSTEM.md` preserve Pi's default prompt, require explicit
-requests for commits and pushes, and describe the GitHub (`gh`) and Launchpad
-(`lp`) CLIs. Run `/reload` after changing instructions.
-
-Credentials stay in `~/.pi/agent/auth.json` (mode `0600`), never in dotfiles.
-Only the active Codex credential was copied from OMP on this machine; use
-`/login openai-codex` in Pi on another machine. OMP remains installed and its
-configuration and credential store are unchanged.
+Keep secrets, credentials, and machine-specific overrides out of version
+control. Use `~/.zsh.local` for local shell settings; the repository's
+[.zsh.local](.zsh.local) is only a template. Put project-specific editor and
+toolchain paths in workspace settings.

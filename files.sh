@@ -29,6 +29,7 @@ FILES=(
   .omp/agent/extensions/inherit-subagent-model.ts
   .pi/agent/settings.json
   .pi/agent/APPEND_SYSTEM.md
+  .pi/agent/extensions/fast-mode.json
   .config/pi/compact-status-line
   .config/zed/settings.json
   .config/zed/keymap.json
