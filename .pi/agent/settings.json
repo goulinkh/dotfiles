@@ -22,7 +22,8 @@
     "local/pi-usage",
     "npm:better-claude-code-ui",
     "~/.config/pi/compact-status-line",
-    "npm:@pi-plugins/fast-mode@0.1.13"
+    "npm:@pi-plugins/fast-mode@0.1.13",
+    "npm:pi-btw"
   ],
   "lastChangelogVersion": "1.1.0",
   "pi-usage": {
