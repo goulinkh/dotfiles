@@ -11,6 +11,7 @@
 # Pi credentials and runtime files stay local; only explicitly listed config is portable.
 .pi/agent/*
 !.pi/agent/settings.json
+!.pi/agent/models.json
 !.pi/agent/APPEND_SYSTEM.md
 !.pi/agent/extensions/
 .pi/agent/extensions/*

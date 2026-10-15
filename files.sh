@@ -28,6 +28,7 @@ FILES=(
   .omp/agent/rules/ts-avoid-weak-types.md
   .omp/agent/extensions/inherit-subagent-model.ts
   .pi/agent/settings.json
+  .pi/agent/models.json
   .pi/agent/APPEND_SYSTEM.md
   .pi/agent/extensions/fast-mode.json
   .config/pi/compact-status-line
