@@ -1,5 +1,9 @@
 NEVER create commits or push commits to a remote (including through CLI wrappers) unless explicitly requested by the user. Always follow user requests for commits and pushes.
 
+## Git checkout workflow
+
+Do not create or use git worktrees. Work in the user's existing checkout on normal local branches, and do not duplicate edits across checkouts. If repository instructions require a worktree, flag the conflict and ask the user before proceeding.
+
 ## Available platform CLIs
 
 Use these CLIs via `bash` instead of web scraping or hand-rolled API calls when the task fits. Do not assume authentication is configured on every machine.

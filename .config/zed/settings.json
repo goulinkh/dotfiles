@@ -7,6 +7,12 @@
   },
   "agent_buffer_font_size": 14.5,
   "lsp": {
+    "terrazzo-lsp": {
+      "settings": {
+        "runtime_path": "/Users/goulin/.local/share/mise/installs/node/26/bin/node",
+        "server_path": "/Users/goulin/.local/share/zed-terrazzo-lsp/scripts/filtered-server.mjs",
+      },
+    },
     "harper-ls": {
       "settings": {
         "harper-ls": {
@@ -50,6 +56,17 @@
     },
     {
       "host": "launchpad-container",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/ubuntu/launchpad-workdir/launchpad/./"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "launchpad-2",
       "args": [],
       "projects": [
         {
@@ -132,6 +149,13 @@
 
   // === languages ===
   "languages": {
+    // Terrazzo is opt-in: enable it in a project\'s .zed/settings.json.
+    "CSS": {
+      "language_servers": ["!terrazzo-lsp", "..."],
+    },
+    "SCSS": {
+      "language_servers": ["!terrazzo-lsp", "..."],
+    },
     "JavaScript": {
       "tab_size": 2,
     },

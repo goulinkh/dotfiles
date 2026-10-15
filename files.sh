@@ -10,6 +10,7 @@ FILES=(
   .vpn.zsh
   .gitconfig
   .screenrc
+  .agents/skills/gohuman
   .omp/agent/config.yml
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
@@ -38,6 +39,7 @@ FILES=(
   .config/htop/htoprc
   .copilot/settings.json
   .claude/settings.json
+  .claude/skills/gohuman
   .claude/CLAUDE.md
   .claude/hooks
 )
