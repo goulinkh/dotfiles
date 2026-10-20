@@ -30,13 +30,16 @@ else
   echo "==> GitHub Copilot CLI already installed"
 fi
 
-# Pi loads the extensions declared in its linked settings on first startup.
+# Install Pi, then reconcile the packages declared in its linked settings.
 if ! command -v pi >/dev/null 2>&1; then
   echo "==> installing Pi"
   mise exec node@26 -- npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 else
   echo "==> Pi already installed"
 fi
+
+echo "==> Installing Pi extensions"
+mise exec node@26 -- pi update --extensions
 
 # Install Bun (required by omp) and oh-my-pi (omp) CLI
 if ! command -v bun >/dev/null 2>&1; then

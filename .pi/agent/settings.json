@@ -19,7 +19,7 @@
   "tuiMode": "regular",
   "packages": [
     "npm:pi-notify@1.4.0",
-    "local/pi-usage",
+    "git:github.com/goulinkh/pi-usage",
     "npm:better-claude-code-ui",
     "~/.config/pi/compact-status-line",
     "npm:@pi-plugins/fast-mode@0.1.13",
