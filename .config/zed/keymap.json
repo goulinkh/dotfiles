@@ -14,11 +14,6 @@
     },
   },
   {
-    "unbind": {
-      "secondary-q": "zed::Quit",
-    },
-  },
-  {
     "context": "SkillCreator > Editor",
     "unbind": {
       "secondary-w": "workspace::CloseWindow",
