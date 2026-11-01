@@ -1,8 +1,8 @@
 {
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6.1-sol",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-opus-5",
   "enabledModels": [
-    "openai-codex/gpt-6.1-sol",
+    "github-copilot/gemini-4-argon",
     "openai-codex/gpt-6-astra",
     "github-copilot/claude-opus-5.5"
   ],
