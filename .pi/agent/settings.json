@@ -1,10 +1,10 @@
 {
-  "defaultProvider": "github-copilot",
-  "defaultModel": "claude-opus-5",
+  "defaultProvider": "openrouter",
+  "defaultModel": "anthropic/claude-opus-5.5",
   "enabledModels": [
+    "openrouter/anthropic/claude-opus-5.5",
     "github-copilot/gemini-4-argon",
-    "openai-codex/gpt-6-astra",
-    "github-copilot/claude-opus-5.5"
+    "openai-codex/gpt-6-astra"
   ],
   "defaultThinkingLevel": "xhigh",
   "defaultTools": [
@@ -26,7 +26,7 @@
     "npm:pi-btw",
     "npm:pi-auto-title@0.4.0"
   ],
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.4.0",
   "pi-usage": {
     "usageMode": "used",
     "usagePlacement": "inlineFooter"

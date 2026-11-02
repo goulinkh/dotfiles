@@ -16,3 +16,4 @@
 !.pi/agent/extensions/
 .pi/agent/extensions/*
 !.pi/agent/extensions/fast-mode.json
+!.pi/agent/extensions/openrouter-vertex.ts
