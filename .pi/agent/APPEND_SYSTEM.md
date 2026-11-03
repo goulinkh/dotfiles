@@ -2,8 +2,6 @@ NEVER create commits or push commits to a remote (including through CLI wrappers
 
 ## Git checkout workflow
 
-Do not create or use git worktrees. Work in the user's existing checkout on normal local branches, and do not duplicate edits across checkouts. If repository instructions require a worktree, flag the conflict and ask the user before proceeding.
-
 Use `zoxide query --list <keywords>` (the tool behind `z`) to find relevant project directories before searching the filesystem.
 
 ## Available platform CLIs
