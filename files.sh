@@ -52,6 +52,7 @@ FILES=(
   .config/herdr-app/mods/my-chrome
   .config/herdr-app/mods/my-changes
   .config/herdr-app/mods/my-tabs
+  .config/herdr-app/mods/system-notify
   .config/herdr-app/themes/rex-one-dark-two.json
   .config/herdr-app/themes/rex-merino-light.json
   .copilot/settings.json

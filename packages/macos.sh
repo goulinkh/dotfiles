@@ -11,6 +11,8 @@ fi
 
 echo "==> brew install"
 brew install fzf bat neovim jq mise gh tmux
+# Posts Herdr agent alerts as macOS notifications (mods/system-notify).
+brew install terminal-notifier
 
 # Shared global runtimes/CLIs via mise.
 bash "$DIR/common.sh"
