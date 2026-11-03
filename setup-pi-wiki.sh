@@ -13,17 +13,22 @@ EXT="$DIR/.pi/agent/extensions/jev-wiki-vault"
 AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 VAULT="${PI_WIKI_VAULT:-$HOME/pi-wiki-vault}"
 REMOTE="${PI_WIKI_VAULT_REMOTE:-git@github.com:goulinkh/pi-wiki-vault.git}"
+# Used when SSH to GitHub fails; git then authenticates through gh (gh auth setup-git).
+HTTPS_REMOTE="https://github.com/goulinkh/pi-wiki-vault.git"
 SYNC="$AGENT_DIR/extensions/jev-wiki-vault/vault-sync.sh"
 LABEL="com.goulinkh.pi-wiki-vault-sync"
 
 echo "==> Pi memory vault (pi-jev-wiki)"
 
 if [ ! -d "$VAULT/.git" ]; then
-  if ! GIT_SSH_COMMAND="ssh -o BatchMode=yes -o ConnectTimeout=15" git clone -q "$REMOTE" "$VAULT" 2>/dev/null; then
-    echo "   could not clone $REMOTE — check SSH access to GitHub, then re-run: ./setup-pi-wiki.sh" >&2
+  if GIT_SSH_COMMAND="ssh -o BatchMode=yes -o ConnectTimeout=15" git clone -q "$REMOTE" "$VAULT" 2>/dev/null; then
+    echo "   cloned $REMOTE -> $VAULT"
+  elif [ -z "${PI_WIKI_VAULT_REMOTE:-}" ] && GIT_TERMINAL_PROMPT=0 git clone -q "$HTTPS_REMOTE" "$VAULT" 2>/dev/null; then
+    echo "   cloned $HTTPS_REMOTE -> $VAULT (SSH to GitHub failed)"
+  else
+    echo "   could not clone the vault over SSH or HTTPS — check GitHub access (ssh -T git@github.com, gh auth status), then re-run: ./setup-pi-wiki.sh" >&2
     exit 1
   fi
-  echo "   cloned $REMOTE -> $VAULT"
 fi
 
 # Seed a fresh vault with its README, ignore rules, merge rules, and project aliases.
