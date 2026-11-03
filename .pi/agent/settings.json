@@ -1,8 +1,8 @@
 {
-  "defaultProvider": "openrouter",
-  "defaultModel": "anthropic/claude-opus-5.5",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-opus-5.5",
   "enabledModels": [
-    "openrouter/anthropic/claude-opus-5.5",
+    "github-copilot/claude-opus-5.5",
     "github-copilot/gemini-4-argon",
     "openai-codex/gpt-6-astra"
   ],
