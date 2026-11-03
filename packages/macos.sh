@@ -14,3 +14,6 @@ brew install fzf bat neovim jq mise gh tmux
 
 # Shared global runtimes/CLIs via mise.
 bash "$DIR/common.sh"
+
+# Herdr app and herdr-core.
+bash "$DIR/herdr.sh"

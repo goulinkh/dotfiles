@@ -3,6 +3,7 @@
 # Best effort: try every updater, then report a failure to the caller.
 set -u
 
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 failures=0
 
 run_update() {
@@ -38,7 +39,7 @@ if command -v mise >/dev/null 2>&1; then
     run_update "Updating mise" mise self-update --yes
   fi
   run_update "Upgrading mise tools" mise upgrade --yes
-  run_update "Updating global Node CLIs" mise exec node@26 -- npm install --global pnpm@latest @github/copilot@latest
+  run_update "Updating global Node CLIs" mise exec node@26 -- npm install --global pnpm@latest @github/copilot@latest @goulin/launchpad-cli@latest
   run_update "Refreshing mise shims" mise reshim
 fi
 
@@ -56,6 +57,18 @@ fi
 if command -v omp >/dev/null 2>&1; then
   run_update "Updating oh-my-pi" omp update
   run_update "Updating oh-my-pi plugins" omp update --plugins
+fi
+
+# Rex server on Linux, where it's installed (the Rex app updates it on macOS).
+if ! bash "$DIR/rex.sh" --update; then
+  echo "   failed: packages/rex.sh --update" >&2
+  failures=$((failures + 1))
+fi
+
+# Herdr app and herdr-core: installed where missing, otherwise updated.
+if ! bash "$DIR/herdr.sh"; then
+  echo "   failed: packages/herdr.sh" >&2
+  failures=$((failures + 1))
 fi
 
 if [ "$failures" -ne 0 ]; then

@@ -30,6 +30,15 @@ else
   echo "==> GitHub Copilot CLI already installed"
 fi
 
+# Launchpad CLI (lp, lpcli). Check the npm package rather than `lp`, which is
+# also the CUPS print command; the package bundles the native binaries.
+if ! mise exec node@26 -- npm ls --global --depth=0 @goulin/launchpad-cli >/dev/null 2>&1; then
+  echo "==> installing Launchpad CLI (@goulin/launchpad-cli)"
+  mise exec node@26 -- npm install -g @goulin/launchpad-cli
+else
+  echo "==> Launchpad CLI already installed"
+fi
+
 # Install Pi, then reconcile the packages declared in its linked settings.
 if ! command -v pi >/dev/null 2>&1; then
   echo "==> installing Pi"

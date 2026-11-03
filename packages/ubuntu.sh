@@ -59,3 +59,9 @@ command -v mise >/dev/null 2>&1 || curl -fsSL https://mise.run | sh
 
 # Shared global runtimes/CLIs via mise.
 bash "$DIR/common.sh"
+
+# Rex server (apt package + personal server unit); updates an existing install.
+bash "$DIR/rex.sh"
+
+# herdr-core (hc), so Herdr on other machines can run terminals here.
+bash "$DIR/herdr.sh"
