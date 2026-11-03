@@ -2,7 +2,20 @@
   "providers": {
     "openai-codex": {
       "modelOverrides": {
+        "gpt-6-astra": {
+          "contextWindow": 256000
+        },
         "gpt-6.1-sol": {
+          "contextWindow": 256000
+        }
+      }
+    },
+    "github-copilot": {
+      "modelOverrides": {
+        "claude-opus-5.5": {
+          "contextWindow": 256000
+        },
+        "gemini-4-argon": {
           "contextWindow": 256000
         }
       }
