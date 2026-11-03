@@ -7,8 +7,5 @@
 *.tmp-*
 *.tmp
 
-# Pointers written by the jev-wiki-vault extension, should Pi run inside the vault.
-**/.pi/jev-wiki.json
-
 .DS_Store
 .obsidian/workspace*.json

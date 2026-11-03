@@ -3,8 +3,8 @@
 #   1. clone the private vault (goulinkh/pi-wiki-vault) to ~/pi-wiki-vault, seeding it if empty
 #   2. write ~/.pi/agent/jev-wiki.json from the template (absolute paths differ per OS)
 #   3. install a 15-minute background sync: launchd on macOS, a systemd user timer on Ubuntu
-# The jev-wiki-vault Pi extension does the rest at session start: per-project pointers,
-# the OpenRouter key file (from /login openrouter), and syncing after work.
+# The jev-wiki-vault Pi extension does the rest at session start: it points each project at
+# its folder in the vault, writes the OpenRouter key file (from /login openrouter) and syncs.
 # Safe to re-run; install.sh and sync.sh call it.
 set -euo pipefail
 
