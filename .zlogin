@@ -8,10 +8,12 @@
 # A pane opened beside others (a split, or a new tab in the same Herdr space
 # or Rex session) starts in the focused pane's folder, so it asks what to run
 # in that project (proj --here). A new space or session, or a pane outside a
-# repo, gets the full picker.
+# repo, gets the full picker. A new Herdr terminal beside one at ~ starts at
+# ~ too and stays a plain shell, like the one it was opened from.
 
 # Succeed if this shell should open the picker, with reply set to the pane
-# key and the proj arguments.
+# key and the proj arguments. Return 2, with reply set to the pane key, if
+# the pane should stay a plain shell.
 function _proj_autostart_wanted() {
   emulate -L zsh
   [[ -o interactive && ${PROJ_AUTOSTART:-1} != 0 ]] && (( $+functions[proj] )) ||
@@ -44,11 +46,20 @@ function _proj_autostart_wanted() {
     info=$(hc ls --json --label herdr.space=$match[1] 2>/dev/null)
     ids=(${(M)${(s:,:)info}:#*'"address":'*})
   fi
-  (( $#ids > 1 )) && reply+=(--here)
+  if (( $#ids > 1 )); then
+    [[ $key == herdr:* && $PWD -ef $HOME ]] && return 2
+    reply+=(--here)
+  fi
   return 0
 }
 
-if _proj_autostart_wanted; then
+_proj_autostart_wanted
+case $? in
+2)
+  # Still mark the pane, so nested shells in it stay plain too.
+  export PROJ_AUTOSTART_PANE=$reply[1]
+  ;;
+0)
   export PROJ_AUTOSTART_PANE=$reply[1]
   typeset -ga _proj_autostart_args=(${reply[2,-1]})
   function _proj_first_prompt() {
@@ -63,5 +74,6 @@ if _proj_autostart_wanted; then
   # Run before the prompt's own precmd hooks so the prompt shows the new
   # directory.
   precmd_functions=(_proj_first_prompt $precmd_functions)
-fi
+  ;;
+esac
 unfunction _proj_autostart_wanted
