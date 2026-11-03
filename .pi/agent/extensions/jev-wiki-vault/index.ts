@@ -12,6 +12,8 @@
  *   capture and retrieval read keys only from the environment or that file.
  * - Syncs the vault in the background on session start, shortly after work
  *   settles, and at shutdown. `/vault-sync` syncs now; `/vault-sync status` reports.
+ * - Shows wiki reports only when the wiki gains something; evaluations that add
+ *   nothing stay hidden (ui.ts).
  *
  * Machine setup (vault clone, pi-jev-wiki config, sync timer): ~/dotfiles/setup-pi-wiki.sh
  */
@@ -22,6 +24,7 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getAgentDir, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { pickRemote, projectNameFromRemote, sanitize } from "./project-name.ts";
+import { registerQuietWikiUi } from "./ui.ts";
 import { existsOnDisk as existsSync, serveVirtualFile } from "./virtual-files.ts";
 
 const SYNC_SCRIPT = join(dirname(fileURLToPath(import.meta.url)), "vault-sync.sh");
@@ -64,6 +67,7 @@ function redactRemote(url: string): string {
 
 export default function jevWikiVault(pi: ExtensionAPI) {
 	let settledTimer: ReturnType<typeof setTimeout> | undefined;
+	registerQuietWikiUi(pi);
 
 	function startSync(): void {
 		if (!existsSync(SYNC_SCRIPT) || !existsSync(join(vaultDir(), ".git"))) return;
