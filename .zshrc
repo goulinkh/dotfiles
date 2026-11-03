@@ -55,6 +55,9 @@ export BUN_INSTALL="$HOME/.bun"
 # --- env ---
 export GPG_TTY=$TTY
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# Pi: always send OSC 7501 program status (Herdr agent state) instead of
+# probing the terminal first. Terminals without 7501 ignore the sequence.
+export PI_PROGRAM_STATUS=1
 
 # --- macOS-specific env ---
 if [[ $OSTYPE == darwin* ]]; then
