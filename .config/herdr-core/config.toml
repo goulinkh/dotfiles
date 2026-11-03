@@ -1,0 +1,5 @@
+# herdr-core settings (hc --help). Linked into $HOME by install.sh and sync.sh.
+#
+# No shell override: new terminals get the default login shell (zsh -l), so
+# ~/.zlogin can open the project picker in each new Herdr pane; Enter there
+# starts Pi.

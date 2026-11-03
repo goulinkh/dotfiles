@@ -3,11 +3,13 @@
 FILES=(
   .zshenv
   .zshrc
+  .zlogin
   .p10k.zsh
   .alias.zsh
   .claupilot.zsh
   .mp.zsh
   .vpn.zsh
+  .proj.zsh
   .gitconfig
   .screenrc
   .agents/skills/gohuman
@@ -38,6 +40,7 @@ FILES=(
   .config/zed/keymap.json
   .config/zed/AGENTS.md
   .config/htop/htoprc
+  .config/herdr-core/config.toml
   .copilot/settings.json
   .claude/settings.json
   .claude/skills/gohuman
