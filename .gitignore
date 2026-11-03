@@ -17,3 +17,7 @@
 .pi/agent/extensions/*
 !.pi/agent/extensions/fast-mode.json
 !.pi/agent/extensions/openrouter-vertex.ts
+
+# Herdr writes editor type files into each mod folder.
+.config/herdr-app/mods/*/gpui-kit.d.ts
+.config/herdr-app/mods/*/jsconfig.json

@@ -41,6 +41,12 @@ FILES=(
   .config/zed/AGENTS.md
   .config/htop/htoprc
   .config/herdr-core/config.toml
+  .config/herdr-app/settings.json
+  .config/herdr-app/layouts/my-main.json
+  .config/herdr-app/mods/my-chrome
+  .config/herdr-app/mods/my-changes
+  .config/herdr-app/themes/rex-one-dark-two.json
+  .config/herdr-app/themes/rex-merino-light.json
   .copilot/settings.json
   .claude/settings.json
   .claude/skills/gohuman

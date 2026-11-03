@@ -17,3 +17,6 @@ bash "$DIR/common.sh"
 
 # Herdr app and herdr-core.
 bash "$DIR/herdr.sh"
+
+# SF Pro Text, for Herdr's UI font.
+bash "$DIR/sf-pro.sh"

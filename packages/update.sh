@@ -71,6 +71,12 @@ if ! bash "$DIR/herdr.sh"; then
   failures=$((failures + 1))
 fi
 
+# SF Pro Text for Herdr's UI font, where it's missing (macOS only).
+if ! bash "$DIR/sf-pro.sh"; then
+  echo "   failed: packages/sf-pro.sh" >&2
+  failures=$((failures + 1))
+fi
+
 if [ "$failures" -ne 0 ]; then
   echo "==> $failures package update(s) failed" >&2
   exit 1
