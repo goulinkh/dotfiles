@@ -42,12 +42,15 @@
 	unstage = reset HEAD --
 	lg = log --oneline --graph --decorate --all
 	amend = commit --amend --no-edit
+# gh is /opt/zerobrew/bin/gh on macOS and /usr/bin/gh on Ubuntu, so find it when git asks:
+# on PATH, else zerobrew's (apps started outside a shell lack it). `gh auth setup-git`
+# would write one machine's absolute path here.
 [credential "https://github.com"]
 	helper = 
-	helper = !/opt/zerobrew/bin/gh auth git-credential
+	helper = !\"$(command -v gh || echo /opt/zerobrew/bin/gh)\" auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/opt/zerobrew/bin/gh auth git-credential
+	helper = !\"$(command -v gh || echo /opt/zerobrew/bin/gh)\" auth git-credential
 [url "git+ssh://goulin@git.launchpad.test:9422/"]
 	insteadOf = lptest:
 [checkout]
