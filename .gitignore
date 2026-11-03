@@ -13,6 +13,7 @@
 !.pi/agent/settings.json
 !.pi/agent/models.json
 !.pi/agent/APPEND_SYSTEM.md
+!.pi/agent/pi-auto-title.json
 !.pi/agent/extensions/
 .pi/agent/extensions/*
 !.pi/agent/extensions/fast-mode.json

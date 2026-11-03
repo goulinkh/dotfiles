@@ -32,6 +32,7 @@ FILES=(
   .omp/agent/extensions/inherit-subagent-model.ts
   .pi/agent/settings.json
   .pi/agent/models.json
+  .pi/agent/pi-auto-title.json
   .pi/agent/APPEND_SYSTEM.md
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
