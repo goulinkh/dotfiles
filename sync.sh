@@ -82,6 +82,9 @@ bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run
 # Re-link VS Code settings/keybindings (OS-specific user config dir).
 bash "$DIR/setup-vscode.sh" || echo "   vscode linking failed — re-run: ./setup-vscode.sh" >&2
 
+# Pi memory vault: clone, pi-jev-wiki config, background sync timer.
+bash "$DIR/setup-pi-wiki.sh" || echo "   pi memory vault setup failed — re-run: ./setup-pi-wiki.sh" >&2
+
 
 echo "==> Updating zsh4humans + plugins"
 if command -v zsh >/dev/null 2>&1; then

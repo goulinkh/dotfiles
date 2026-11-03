@@ -35,6 +35,8 @@ FILES=(
   .pi/agent/APPEND_SYSTEM.md
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
+  .pi/agent/extensions/jev-wiki-vault
+  .config/git/ignore
   .config/pi/compact-status-line
   .config/zed/settings.json
   .config/zed/keymap.json

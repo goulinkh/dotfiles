@@ -24,7 +24,8 @@
     "~/.config/pi/compact-status-line",
     "npm:@pi-plugins/fast-mode@0.1.13",
     "npm:pi-btw@0.8.0",
-    "npm:pi-auto-title@0.4.0"
+    "npm:pi-auto-title@0.4.0",
+    "npm:pi-jev-wiki@1.0.4"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {

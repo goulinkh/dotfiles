@@ -1,0 +1,5 @@
+# Append-only or list files: keep both sides' lines when two machines edit them.
+**/.jev-wiki/decisions.jsonl merge=union
+**/.jev-wiki/review-queue.jsonl merge=union
+**/wiki/log.md merge=union
+**/remotes.txt merge=union

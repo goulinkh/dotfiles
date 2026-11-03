@@ -1,0 +1,14 @@
+# Machine-local pi-jev-wiki state: locks, metrics, session logs, sync baselines.
+**/.jev-wiki/lock
+**/.jev-wiki/metrics.jsonl
+**/.jev-wiki/session-log.jsonl
+**/.jev-wiki/state.json
+**/.jev-wiki/pending-capture.md
+*.tmp-*
+*.tmp
+
+# Pointers written by the jev-wiki-vault extension, should Pi run inside the vault.
+**/.pi/jev-wiki.json
+
+.DS_Store
+.obsidian/workspace*.json

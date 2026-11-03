@@ -1,0 +1,16 @@
+{
+  "provider": "openrouter",
+  "model": "~typesafe/jev-latest",
+  "apiKey": "$JEV_WIKI_API_KEY",
+  "envFile": "${PI_AGENT_DIR}/jev-wiki.env",
+  "wikiRoot": "${PI_WIKI_VAULT}/global",
+  "globalWikiRoot": "${PI_WIKI_VAULT}/global",
+  "capture": { "cadence": "task", "onCompact": true, "route": "session" },
+  "writer": { "mode": "auto" },
+  "search": {
+    "vector": {
+      "model": "performance",
+      "scan": { "roots": ["${PI_WIKI_VAULT}"], "wsl": false }
+    }
+  }
+}
