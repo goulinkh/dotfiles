@@ -32,5 +32,8 @@
   "pi-usage": {
     "usageMode": "used",
     "usagePlacement": "inlineFooter"
+  },
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-jev-wiki@1.0.4\",\"scope\":\"user\"}": "1.0.4"
   }
 }
