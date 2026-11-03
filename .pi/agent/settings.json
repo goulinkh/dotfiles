@@ -25,7 +25,8 @@
     "npm:@pi-plugins/fast-mode@0.1.13",
     "npm:pi-btw@0.8.0",
     "git:github.com/goulinkh/pi-auto-title",
-    "npm:pi-jev-wiki@1.0.4"
+    "npm:pi-jev-wiki@1.0.4",
+    "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {

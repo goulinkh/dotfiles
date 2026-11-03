@@ -37,6 +37,9 @@ FILES=(
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
   .pi/agent/extensions/jev-wiki-vault
+  # pi-review reads REVIEW_GUIDELINES.md beside the nearest .pi directory,
+  # which is ~ for any project without its own .pi.
+  REVIEW_GUIDELINES.md
   .config/git/ignore
   .config/pi/compact-status-line
   .config/zed/settings.json
