@@ -115,6 +115,9 @@ After=network-online.target
 Type=oneshot
 Environment=PI_WIKI_VAULT=$VAULT
 ExecStart=/bin/bash $SYNC sync
+# The index refresh may start pi-jev-wiki's shared embedder; leave it serving Pi sessions
+# until its own idle exit instead of stopping it with the job.
+KillMode=process
 EOF
       cat >"$units/pi-wiki-vault-sync.timer" <<EOF
 [Unit]

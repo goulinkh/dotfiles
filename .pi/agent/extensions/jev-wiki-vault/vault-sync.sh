@@ -9,10 +9,13 @@
 # vault's .gitattributes); generated files take the remote copy and are rebuilt by
 # pi-jev-wiki. Any other conflict aborts the rebase, keeps the local commit, and
 # leaves a note in .git/vault-sync-conflict that the extension shows in Pi.
+# After a sync that moved HEAD it brings this machine's semantic index up to date
+# (reindex.ts), so pages other machines wrote are found by meaning, not just keywords.
 # Bash 3.2 compatible (macOS /bin/bash).
 set -uo pipefail
 
 VAULT="${PI_WIKI_VAULT:-$HOME/pi-wiki-vault}"
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODE="${1:-sync}"
 BRANCH="main"
 export GIT_SSH_COMMAND="${GIT_SSH_COMMAND:-ssh -o BatchMode=yes -o ConnectTimeout=15}"
@@ -29,6 +32,7 @@ LOCK="$GITDIR/vault-sync.lock"
 CONFLICT="$GITDIR/vault-sync-conflict"
 STATUS="$GITDIR/vault-sync-status"
 LOG="$GITDIR/vault-sync.log"
+INDEXED="$GITDIR/vault-index-head"
 
 # Background commits (including the ones rebase re-creates) must not need a signing key.
 g() { git -C "$VAULT" -c commit.gpgsign=false "$@"; }
@@ -41,13 +45,49 @@ log() {
 finish() { # finish <exit code> <status message>
   echo "$(date -u +%FT%TZ) $2" >"$STATUS"
   log "$2"
+  refresh_index
   exit "$1"
+}
+
+# The timers run without the login shell's PATH, where mise puts node.
+find_node() {
+  local candidate
+  for candidate in "${PI_WIKI_NODE:-}" "$HOME/.local/share/mise/shims/node" "$(command -v node 2>/dev/null)"; do
+    [ -n "$candidate" ] && [ -x "$candidate" ] && { echo "$candidate"; return 0; }
+  done
+  return 1
+}
+
+# 3. Re-embed what changed since the last indexed HEAD: pages pulled from other machines,
+#    new project wikis, deleted ones. A failure is retried on the next run.
+refresh_index() {
+  local head node out code
+  head="$(g rev-parse -q --verify HEAD 2>/dev/null)" || return 0
+  [ "$head" = "$(cat "$INDEXED" 2>/dev/null)" ] && return 0
+  if ! node="$(find_node)"; then
+    log "index: skipped, node not found (set PI_WIKI_NODE)"
+    echo "$head" >"$INDEXED"
+    return 0
+  fi
+  out="$("$node" "$HERE/reindex.ts" 2>&1)"
+  code=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | while IFS= read -r line; do log "index: $line"; done
+  case "$code" in
+    0 | 3) echo "$head" >"$INDEXED" ;;
+    *) [ -n "$out" ] || log "index: failed (exit $code)" ;;
+  esac
+  return 0
 }
 
 if [ "$MODE" = "status" ]; then
   echo "vault:  $VAULT"
   echo "last:   $(cat "$STATUS" 2>/dev/null || echo 'never synced')"
   echo "ahead:  $(g rev-list --count "origin/$BRANCH..HEAD" 2>/dev/null || echo '?') local commit(s) not pushed"
+  if [ "$(cat "$INDEXED" 2>/dev/null)" = "$(g rev-parse -q --verify HEAD 2>/dev/null)" ]; then
+    echo "index:  up to date with the vault"
+  else
+    echo "index:  refreshes after the next sync"
+  fi
   [ -f "$CONFLICT" ] && { echo "CONFLICT:"; sed 's/^/  /' "$CONFLICT"; }
   exit 0
 fi
