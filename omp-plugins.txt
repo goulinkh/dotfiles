@@ -1,6 +1,8 @@
 # omp plugins installed by setup-omp-plugins.sh — one spec per line.
-# Specs are what `omp plugin install` accepts: an npm package name or
-# github:<owner>/<repo>. Comments and blank lines are ignored.
+# Specs are what `omp plugin install` accepts: npm-name@version or
+# github:<owner>/<repo>[#commit]. Blank lines, comment lines, and whitespace-
+# separated inline comments are ignored; #commit refs are preserved.
+# Pin third-party plugins; goulinkh projects intentionally remain unpinned.
 #
 # omp materialises plugins in ~/.omp/plugins (package.json, lockfiles,
 # node_modules) — machine-local build output, so the repo tracks only the
@@ -11,3 +13,6 @@
 # Adds Launchpad bugs, repositories, merge proposals, diffs, search, checkout,
 # and write operations through lp-shell/launchpadlib.
 github:goulinkh/omp-launchpad
+
+# Third-party plugins, pinned to the installed revision (omp-send-context 2.6.0).
+github:klondikemarlen/omp-send-context#b87ea2cf78d90f9be9211ccb09ef5c04077d68a5

@@ -79,9 +79,6 @@ bash "$DIR/packages/update.sh" || echo "   package updates failed — re-run: ./
 # Register the local SSH signing key with GitHub when gh is authenticated.
 bash "$DIR/setup-git-signing.sh" || echo "   git signing setup failed — re-run: ./setup-git-signing.sh" >&2
 
-# Install/update the omp plugins listed in omp-plugins.txt.
-bash "$DIR/setup-omp-plugins.sh" || echo "   omp plugin install failed — re-run: ./setup-omp-plugins.sh" >&2
-
 # Re-link VS Code settings/keybindings (OS-specific user config dir).
 bash "$DIR/setup-vscode.sh" || echo "   vscode linking failed — re-run: ./setup-vscode.sh" >&2
 

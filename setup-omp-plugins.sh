@@ -17,10 +17,13 @@ fi
 
 echo "==> Installing omp plugins"
 failed=0
-while IFS= read -r spec; do
-  spec="${spec%%#*}"
-  spec="$(echo "$spec" | xargs)"
-  [ -n "$spec" ] || continue
+while IFS= read -r spec || [ -n "$spec" ]; do
+  # Only whitespace-separated comments may follow a spec; keep Git #refs.
+  spec="${spec%%[[:space:]]#*}"
+  spec="$(printf '%s\n' "$spec" | xargs)"
+  case "$spec" in
+    ""|\#*) continue ;;
+  esac
   if omp plugin install "$spec" >/dev/null 2>&1; then
     echo "   plugin: $spec"
   else

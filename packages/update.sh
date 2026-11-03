@@ -56,7 +56,8 @@ fi
 
 if command -v omp >/dev/null 2>&1; then
   run_update "Updating oh-my-pi" omp update
-  run_update "Updating oh-my-pi plugins" omp update --plugins
+  # Reconcile the declared specs instead of upgrading past third-party pins.
+  run_update "Updating oh-my-pi plugins" bash "$DIR/../setup-omp-plugins.sh"
 fi
 
 # Rex server on Linux, where it's installed (the Rex app updates it on macOS).

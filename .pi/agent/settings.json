@@ -20,13 +20,13 @@
   "packages": [
     "npm:pi-notify@1.4.0",
     "git:github.com/goulinkh/pi-usage",
-    "npm:better-claude-code-ui",
+    "npm:better-claude-code-ui@0.1.9",
     "~/.config/pi/compact-status-line",
     "npm:@pi-plugins/fast-mode@0.1.13",
-    "npm:pi-btw",
+    "npm:pi-btw@0.8.0",
     "npm:pi-auto-title@0.4.0"
   ],
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.0",
   "pi-usage": {
     "usageMode": "used",
     "usagePlacement": "inlineFooter"
