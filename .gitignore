@@ -23,3 +23,6 @@
 # Herdr writes editor type files into each mod folder.
 .config/herdr-app/mods/*/gpui-kit.d.ts
 .config/herdr-app/mods/*/jsconfig.json
+
+# Python writes bytecode caches when the tests run.
+__pycache__/
