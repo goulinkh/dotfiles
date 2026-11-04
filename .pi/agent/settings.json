@@ -7,6 +7,9 @@
     "openai-codex/gpt-6.1-sol"
   ],
   "defaultThinkingLevel": "xhigh",
+  "modelThinkingLevels": {
+    "openai-codex/gpt-6-astra": "high"
+  },
   "defaultTools": [
     "+codemode",
     "+grep",
