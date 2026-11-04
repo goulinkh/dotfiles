@@ -1,7 +1,8 @@
 {
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-astra",
+  "defaultProvider": "auto",
+  "defaultModel": "gpt-auto",
   "enabledModels": [
+    "auto/gpt-auto",
     "openai-codex/gpt-6-astra",
     "github-copilot/claude-opus-5.5",
     "openai-codex/gpt-6.1-sol"
@@ -30,7 +31,8 @@
     "git:github.com/goulinkh/pi-auto-title",
     "npm:pi-jev-wiki@1.0.4",
     "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb",
-    "npm:pi-token-speed@0.12.0"
+    "npm:pi-token-speed@0.12.0",
+    "git:github.com/goulinkh/pi-jev-router@559044b8934e9797c94ea59fc4975813246ca2ed"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {
