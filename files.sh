@@ -46,7 +46,6 @@ FILES=(
   .config/zed/keymap.json
   .config/zed/AGENTS.md
   .config/zed/tasks.json
-  .config/zed/herdr-open.sh
   .config/htop/htoprc
   .config/herdr-core/config.toml
   .config/herdr-app/settings.json

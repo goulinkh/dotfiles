@@ -3,31 +3,6 @@
 // Example:
 [
   {
-    // Show this project's Herdr space (made if missing). Local projects only.
-    "label": "Herdr: open project",
-    "command": "$HOME/.config/zed/herdr-open.sh",
-    "args": ["$ZED_WORKTREE_ROOT"],
-    "reveal": "never",
-    "hide": "on_success"
-  },
-  {
-    // ...and show this file in its Files panel at the cursor's line.
-    "label": "Herdr: show file",
-    "command": "$HOME/.config/zed/herdr-open.sh",
-    "args": ["$ZED_WORKTREE_ROOT", "$ZED_FILE", "$ZED_ROW"],
-    "reveal": "never",
-    "hide": "on_success"
-  },
-  {
-    // A Herdr terminal (agent) in Zed's terminal: `hc` picks one, ctrl+\ detaches.
-    "label": "Herdr: attach terminal",
-    "command": "hc",
-    "use_new_terminal": true,
-    "allow_concurrent_runs": true,
-    "reveal": "always",
-    "hide": "always"
-  },
-  {
     "label": "Example task",
     "command": "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done",
     //"args": [],
