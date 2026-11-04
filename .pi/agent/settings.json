@@ -23,7 +23,7 @@
   "tuiMode": "regular",
   "packages": [
     "npm:pi-notify@1.4.0",
-    "git:github.com/goulinkh/pi-usage",
+    "git:github.com/goulinkh/pi-usage@2825c092a75a4feb0ef1a67cff116736073f936e",
     "npm:better-claude-code-ui@0.1.9",
     "~/.config/pi/compact-status-line",
     "npm:@pi-plugins/fast-mode@0.1.13",
@@ -37,7 +37,10 @@
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {
     "usageMode": "used",
-    "usagePlacement": "inlineFooter"
+    "usagePlacement": "inlineFooter",
+    "modelProviders": {
+      "auto/gpt-auto": "openai-codex"
+    }
   },
   "extensionChangelogVersions": {
     "{\"source\":\"npm:pi-jev-wiki@1.0.4\",\"scope\":\"user\"}": "1.0.4"
