@@ -26,13 +26,12 @@
     "git:github.com/goulinkh/pi-usage@2825c092a75a4feb0ef1a67cff116736073f936e",
     "npm:better-claude-code-ui@0.1.9",
     "~/.config/pi/compact-status-line",
-    "npm:@pi-plugins/fast-mode@0.1.13",
     "npm:pi-btw@0.8.0",
     "git:github.com/goulinkh/pi-auto-title",
     "npm:pi-jev-wiki@1.0.4",
     "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb",
     "npm:pi-token-speed@0.12.0",
-    "git:github.com/goulinkh/pi-jev-router@559044b8934e9797c94ea59fc4975813246ca2ed"
+    "git:github.com/goulinkh/pi-jev-router@0aabbd348a7e295e8adea1d4c44389981ea7483d"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {
