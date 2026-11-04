@@ -33,6 +33,15 @@ CONFLICT="$GITDIR/vault-sync-conflict"
 STATUS="$GITDIR/vault-sync-status"
 LOG="$GITDIR/vault-sync.log"
 INDEXED="$GITDIR/vault-index-head"
+PAUSED="$GITDIR/vault-sync-paused"
+
+# A local reset must not be automatically committed, pushed, or repopulated.
+# Remove this marker only when the user authorizes resuming synchronization.
+if [ -f "$PAUSED" ]; then
+  case "$MODE" in
+    sync | status) echo "vault-sync: paused ($PAUSED)"; exit 0 ;;
+  esac
+fi
 
 # Background commits (including the ones rebase re-creates) must not need a signing key.
 g() { git -C "$VAULT" -c commit.gpgsign=false "$@"; }

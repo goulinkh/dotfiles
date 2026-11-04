@@ -5,8 +5,17 @@
   "envFile": "${PI_AGENT_DIR}/jev-wiki.env",
   "wikiRoot": "${PI_WIKI_VAULT}/global",
   "globalWikiRoot": "${PI_WIKI_VAULT}/global",
-  "capture": { "cadence": "task", "onCompact": true, "route": "session" },
-  "writer": { "mode": "auto" },
+  "capture": { "cadence": "manual", "onCompact": false, "onSettle": false, "route": "subject", "triggerTurn": false },
+  "writer": { "mode": "guided" },
+  "review": { "autoAcceptUserStated": false },
+  "thresholds": {
+    "autoAccept": 0.95,
+    "minSupport": 0.95,
+    "minDerivable": 0.3,
+    "framingImportance": 1,
+    "minImportance": 2
+  },
+  "hooks": { "autoRetrieve": { "mode": "off" } },
   "search": {
     "vector": {
       "model": "performance",
