@@ -2,38 +2,21 @@
 
 Load after `better-claude-code-ui` and before `@pi-plugins/fast-mode`. Keep pi-usage before the UI package when using its `inlineFooter` placement.
 
+The footer shows the model, inline fast-mode indicator, token speed, context usage, and session duration/turn count. Project paths, Git status, and branch names are omitted because the multiplexer already shows them. The footer no longer polls Git or directory metadata.
+
 Fast mode appears as `` (`nf-fa-bolt`, U+F0E7) next to the model only while the plugin reports it active. Its separate widget is suppressed without changing `/fast` or provider requests. The adapter targets fast-mode 0.1.13's shared statusline registry and preserves other plugins' segments.
 
-## Git
+## Token speed
 
-The Git segment uses Oh My Zsh-inspired colors and counters, for example:
+Install the pinned `npm:pi-token-speed@0.12.0` package alongside this extension. The footer reads its `tokenSpeed` status entry on every render, preserving its colors and `/tps` display settings:
 
 ```text
- main +2 ~3 ?1 !1 ↑2 ↓1
+model · ⚡ TPS: 25.0 tok/s · ctx 12%/200k              2m 10s · 3 turns
 ```
 
-| Marker | Meaning | Theme color |
-| --- | --- | --- |
-| `+N` | Staged files | Success (green) |
-| `~N` | Unstaged files | Warning (yellow) |
-| `?N` | Untracked files | Accent |
-| `!N` | Conflicted files | Error (red) |
-| `↑N` / `↓N` | Commits ahead / behind upstream | Success / warning |
-| `✓` | Clean working tree | Success |
+Pi requests a render when the token-speed extension updates its status. No extra polling or token counting is needed here. If the package is absent or its status is cleared, the segment is omitted.
 
-Zero counts are hidden. The branch is green when clean, yellow with changes, and red with conflicts. A partially staged file contributes to both staged and unstaged counts; conflicted files contribute only to conflicts. Detached HEAD shows a short commit identifier. Upstream counts come from local Git metadata, without fetching.
-
-## Directory
-
-Directory shortening follows the current Powerlevel10k settings in `~/dotfiles/.p10k.zsh`:
-
-- Replace the home-directory prefix with `~`, preserving path boundaries.
-- Keep full paths while they fit, up to 80 columns.
-- Shorten intermediate directories to their shortest unique sibling prefixes when space is needed, without an ellipsis or suffix.
-- Preserve the first absolute-path directory, project/marker directories, and final directory.
-- Reserve space for the model, Git, context, session details, and appended usage before shortening the path.
-
-Only directory-entry metadata is read, asynchronously outside rendering. Prefixes refresh every five seconds; unreadable directories retain full names. Extremely narrow terminals still clip the final footer to their width.
+The standalone Git/path helpers and their tests are retained but are not used by the current footer.
 
 ## Checks
 

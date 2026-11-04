@@ -1,12 +1,9 @@
-import { execFile } from "node:child_process";
-import { homedir } from "node:os";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { formatGitStatus, parseGitStatus } from "./gitStatus.ts";
 import inlineFastModeStatus from "./inlineFastModeStatus.ts";
-import { describePath, formatPath, loadPathDescription } from "./pathStatus.ts";
 
 const FAST_MODE_STATUS_KEY = "compact-status-line:fast-mode";
+const TOKEN_SPEED_STATUS_KEY = "tokenSpeed";
 
 function formatContextLimit(tokens: number): string {
 	if (tokens < 1_000) return `${tokens}`;
@@ -25,7 +22,8 @@ function formatDuration(milliseconds: number): string {
 }
 
 /** Replace better-claude-code-ui's status line with a compact personal variant.
- * @note Registers lifecycle handlers, wraps widget updates, and polls Git/directory metadata while the footer is mounted.
+ * Project path and Git details belong to the multiplexer; show token speed here instead.
+ * @note Registers lifecycle handlers and wraps widget updates for inline fast-mode status.
  */
 export default function compactStatusLine(pi: ExtensionAPI): void {
 	let restoreFastModeStatus: (() => void) | undefined;
@@ -54,64 +52,20 @@ export default function compactStatusLine(pi: ExtensionAPI): void {
 			if (event.message?.role === "user") turns++;
 		});
 
-		ctx.ui.setFooter((tui, theme, footerData) => {
-			let disposed = false;
-			let gitStatus: ReturnType<typeof parseGitStatus> | undefined;
-			let pathDescription = describePath(ctx.cwd, homedir());
-			let refreshInFlight = false;
-			let pathRefreshInFlight = false;
-			const refreshGitStatus = () => {
-				if (disposed || refreshInFlight) return;
-				refreshInFlight = true;
-				execFile("git", ["--no-optional-locks", "status", "--porcelain=v2", "--branch", "-z", "--untracked-files=all"], { cwd: ctx.cwd, encoding: "utf8" }, (error, stdout) => {
-					refreshInFlight = false;
-					if (disposed) return;
-					const nextGitStatus = error ? undefined : parseGitStatus(stdout);
-					if (JSON.stringify(nextGitStatus) === JSON.stringify(gitStatus)) return;
-					gitStatus = nextGitStatus;
-					tui.requestRender();
-				});
-			};
-			const refreshPath = async () => {
-				if (disposed || pathRefreshInFlight) return;
-				pathRefreshInFlight = true;
-				try {
-					const nextPath = await loadPathDescription(ctx.cwd, homedir());
-					if (disposed || JSON.stringify(nextPath) === JSON.stringify(pathDescription)) return;
-					pathDescription = nextPath;
-					tui.requestRender();
-				} finally {
-					pathRefreshInFlight = false;
-				}
-			};
-			refreshGitStatus();
-			void refreshPath();
-			const refreshTimer = setInterval(() => {
-				refreshGitStatus();
-				void refreshPath();
-			}, 5_000);
-			refreshTimer.unref?.();
-			const unsubscribe = footerData.onBranchChange(() => {
-				refreshGitStatus();
-				tui.requestRender();
-			});
+		ctx.ui.setFooter((_tui, theme, footerData) => {
 			return {
-				dispose: () => {
-					disposed = true;
-					unsubscribe();
-					clearInterval(refreshTimer);
-				},
 				invalidate() {},
 				render(width: number): string[] {
 					const model = ctx.model?.id ?? "no-model";
 					const usage = ctx.getContextUsage();
 					const contextLimit = ctx.model?.contextWindow ?? 0;
 					const contextTokens = usage?.tokens ?? 0;
-					const fastModeIcon = footerData.getExtensionStatuses().get(FAST_MODE_STATUS_KEY);
+					const statuses = footerData.getExtensionStatuses();
+					const fastModeIcon = statuses.get(FAST_MODE_STATUS_KEY);
 					const modelText = theme.fg("muted", model) + (fastModeIcon ? ` ${theme.fg("accent", fastModeIcon)}` : "");
 					const leftParts: string[] = [modelText];
-					const gitText = formatGitStatus(theme, gitStatus, footerData.getGitBranch());
-					if (gitText) leftParts.push(gitText);
+					const tokenSpeed = statuses.get(TOKEN_SPEED_STATUS_KEY);
+					if (tokenSpeed) leftParts.push(tokenSpeed);
 					if (contextTokens > 0) {
 						const percent = contextLimit > 0 ? Math.round((contextTokens / contextLimit) * 100) : 0;
 						const contextText = contextLimit > 0 ? `${percent}%/${formatContextLimit(contextLimit)}` : `${contextTokens}`;
@@ -125,9 +79,6 @@ export default function compactStatusLine(pi: ExtensionAPI): void {
 					}
 					const separator = theme.fg("dim", " · ");
 					const right = rightParts.join(separator);
-					const fixedWidth = visibleWidth(leftParts.join(separator)) + (right ? visibleWidth(right) + 1 : 0);
-					const pathColumns = Math.max(0, width - fixedWidth - visibleWidth(separator));
-					leftParts.splice(1, 0, theme.fg("dim", formatPath(pathDescription, pathColumns, visibleWidth)));
 					const left = leftParts.join(separator);
 					if (!right) return [truncateToWidth(left, width, "")];
 					const padding = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));

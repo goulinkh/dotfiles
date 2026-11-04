@@ -26,7 +26,8 @@
     "npm:pi-btw@0.8.0",
     "git:github.com/goulinkh/pi-auto-title",
     "npm:pi-jev-wiki@1.0.4",
-    "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb"
+    "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb",
+    "npm:pi-token-speed@0.12.0"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {
