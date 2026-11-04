@@ -40,6 +40,8 @@ FILES=(
   # pi-review reads REVIEW_GUIDELINES.md beside the nearest .pi directory,
   # which is ~ for any project without its own .pi.
   REVIEW_GUIDELINES.md
+  .config/vale-general/.vale.ini
+  .config/vale-general/styles/Prose/LongSentence.yml
   .config/git/ignore
   .config/pi/compact-status-line
   .config/zed/settings.json
