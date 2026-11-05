@@ -13,7 +13,7 @@ source "$DIR/files.sh"
 
 echo "==> Linking dotfiles"
 for f in "${FILES[@]}"; do
-  src="$DIR/$f"
+  src="$(dotfile_source "$f")"
   dst="$HOME/$f"
   [ -e "$src" ] || continue
   if [ -e "$dst" ] && [ ! -L "$dst" ]; then

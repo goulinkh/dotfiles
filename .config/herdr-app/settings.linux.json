@@ -1,0 +1,14 @@
+{
+  "zoom": 1.0,
+  "sounds": {
+    "enabled": true
+  },
+  "font": "Maple Mono NF",
+  "font_size": 14.5,
+  "ui_font": "Ubuntu Sans",
+  "minimum_contrast": 1.0,
+  "theme": {
+    "light": "rex-merino-light",
+    "dark": "rex-one-dark-two"
+  }
+}

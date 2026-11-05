@@ -1,5 +1,15 @@
 # Dotfiles symlinked into $HOME by install.sh and sync.sh.
 # Single source of truth — edit here, both scripts pick it up.
+
+# Resolve platform-specific sources without changing their destination names.
+# The caller sets DIR to the dotfiles repository root.
+dotfile_source() {
+  case "$1:$(uname -s)" in
+    .config/herdr-app/settings.json:Linux)
+      printf '%s\n' "$DIR/.config/herdr-app/settings.linux.json" ;;
+    *) printf '%s\n' "$DIR/$1" ;;
+  esac
+}
 FILES=(
   .zshenv
   .zshrc
