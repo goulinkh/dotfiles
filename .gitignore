@@ -26,3 +26,12 @@
 
 # Python writes bytecode caches when the tests run.
 __pycache__/
+
+# Codex credentials and runtime files stay local.
+.codex/*
+!.codex/config.toml
+!.codex/AGENTS.md
+!.codex/hooks.json
+!.codex/skills/
+.codex/skills/*
+!.codex/skills/code-review/

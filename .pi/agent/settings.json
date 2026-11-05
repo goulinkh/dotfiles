@@ -31,7 +31,7 @@
     "npm:pi-jev-wiki@1.0.4",
     "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb",
     "npm:pi-token-speed@0.12.0",
-    "git:github.com/goulinkh/pi-jev-router@0aabbd348a7e295e8adea1d4c44389981ea7483d"
+    "git:github.com/goulinkh/pi-jev-router@e8f07459dbec7c50ac7dd632bc7d3ade5fd0aef6"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {

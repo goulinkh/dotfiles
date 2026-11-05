@@ -35,6 +35,25 @@ if command -v nvim &>/dev/null; then
 fi
 command -v code   &>/dev/null && alias c="code"
 command -v zoxide &>/dev/null && alias zz="zi"
+
+# Keep commands and session context in the Herdr terminal that launched Codex.
+function codex() {
+  if [[ -n ${HC_TERMINAL_ID:-} ]]; then
+    local argument
+    for argument in "$@"; do
+      case $argument in
+        --no-daemon|--remote|--remote=*|agents|exec|e|review|login|logout|mcp|plugin|app-server|remote-control|app|completion|update|doctor|sandbox|debug|apply|queue|archive|delete|migrate-rollouts|migrate-nfs-db|unarchive|cloud|exec-server|features|help)
+          command codex "$@"
+          return $?
+          ;;
+      esac
+    done
+    command codex --no-daemon "$@"
+  else
+    command codex "$@"
+  fi
+}
+
 command -v lsd &>/dev/null && alias ls="lsd --group-dirs first --color always --human-readable --hyperlink auto"
 # bat ships as `batcat` on Debian/Ubuntu.
 if command -v bat &>/dev/null; then

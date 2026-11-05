@@ -23,6 +23,10 @@ FILES=(
   .gitconfig
   .screenrc
   .agents/skills/gohuman
+  .codex/config.toml
+  .codex/AGENTS.md
+  .codex/hooks.json
+  .codex/skills/code-review
   .omp/agent/config.yml
   .omp/agent/models.yaml
   .omp/agent/APPEND_SYSTEM.md
@@ -61,6 +65,7 @@ FILES=(
   .config/htop/htoprc
   .config/herdr-core/config.toml
   .config/herdr-app/settings.json
+  .config/herdr-app/programs.json
   .config/herdr-app/layouts/my-main.json
   .config/herdr-app/mods/my-chrome
   .config/herdr-app/mods/my-changes

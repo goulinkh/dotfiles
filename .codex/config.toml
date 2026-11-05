@@ -1,0 +1,30 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "xhigh"
+service_tier = "fast"
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+
+[features]
+daemon_auto_start = false
+
+[tui]
+screen_reader_detection_done = true
+alternate_screen = "never"
+raw_output_mode = false
+# This account's primary quota window is weekly, despite the legacy item name.
+status_line = ["model-with-reasoning", "fast-mode", "context-used", "five-hour-limit"]
+terminal_title = ["thread"]
+
+[tui.presets.1]
+label = "Astra · high · Fast"
+input = "/model gpt-6-astra --reasoning=high --speed=fast"
+
+[tui.presets.2]
+label = "Sol · xhigh · Fast"
+input = "/model gpt-6.1-sol --reasoning=xhigh --speed=fast"
+
+[tui.keymap.chat]
+open_presets = "ctrl-p"
+
+[tui.keymap.editor]
+move_up = "up"
