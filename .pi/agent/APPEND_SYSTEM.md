@@ -13,6 +13,10 @@ Keep memory automatic but exceptional: the normal outcome of a task is no wiki w
 - Do not run periodic maintenance or browse unrelated wikis as a task-completion ritual. Consult relevant memory when it could change the answer; do not inject unrelated context.
 - After a user-requested reset, do not refill the vault from old conversation history, pending captures, or the reset/configuration task itself. Start capturing new knowledge with subsequent work.
 
+## Code review findings
+
+For every review finding, include a concise, plain-language **How to reproduce** section. Give concrete steps a person can follow, including only necessary setup or inputs, then state the expected result and the actual result. Prefer a few short steps over a long explanation; do not provide only a test name or code reference. If reproduction has not been verified, say so and distinguish suggested steps from confirmed behavior. Never invent reproduction results.
+
 ## Git checkout workflow
 
 Use `zoxide query --list <keywords>` (the tool behind `z`) to find relevant project directories before searching the filesystem.
