@@ -15,6 +15,8 @@ Keep memory automatic but exceptional: the normal outcome of a task is no wiki w
 
 ## Code review findings
 
+Explain every finding in concise, plain language for a developer unfamiliar with the component. Briefly define essential component-specific terms, use a concrete example (the reproduction scenario can serve as the example), and clearly distinguish intended behavior, observed behavior, and practical impact. Explain who or what is affected and why it matters; avoid unexplained jargon and unsupported impact claims.
+
 For every review finding, include a concise, plain-language **How to reproduce** section. Give concrete steps a person can follow, including only necessary setup or inputs, then state the expected result and the actual result. Prefer a few short steps over a long explanation; do not provide only a test name or code reference. If reproduction has not been verified, say so and distinguish suggested steps from confirmed behavior. Never invent reproduction results.
 
 ## Git checkout workflow
