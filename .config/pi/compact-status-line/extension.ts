@@ -3,7 +3,6 @@ import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import inlineFastModeStatus from "./inlineFastModeStatus.ts";
 
 const FAST_MODE_STATUS_KEY = "compact-status-line:fast-mode";
-const TOKEN_SPEED_STATUS_KEY = "tokenSpeed";
 
 function formatContextLimit(tokens: number): string {
 	if (tokens < 1_000) return `${tokens}`;
@@ -22,7 +21,7 @@ function formatDuration(milliseconds: number): string {
 }
 
 /** Replace better-claude-code-ui's status line with a compact personal variant.
- * Project path and Git details belong to the multiplexer; show token speed here instead.
+ * Project path and Git details belong to the multiplexer.
  * @note Registers lifecycle handlers and wraps widget updates for inline fast-mode status.
  */
 export default function compactStatusLine(pi: ExtensionAPI): void {
@@ -64,8 +63,6 @@ export default function compactStatusLine(pi: ExtensionAPI): void {
 					const fastModeIcon = statuses.get(FAST_MODE_STATUS_KEY);
 					const modelText = theme.fg("muted", model) + (fastModeIcon ? ` ${theme.fg("accent", fastModeIcon)}` : "");
 					const leftParts: string[] = [modelText];
-					const tokenSpeed = statuses.get(TOKEN_SPEED_STATUS_KEY);
-					if (tokenSpeed) leftParts.push(tokenSpeed);
 					if (contextTokens > 0) {
 						const percent = contextLimit > 0 ? Math.round((contextTokens / contextLimit) * 100) : 0;
 						const contextText = contextLimit > 0 ? `${percent}%/${formatContextLimit(contextLimit)}` : `${contextTokens}`;

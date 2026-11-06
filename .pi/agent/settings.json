@@ -30,8 +30,7 @@
     "git:github.com/goulinkh/pi-auto-title",
     "npm:pi-jev-wiki@1.0.4",
     "git:github.com/earendil-works/pi-review@f1de050504936046c0f85b21fec0e0a93ef394eb",
-    "npm:pi-token-speed@0.12.0",
-    "git:github.com/goulinkh/pi-jev-router@e8f07459dbec7c50ac7dd632bc7d3ade5fd0aef6"
+    "git:github.com/goulinkh/pi-jev-router@a6d9e994c9f5f2374d51ed04fc2eb6ceb3f67a97"
   ],
   "lastChangelogVersion": "1.5.0",
   "pi-usage": {
