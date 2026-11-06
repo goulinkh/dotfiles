@@ -48,6 +48,7 @@ FILES=(
   .pi/agent/models.json
   .pi/agent/pi-auto-title.json
   .pi/agent/APPEND_SYSTEM.md
+  .pi/agent/prompts/explain.md
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
   .pi/agent/extensions/jev-wiki-vault
