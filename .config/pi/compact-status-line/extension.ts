@@ -1,6 +1,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import inlineFastModeStatus from "./inlineFastModeStatus.ts";
+import { modelLabel } from "./modelLabel.ts";
 
 const FAST_MODE_STATUS_KEY = "compact-status-line:fast-mode";
 
@@ -55,11 +56,11 @@ export default function compactStatusLine(pi: ExtensionAPI): void {
 			return {
 				invalidate() {},
 				render(width: number): string[] {
-					const model = ctx.model?.id ?? "no-model";
 					const usage = ctx.getContextUsage();
 					const contextLimit = ctx.model?.contextWindow ?? 0;
 					const contextTokens = usage?.tokens ?? 0;
 					const statuses = footerData.getExtensionStatuses();
+					const model = modelLabel(ctx.model?.provider, ctx.model?.id, statuses.get("jev-router"));
 					const fastModeIcon = statuses.get(FAST_MODE_STATUS_KEY);
 					const modelText = theme.fg("muted", model) + (fastModeIcon ? ` ${theme.fg("accent", fastModeIcon)}` : "");
 					const leftParts: string[] = [modelText];

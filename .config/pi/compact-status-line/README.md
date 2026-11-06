@@ -7,8 +7,10 @@ The footer shows the model, inline fast-mode indicator, context usage, and sessi
 Fast mode appears as `` (`nf-fa-bolt`, U+F0E7) next to the model while the plugin reports it active. For `gpt-auto`, the router's fast-mode bridge checks the concrete route for both requests and `/fast` status updates. Before the first route, `/fast on` reports that it is waiting; the bolt appears once an eligible route is selected. Its separate widget is suppressed without changing `/fast` or provider requests. The adapter targets fast-mode 0.1.13's shared statusline registry and preserves other plugins' segments.
 
 ```text
-gpt-auto  · ctx 12%/200k                         2m 10s · 3 turns
+gpt-auto (gpt-6.1-sol)  · ctx 12%/200k                         2m 10s · 3 turns
 ```
+
+GPT Auto's parenthesized model is read from the router's live status on every render, so it follows route changes within the same session. Before routing, only `gpt-auto` is shown.
 
 Token speed is not displayed and the token-speed package is not required.
 
