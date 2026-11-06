@@ -2,8 +2,8 @@
 
 These guidelines extend the pi-review rubric for every review. The goal is to
 prove that the change is correct and reliable by running it, not only by
-reading the diff. Report findings only: do not fix them, and do not post
-anything to GitHub.
+reading the diff. Report findings only: do not fix them. Do not write to
+GitHub unless explicitly asked; then follow the comment rules below.
 
 ## 1. Understand the intent
 
@@ -120,6 +120,26 @@ verdict. The Human Reviewer Callouts section stays last. Include:
 
 Only give the verdict "correct" if the relevant build and tests actually ran
 and passed. If they could not run, say so next to the verdict.
+
+## 7. GitHub review comments
+
+When explicitly asked to add review comments:
+
+- Use `gh` and keep the review **pending** unless explicitly asked to submit.
+- Put each finding in its own inline comment on the relevant changed lines.
+  Never combine findings into a file-level comment or anchor them to unrelated
+  code. If no valid changed-line anchor exists, ask rather than misplace it.
+- Use **bold labels**, not H2 headings. Include priority, practical impact,
+  and concise reproduction steps with expected and actual results. Keep the
+  explanation plain and distinguish verified behavior from inference.
+- Omit redundant location labels; make file references clickable links.
+- Keep comments and the review body short and issue-focused. Keep the detailed
+  verification report in chat; omit routine build, lint, and passing-test
+  summaries from GitHub.
+- Run Vale on the comment text before saving; if unavailable, report that
+  limitation rather than claiming it passed. Preserve existing user comments
+  and verify afterwards that the review remains pending (unless submission
+  was explicitly requested).
 
 ---
 
