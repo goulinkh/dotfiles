@@ -66,6 +66,7 @@ FILES=(
   .config/zed/AGENTS.md
   .config/zed/tasks.json
   .config/htop/htoprc
+  .config/ghostty/config
   .config/herdr-core/config.toml
   .config/herdr-app/settings.json
   .config/herdr-app/programs.json

@@ -55,6 +55,9 @@ bash "$DIR/setup-omp-plugins.sh" || echo "   omp plugin install failed — re-ru
 # Link VS Code settings/keybindings into the OS-specific user config dir.
 bash "$DIR/setup-vscode.sh" || echo "   vscode linking failed — re-run: ./setup-vscode.sh" >&2
 
+# Ghostty, iTerm2, Rex, and GNOME Terminal fonts.
+bash "$DIR/setup-terminals.sh" || echo "   terminal font setup failed — re-run: ./setup-terminals.sh" >&2
+
 # Pi memory vault: clone, pi-jev-wiki config, background sync timer.
 bash "$DIR/setup-pi-wiki.sh" || echo "   pi memory vault setup failed — re-run: ./setup-pi-wiki.sh" >&2
 

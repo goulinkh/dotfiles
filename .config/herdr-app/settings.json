@@ -3,7 +3,7 @@
   "sounds": {
     "enabled": true
   },
-  "font": "MonoLisa Regular Nerd Font Complete Mono",
+  "font": "IoskeleyMonoNL Nerd Font Mono",
   "font_size": 14,
   "ui_font": "SF Pro Text",
   "minimum_contrast": 1,

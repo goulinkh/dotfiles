@@ -3,7 +3,7 @@
   "sounds": {
     "enabled": true
   },
-  "font": "Maple Mono NF",
+  "font": "IoskeleyMonoNL Nerd Font Mono",
   "font_size": 14.5,
   "ui_font": "Ubuntu Sans",
   "minimum_contrast": 1.0,

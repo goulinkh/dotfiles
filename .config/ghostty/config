@@ -1,0 +1,57 @@
+# Ghostty config (https://ghostty.org/docs/config). Linked to
+# ~/.config/ghostty/config by install.sh and sync.sh; setup-terminals.sh moves
+# aside the macOS-only ~/Library/Application Support copy, which would
+# otherwise load after this file and override it.
+
+# Code + terminal font, installed by packages/ioskeley-mono.sh.
+font-family = "IoskeleyMonoNL Nerd Font Mono"
+font-size = 14.5
+background-opacity = 0.95
+background-blur = true
+
+# Active iTerm2 Default palette, converted to sRGB.
+background = #282828
+foreground = #d7c9a0
+bold-color = #ebdbb2
+cursor-color = #ebdbb2
+cursor-text = #282828
+selection-background = #665c54
+selection-foreground = #ebdbb2
+palette = 0=#282828
+palette = 1=#cc241d
+palette = 2=#98971a
+palette = 3=#d79921
+palette = 4=#458588
+palette = 5=#b2608a
+palette = 6=#689d6a
+palette = 7=#a89984
+palette = 8=#928374
+palette = 9=#fb4934
+palette = 10=#b8bb26
+palette = 11=#fabd2f
+palette = 12=#4bafa6
+palette = 13=#d3869b
+palette = 14=#8ec07c
+palette = 15=#ebdbb2
+
+# Window controls and tabs share one titlebar row.
+# Applies to new windows after reloading the configuration.
+macos-titlebar-style = tabs
+
+# Keep receiving prerelease fixes for the macOS 27 tab layout.
+auto-update-channel = tip
+
+# Compact spacing and less visual distraction.
+window-padding-x = 8
+window-padding-y = 0
+resize-overlay = never
+mouse-hide-while-typing = true
+
+# Initial grid dimensions for new windows (columns and rows).
+window-width = 124
+window-height = 40
+
+# Steady block cursor; retain shell integration and enable SSH compatibility.
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor,ssh-env

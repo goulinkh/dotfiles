@@ -14,17 +14,12 @@
   "editor.tabSize": 2,
   // fonts — ported from Zed (buffer_font_* / terminal.font_*).
   // First installed family wins, so macOS and Ubuntu can degrade gracefully.
-  "editor.fontFamily": "Maple Mono NF, MonoLisa Nerd Font Mono, MesloLGS NF, monospace",
+  "editor.fontFamily": "IoskeleyMonoNL Nerd Font Mono, MesloLGS NF, monospace",
   "editor.fontSize": 13.5,
   // <8 is a multiplier — matches Zed's "comfortable" line height.
   "editor.lineHeight": 1.6,
-  // Maple Mono stylistic sets from Zed's buffer_font_features: cv02 top-arm `a`,
-  // cv05 double-story `g`, cv61 straight-tail `,`/`;`, cv63 arrow-style `<=`.
-  "editor.fontLigatures": "'calt' on, 'cv02' on, 'cv05' on, 'cv61' on, 'cv63' on",
-  "terminal.integrated.fontFamily": "Maple Mono NF, MesloLGS NF, monospace",
+  "terminal.integrated.fontFamily": "IoskeleyMonoNL Nerd Font Mono, MesloLGS NF, monospace",
   "terminal.integrated.fontSize": 13.5,
-  "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"cv02\" on, \"cv05\" on, \"cv61\" on, \"cv63\" on",
   // themes
   "workbench.iconTheme": "vscode-icons",
   // Zed is on GitHub Light (theme.mode = light); needs github.github-vscode-theme.

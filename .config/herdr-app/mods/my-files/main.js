@@ -245,7 +245,7 @@ export default class Files extends View {
         .child(div().w(this.gutter).h_full().flex_none().flex().items_center().justify_end().pr(8).text_color(hit ? t.foreground : t.dim).when(hit, el => el.bg(edge)).child(String(i + 1)))
         .child(h_flex().flex_none().pl(10).children(this.highlighter.tokens(i).map(span)));
     };
-    return div().flex_1().min_h(0).relative().font_family(settings().font_family ?? "JetBrains Mono").text_size(CODE_TEXT)
+    return div().flex_1().min_h(0).relative().font_family(settings().font_family ?? "IoskeleyMonoNL Nerd Font Mono").text_size(CODE_TEXT)
       .child(div().id("files-code-x").size_full().overflow_x_scrollbar()
         .child(div().w_full().min_w(this.codeWidth).h_full()
           .child(v_virtual_list("files-code", lines.length, CODE_ROW, i => String(i), visible => {

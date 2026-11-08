@@ -88,7 +88,7 @@ class AgentPluginTests(unittest.TestCase):
         packages.mkdir()
         shutil.copy2(ROOT / "packages/update.sh", packages)
         shutil.copy2(ROOT / "omp-plugins.txt", self.root)
-        for name in ("rex.sh", "herdr.sh", "sf-pro.sh"):
+        for name in ("rex.sh", "herdr.sh", "sf-pro.sh", "ioskeley-mono.sh"):
             (packages / name).write_text("#!/bin/sh\nexit 0\n")
         self.stub("uname", "echo TestOS\n")
         for name in ("mise", "bun", "pi"):

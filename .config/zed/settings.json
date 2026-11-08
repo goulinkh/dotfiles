@@ -100,16 +100,9 @@
   },
   "ui_font_family": ".ZedSans",
   "ui_font_size": 16,
-  "buffer_font_family": "Maple Mono NF",
+  "buffer_font_family": "IoskeleyMonoNL Nerd Font Mono",
   "buffer_font_size": 14.5,
   "agent_ui_font_size": 16,
-  "buffer_font_features": {
-    "calt": true, // standard ligatures (-> => != etc)
-    "cv02": true, // alternative `a` with top arm
-    "cv05": true, // alternative `g` in double story style
-    "cv61": true, // alternative `,` and `;` with straight tail
-    "cv63": true, // alternative `<=` in arrow style
-  },
   "colorize_brackets": true,
   "document_symbols": "on",
   "diff_view_style": "split",
@@ -395,14 +388,7 @@
       "show": "auto",
     },
     "max_scroll_history_lines": 5000000,
-    "font_family": "Maple Mono NF",
-    "font_features": {
-      "calt": true,
-      "cv02": true,
-      "cv05": true,
-      "cv61": true,
-      "cv63": true,
-    },
+    "font_family": "IoskeleyMonoNL Nerd Font Mono",
     "detect_venv": {
       "on": {
         "activate_script": "default",
