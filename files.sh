@@ -23,6 +23,7 @@ FILES=(
   .gitconfig
   .screenrc
   .agents/skills/gohuman
+  .agents/skills/visual-explain
   .codex/config.toml
   .codex/AGENTS.md
   .codex/hooks.json
@@ -49,6 +50,7 @@ FILES=(
   .pi/agent/pi-auto-title.json
   .pi/agent/APPEND_SYSTEM.md
   .pi/agent/prompts/explain.md
+  .pi/agent/prompts/visual-explain.md
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
   .pi/agent/extensions/jev-wiki-vault
@@ -79,6 +81,7 @@ FILES=(
   .copilot/settings.json
   .claude/settings.json
   .claude/skills/gohuman
+  .claude/skills/visual-explain
   .claude/CLAUDE.md
   .claude/hooks
 )

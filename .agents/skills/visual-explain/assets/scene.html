@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Visual explanation — starter</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #101723; color: #f1f5ff; font: 18px system-ui, sans-serif; }
+  main { max-width: 1600px; margin: auto; }
+  #stage { width: 100%; aspect-ratio: 16 / 9; background: #101723; }
+  #stage svg { display: block; width: 100%; height: 100%; }
+  #controls, #notes { padding: 18px 24px; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  button, input { font: inherit; }
+  button { color: #f1f5ff; background: #24344b; border: 1px solid #9daec9; border-radius: 8px; padding: 8px 16px; cursor: pointer; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; }
+  #seek { flex: 1 1 220px; min-width: 0; }
+  #chapters { margin-top: 14px; }
+  #notes { line-height: 1.5; }
+  a { color: #94d8ff; }
+  [hidden] { display: none !important; }
+  .capture main { max-width: none; }
+</style>
+</head>
+<body>
+<main>
+  <div id="stage">
+    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title description">
+      <title id="title">Visual explanation — blank playback shell</title>
+      <desc id="description">No visual treatment is supplied. Add the concrete demonstration and its accessible description here.</desc>
+      <rect width="1600" height="900" fill="#101723"/>
+      <!-- Add subject-specific artwork. No prescribed boxes, arrows or cards. -->
+      <g id="artwork"></g>
+    </svg>
+  </div>
+  <section id="controls" aria-label="Playback controls">
+    <div class="row">
+      <button id="play" type="button">Play</button>
+      <button id="replay" type="button">Replay</button>
+      <label for="seek">Time</label>
+      <input id="seek" type="range" min="0" max="20" step="0.01" value="0">
+      <output id="time" for="seek">0.0 / 20 s</output>
+    </div>
+    <div id="chapters" class="row" aria-label="Chapters"></div>
+    <p id="motion-note" hidden>Reduced motion: use chapter buttons or the scrubber to explore still frames. Playback is optional.</p>
+  </section>
+  <aside id="notes">Developer scaffold only: the stage is intentionally blank. Add the researched visual mechanism and replace this note with its source and qualifications before delivery.</aside>
+</main>
+<script>
+'use strict';
+(() => {
+  const width = 1600, height = 900, duration = 20;
+  const chapters = Object.freeze([]);
+  const byId = id => document.getElementById(id);
+  const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
+  const controls = byId('controls'), notes = byId('notes');
+  const playButton = byId('play'), seek = byId('seek');
+  let currentTime = 0, playing = false, raf = null, epoch = 0, capture = false;
+
+  // Fully assign every animated property on every call, in any time order.
+  function render(seconds) {
+    if (!Number.isFinite(seconds)) throw new TypeError('render(t) requires finite seconds');
+    const t = clamp(seconds, 0, duration);
+    // Implement the visual mechanism here. Assign all changing properties
+    // from t and fixed data, including their before/after-beat values.
+    // The blank scaffold is not a finished explanation.
+    currentTime = t; // Playback bookkeeping only; never consulted to draw.
+    seek.value = String(t);
+    byId('time').textContent = `${t.toFixed(1)} / ${duration} s`;
+  }
+  function pause() {
+    playing = false;
+    if (raf !== null) cancelAnimationFrame(raf);
+    raf = null;
+    playButton.textContent = 'Play';
+  }
+  function tick(now) {
+    if (!playing) return;
+    const t = (now - epoch) / 1000;
+    render(t);
+    if (t >= duration) pause();
+    else raf = requestAnimationFrame(tick);
+  }
+  function play() {
+    if (capture) return;
+    if (currentTime >= duration) render(0);
+    playing = true;
+    epoch = performance.now() - currentTime * 1000;
+    playButton.textContent = 'Pause';
+    raf = requestAnimationFrame(tick);
+  }
+  function setCaptureMode(enabled) {
+    pause();
+    capture = Boolean(enabled);
+    controls.hidden = capture;
+    notes.hidden = capture;
+    document.documentElement.classList.toggle('capture', capture);
+  }
+  playButton.addEventListener('click', () => playing ? pause() : play());
+  byId('replay').addEventListener('click', () => { pause(); render(0); play(); });
+  seek.addEventListener('input', () => { pause(); render(Number(seek.value)); });
+  for (const chapter of chapters) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = chapter.title;
+    button.addEventListener('click', () => { pause(); render(chapter.time); });
+    byId('chapters').append(button);
+  }
+  byId('motion-note').hidden = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ready = (async () => {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map(image => image.decode()));
+    render(0);
+  })();
+  window.scene = Object.freeze({ duration, width, height, chapters, ready, render, setCaptureMode });
+})();
+</script>
+</body>
+</html>

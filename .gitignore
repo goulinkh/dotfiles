@@ -17,6 +17,7 @@
 !.pi/agent/prompts/
 .pi/agent/prompts/*
 !.pi/agent/prompts/explain.md
+!.pi/agent/prompts/visual-explain.md
 !.pi/agent/extensions/
 .pi/agent/extensions/*
 !.pi/agent/extensions/fast-mode.json
