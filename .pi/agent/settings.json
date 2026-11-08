@@ -22,7 +22,7 @@
   "tuiMode": "regular",
   "packages": [
     "npm:pi-notify@1.4.0",
-    "git:github.com/goulinkh/pi-usage@f6099e58bccef7a4ccc28a98f06ff1f6f345e3a8",
+    "git:github.com/goulinkh/pi-usage@346168fc7b025404bdca0481cd1e17020d1f9494",
     "npm:better-claude-code-ui@0.1.9",
     "~/.config/pi/compact-status-line",
     "npm:pi-btw@0.8.0",
