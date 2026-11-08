@@ -1,15 +1,14 @@
 {
-  "defaultProvider": "auto",
-  "defaultModel": "gpt-auto",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-5-5",
   "enabledModels": [
-    "auto/gpt-auto",
-    "openai-codex/gpt-6-astra",
-    "github-copilot/claude-opus-5.5",
+    "anthropic/claude-opus-5-5",
     "openai-codex/gpt-6.1-sol"
   ],
   "defaultThinkingLevel": "xhigh",
   "modelThinkingLevels": {
-    "openai-codex/gpt-6-astra": "high"
+    "openai-codex/gpt-6-astra": "high",
+    "anthropic/claude-opus-5-5": "high"
   },
   "defaultTools": [
     "+codemode",

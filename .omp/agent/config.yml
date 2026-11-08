@@ -1,19 +1,16 @@
 setupVersion: 2
 enabledModels:
-  - github-copilot/claude-opus-5.5
-  - github-copilot/gemini-4-argon
-  - openai-codex/gpt-6-astra
+  - anthropic/claude-opus-5-5
+  - openai-codex/gpt-6.1-sol
 modelRoles:
-  default: github-copilot/claude-opus-5.5:xhigh
+  default: anthropic/claude-opus-5-5:high
   smol: github-copilot/claude-sonnet-5:xhigh
-  opus: github-copilot/claude-opus-5.5:xhigh
-  gemini: github-copilot/gemini-4-argon:xhigh
-  astra: openai-codex/gpt-6-astra:high
-  plan: openai-codex/gpt-6-astra:high
+  opus: anthropic/claude-opus-5-5:high
+  sol: openai-codex/gpt-6.1-sol:xhigh
+  plan: openai-codex/gpt-6.1-sol:xhigh
 cycleOrder:
   - default
-  - gemini
-  - astra
+  - sol
 hideThinkingBlock: true
 textVerbosity: low
 ttsr:
