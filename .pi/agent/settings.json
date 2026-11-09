@@ -19,7 +19,7 @@
   "hideThinkingBlock": true,
   "showCacheMissNotices": true,
   "quietStartup": true,
-  "tuiMode": "regular",
+  "tuiMode": "fullscreen",
   "packages": [
     "npm:pi-notify@1.4.0",
     "git:github.com/goulinkh/pi-usage@346168fc7b025404bdca0481cd1e17020d1f9494",
