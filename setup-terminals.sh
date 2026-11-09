@@ -4,7 +4,7 @@
 #   Ghostty  .config/ghostty/config is linked by files.sh; on macOS, move aside
 #            the Application Support copy, which loads later and overrides it.
 #   iTerm2   every profile's ASCII and non-ASCII font, keeping their sizes.
-#   Rex      the workspace terminal font.
+#   Rex      the workspace terminal font; no fading of unfocused split panes.
 #   GNOME Terminal (Linux)  the default profile's font.
 # Herdr's font is set in .config/herdr-app/settings*.json; herdr-core has none.
 set -euo pipefail
@@ -64,6 +64,12 @@ rex() {
   else
     defaults write "$domain" "$key" -string "$FAMILY"
     echo "   rex: updated (restart Rex to apply)"
+  fi
+  # Settings > Panes > Fade inactive panes > None (default fades surface & content).
+  key=Workspace.inactivePaneFadeMode
+  if [ "$(defaults read "$domain" "$key" 2>/dev/null || true)" != none ]; then
+    defaults write "$domain" "$key" -string none
+    echo "   rex: inactive pane fading disabled"
   fi
 }
 
