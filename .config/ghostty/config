@@ -3,8 +3,8 @@
 # aside the macOS-only ~/Library/Application Support copy, which would
 # otherwise load after this file and override it.
 
-# Code + terminal font, installed by packages/ioskeley-mono.sh.
-font-family = "IoskeleyMonoNL Nerd Font Mono"
+# Code + terminal font, installed by packages/maple-mono.sh.
+font-family = "Maple Mono NF"
 font-size = 14.5
 background-opacity = 0.95
 background-blur = true

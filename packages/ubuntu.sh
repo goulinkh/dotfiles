@@ -33,8 +33,8 @@ if command -v apt-get >/dev/null 2>&1 && ! command -v gh >/dev/null 2>&1; then
   sudo apt-get install -y gh
 fi
 
-# Ioskeley Mono NL Nerd Font: code + terminal font for Zed, VS Code, and Herdr.
-bash "$DIR/ioskeley-mono.sh" || echo "   font install failed — re-run: ./packages/ioskeley-mono.sh" >&2
+# Maple Mono NF: code + terminal font for Zed, VS Code, Herdr, and GNOME Terminal.
+bash "$DIR/maple-mono.sh" || echo "   font install failed — re-run: ./packages/maple-mono.sh" >&2
 
 # mise has no apt package; use the official installer.
 command -v mise >/dev/null 2>&1 || curl -fsSL https://mise.run | sh

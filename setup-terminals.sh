@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Point terminals whose font lives outside a linkable config file at the shared
-# code + terminal font (installed by packages/ioskeley-mono.sh). Idempotent.
+# code + terminal font (installed by packages/maple-mono.sh). Idempotent.
 #   Ghostty  .config/ghostty/config is linked by files.sh; on macOS, move aside
 #            the Application Support copy, which loads later and overrides it.
 #   iTerm2   every profile's ASCII and non-ASCII font, keeping their sizes.
@@ -9,8 +9,8 @@
 # Herdr's font is set in .config/herdr-app/settings*.json; herdr-core has none.
 set -euo pipefail
 
-FAMILY="IoskeleyMonoNL Nerd Font Mono"
-POSTSCRIPT="IoskeleyMonoNLNFM" # iTerm2 stores "<PostScript name> <size>"
+FAMILY="Maple Mono NF"
+POSTSCRIPT="MapleMono-NF-Regular" # iTerm2 stores "<PostScript name> <size>"
 DEFAULT_SIZE=14
 
 echo "==> Setting terminal fonts to $FAMILY"

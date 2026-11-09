@@ -78,9 +78,9 @@ if ! bash "$DIR/sf-pro.sh"; then
   failures=$((failures + 1))
 fi
 
-# Ioskeley Mono NL Nerd Font, where it's missing.
-if ! bash "$DIR/ioskeley-mono.sh"; then
-  echo "   failed: packages/ioskeley-mono.sh" >&2
+# Maple Mono NF, where it's missing.
+if ! bash "$DIR/maple-mono.sh"; then
+  echo "   failed: packages/maple-mono.sh" >&2
   failures=$((failures + 1))
 fi
 
