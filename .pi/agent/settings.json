@@ -25,6 +25,7 @@
     "git:github.com/goulinkh/pi-usage@346168fc7b025404bdca0481cd1e17020d1f9494",
     "npm:better-claude-code-ui@0.1.9",
     "~/.config/pi/compact-status-line",
+    "git:github.com/goulinkh/pi-rich-markdown",
     "npm:pi-btw@0.8.0",
     "git:github.com/goulinkh/pi-auto-title",
     "npm:pi-jev-wiki@1.0.4",
@@ -41,5 +42,8 @@
   },
   "extensionChangelogVersions": {
     "{\"source\":\"npm:pi-jev-wiki@1.0.4\",\"scope\":\"user\"}": "1.0.4"
+  },
+  "markdown": {
+    "mermaid": "off"
   }
 }
