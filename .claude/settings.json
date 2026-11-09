@@ -38,5 +38,9 @@
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "theme": "dark-ansi"
+  "theme": "dark-ansi",
+  "enableArtifact": false,
+  "autoUploadSessions": false,
+  "disableRemoteControl": true,
+  "remoteControlAtStartup": false
 }
