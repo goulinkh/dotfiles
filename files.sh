@@ -54,8 +54,8 @@ FILES=(
   .pi/agent/extensions/fast-mode.json
   .pi/agent/extensions/openrouter-vertex.ts
   .pi/agent/extensions/jev-wiki-vault
-  # pi-review reads REVIEW_GUIDELINES.md beside the nearest .pi directory,
-  # which is ~ for any project without its own .pi.
+  # pi-review and the Claude /review skill read REVIEW_GUIDELINES.md beside
+  # the nearest .pi (or .claude) directory, which is ~ for most projects.
   REVIEW_GUIDELINES.md
   .config/vale-general/.vale.ini
   .config/vale-general/styles/Prose/LongSentence.yml
@@ -83,6 +83,8 @@ FILES=(
   .claude/settings.json
   .claude/skills/gohuman
   .claude/skills/visual-explain
+  .claude/skills/explain
+  .claude/skills/review
   .claude/CLAUDE.md
   .claude/hooks
 )
