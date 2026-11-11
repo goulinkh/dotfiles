@@ -13,16 +13,6 @@
         "server_path": "/Users/goulin/.local/share/zed-terrazzo-lsp/scripts/filtered-server.mjs",
       },
     },
-    "harper-ls": {
-      "settings": {
-        "harper-ls": {
-          "linters": {
-            "Spaces": false,
-            "SentenceCapitalization": false,
-          },
-        },
-      },
-    },
   },
   // === appearance ===
   "format_on_save": "off",
