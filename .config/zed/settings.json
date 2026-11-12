@@ -76,6 +76,17 @@
           ]
         }
       ]
+    },
+    {
+      "host": "thinklab",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/goulin/superdistro/./"
+          ]
+        }
+      ]
     }
   ],
   "theme": {
@@ -230,9 +241,9 @@
     },
     "claude-acp": {
       "default_config_options": {
-        "mode": "acceptEdits",
+        "mode": "bypassPermissions",
         "fast": "on",
-        "effort": "medium",
+        "effort": "xhigh",
         "model": "claude-fable-5",
       },
       "type": "registry",
@@ -306,6 +317,8 @@
     "message_editor_min_lines": 2,
     "cancel_generation_on_terminal_stop": false,
     "thinking_display": "always_collapsed",
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
     "prevent_idle_sleep": false,
     "play_sound_when_agent_done": "always",
     "threads_sidebar": {
