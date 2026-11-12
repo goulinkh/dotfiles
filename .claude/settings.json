@@ -3,7 +3,7 @@
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
-  "model": "claude-opus-5-5[1m]",
+  "model": "opus",
   "availableModels": [
     "opus"
   ],
@@ -20,6 +20,8 @@
       }
     ]
   },
+  "disableRemoteControl": true,
+  "enableArtifact": false,
   "enabledPlugins": {
     "figma@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
@@ -39,8 +41,6 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
-  "enableArtifact": false,
-  "autoUploadSessions": false,
-  "disableRemoteControl": true,
-  "remoteControlAtStartup": false
+  "remoteControlAtStartup": false,
+  "autoUploadSessions": false
 }
